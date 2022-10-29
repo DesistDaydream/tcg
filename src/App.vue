@@ -1,26 +1,10 @@
 <script setup>
-import { ref } from "vue"
 import { RouterLink, RouterView } from "vue-router"
-
-// 生成顶部路由导航栏
-let menuList = ref([
-  { menu: "首页", link: "/" },
-  { menu: "卡组价格", link: "/card" },
-])
-
-// 判断导航栏中哪个按钮被激活了
-// 点击某一项的时候拿到相应的index 。然后把这个index赋值给isActiveNum 。再用 RouterLink 里面的 index 去对比。如果一样的话就加上 isActive 类 否则类名为空。
-let isActiveNum = ref(0)
-let btnMenu = (index) => {
-  isActiveNum.value = index
-}
 </script>
 
 <template>
   <ul>
-    <li>
-      <RouterLink to="/">首页</RouterLink>
-    </li>
+    <li><RouterLink to="/">首页</RouterLink></li>
     <li><RouterLink to="/wowtcg">WOWTCG</RouterLink></li>
     <li>
       <div class="dropdown">
@@ -32,14 +16,20 @@ let btnMenu = (index) => {
     </li>
     <li>
       <div class="dropdown">
-        <a href="#" class="dropbtn">YGO</a>
+        <RouterLink to="/ygo">YGO</RouterLink>
         <div class="dropdown-content">
-          <RouterLink to="/ygo">YGO</RouterLink>
           <RouterLink to="/ygo/carddesc">卡牌列表</RouterLink>
         </div>
       </div>
     </li>
-    <li><RouterLink to="/http">WOWTCG</RouterLink></li>
+    <li>
+      <div class="dropdown">
+        <RouterLink to="/tools">工具</RouterLink>
+        <div class="dropdown-content">
+          <RouterLink to="/tools/probability">抽卡概率计算器</RouterLink>
+        </div>
+      </div>
+    </li>
   </ul>
 
   <RouterView />
