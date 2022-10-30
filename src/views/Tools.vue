@@ -1,9 +1,9 @@
-<script setup>
+<script setup lang="ts">
 import Tools from "../components/tools/Tools.vue"
 </script>
 
 <template>
-  <main>
+  <div>
     <Tools />
-  </main>
+  </div>
 </template>

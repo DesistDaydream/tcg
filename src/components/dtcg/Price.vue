@@ -1,10 +1,10 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue"
 
 let deck = ref("")
 let resp = ref({})
 
-function commit(params) {
+function commit(params: string) {
   console.log(params)
   let xhr = new XMLHttpRequest()
   xhr.open("POST", "https://www.102205.xyz:8443/api/v1/deck/price")
@@ -57,7 +57,7 @@ function commit(params) {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, _) in resp.data">
+        <tr :key="item" v-for="item in resp.data">
           <th>{{ item.sc_name }}</th>
           <th>{{ item.count }}</th>
           <th>{{ item.serial }}</th>
