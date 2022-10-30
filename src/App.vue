@@ -10,7 +10,7 @@ import { RouterLink, RouterView } from "vue-router"
       <div class="dropdown">
         <RouterLink to="/dtcg">DTCG</RouterLink>
         <div class="dropdown-content">
-          <RouterLink to="/dtcg/carddesc">卡牌列表</RouterLink>
+          <!-- <RouterLink to="/dtcg/carddesc">卡牌列表</RouterLink> -->
         </div>
       </div>
     </li>
@@ -18,7 +18,7 @@ import { RouterLink, RouterView } from "vue-router"
       <div class="dropdown">
         <RouterLink to="/ygo">YGO</RouterLink>
         <div class="dropdown-content">
-          <RouterLink to="/ygo/carddesc">卡牌列表</RouterLink>
+          <!-- <RouterLink to="/ygo/carddesc">卡牌列表</RouterLink> -->
         </div>
       </div>
     </li>
@@ -26,7 +26,7 @@ import { RouterLink, RouterView } from "vue-router"
       <div class="dropdown">
         <RouterLink to="/tools">工具</RouterLink>
         <div class="dropdown-content">
-          <RouterLink to="/tools/probability">抽卡概率计算器</RouterLink>
+          <!-- <RouterLink to="/tools/probability">抽卡概率计算器</RouterLink> -->
         </div>
       </div>
     </li>

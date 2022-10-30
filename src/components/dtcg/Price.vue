@@ -1,8 +1,23 @@
 <script setup lang="ts">
 import { ref } from "vue"
 
+interface DeckPrice {
+  min_price: string
+  avg_price: string
+  data: Data[]
+}
+
+interface Data {
+  count: number
+  serial: string
+  sc_name: string
+  alternative_art: string
+  min_price: string
+  avg_price: string
+}
+
 let deck = ref("")
-let resp = ref({})
+let resp: DeckPrice = ref({})
 
 function commit(params: string) {
   console.log(params)
