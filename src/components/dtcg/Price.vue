@@ -16,8 +16,12 @@ interface Data {
   avg_price: string
 }
 
-let deck = ref("")
-let resp: DeckPrice = ref({})
+let deck = ref<string>("")
+let resp = ref<DeckPrice>({
+  min_price: "",
+  avg_price: "",
+  data: [],
+})
 
 function commit(params: string) {
   console.log(params)
@@ -72,7 +76,7 @@ function commit(params: string) {
         </tr>
       </thead>
       <tbody>
-        <tr :key="item" v-for="item in resp.data">
+        <tr v-for="item in resp.data">
           <th>{{ item.sc_name }}</th>
           <th>{{ item.count }}</th>
           <th>{{ item.serial }}</th>
