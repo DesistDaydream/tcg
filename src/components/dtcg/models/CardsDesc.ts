@@ -1,4 +1,4 @@
-export interface CardDesc {
+export interface CardsDescResp {
   count: number
   page_size: number
   page_current: number
