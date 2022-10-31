@@ -29,7 +29,7 @@ let tableHeader = ref({
 
 let req = axios({
   method: "POST",
-  url: "http://localhost:12205/api/v1/card/desc",
+  url: "https://tcg.102205.xyz:8443/api/v1/card/desc",
   data: JSON.stringify({
     page_size: 4,
     page_num: 1,
