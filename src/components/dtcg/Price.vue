@@ -12,7 +12,7 @@ let resp = ref<DeckPrice>({
 function commit(params: string) {
   console.log(params)
   let xhr = new XMLHttpRequest()
-  xhr.open("POST", "https://www.102205.xyz:8443/api/v1/deck/price")
+  xhr.open("POST", "https://tcg.102205.xyz:8443/api/v1/deck/price")
   xhr.send(
     JSON.stringify({
       deck: params,
