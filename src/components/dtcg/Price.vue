@@ -1,20 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue"
-
-interface DeckPrice {
-  min_price: string
-  avg_price: string
-  data: Data[]
-}
-
-interface Data {
-  count: number
-  serial: string
-  sc_name: string
-  alternative_art: string
-  min_price: string
-  avg_price: string
-}
+import type { DeckPrice } from "./models/DeckPrice"
 
 let deck = ref<string>("")
 let resp = ref<DeckPrice>({

@@ -10,7 +10,7 @@ import { RouterLink, RouterView } from "vue-router"
       <div class="dropdown">
         <RouterLink to="/dtcg">DTCG</RouterLink>
         <div class="dropdown-content">
-          <!-- <RouterLink to="/dtcg/carddesc">卡牌列表</RouterLink> -->
+          <RouterLink to="/dtcg/carddesc">卡牌列表</RouterLink>
         </div>
       </div>
     </li>

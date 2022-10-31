@@ -19,6 +19,11 @@ const router = createRouter({
       component: () => import("../views/DTCG.vue"),
     },
     {
+      path: "/dtcg/carddesc",
+      name: "dtcgdesc",
+      component: () => import("../views/DtcgCardDesc.vue"),
+    },
+    {
       path: "/ygo",
       name: "ygo",
       component: () => import("../views/YGO.vue"),
