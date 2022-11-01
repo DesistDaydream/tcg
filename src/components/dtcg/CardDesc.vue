@@ -5,14 +5,9 @@ import type { CardsDescResp } from "./api/v1/models/CardsDescResp"
 import { postCardsDesc } from "./api/v1/api"
 import type { AxiosResponse } from "axios"
 import axios from "axios"
+import type { tableRow } from "./api/v1/models/tableRow"
 
 let respData: CardsDescResp
-
-interface tableRow {
-  serial: string
-  sc_name: string
-  alternative_art: string
-}
 
 const TableItems: tableRow[] = new Array<tableRow>()
 const tableData = ref<tableRow[]>()
@@ -22,7 +17,7 @@ const tableHeader = ref({
   alternative_art: "异画",
 })
 const cardsCount = ref<number>(0)
-const pageSize = ref<number>(4)
+const pageSize = ref<number>(5)
 const pageNum = ref<number>(1)
 
 let req = axios({
@@ -32,9 +27,7 @@ let req = axios({
     page_size: pageSize.value,
     page_num: pageNum.value,
   }),
-})
-
-req.then((resp: AxiosResponse) => {
+}).then((resp: AxiosResponse) => {
   console.log(resp.data)
   respData = resp.data
 
