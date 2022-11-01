@@ -49,6 +49,13 @@ req.then((resp: AxiosResponse) => {
   })
   tableData.value = TableItems
 })
+
+const handleSizeChange = (val: number) => {
+  console.log(`${val} items per page`)
+}
+const handleCurrentChange = (val: number) => {
+  console.log(`current page: ${val}`)
+}
 </script>
 
 <template>
@@ -69,10 +76,26 @@ req.then((resp: AxiosResponse) => {
     <el-table-column prop="serial" label="编号" />
     <el-table-column prop="alternative_art" label="异画" />
   </el-table> -->
-
-  <div>
-    <Paging :cardsCount="cardsCount" :pageSize="pageSize" :pageNum="pageNum" />
+  <div class="demo-pagination-block">
+    <div class="demonstration">All combined</div>
+    <el-pagination
+      v-model:currentPage="pageNum"
+      v-model:page-size="pageSize"
+      :page-sizes="[10, 50, 100]"
+      :background="true"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="cardsCount"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+    />
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.demo-pagination-block + .demo-pagination-block {
+  margin-top: 10px;
+}
+.demo-pagination-block .demonstration {
+  margin-bottom: 16px;
+}
+</style>
