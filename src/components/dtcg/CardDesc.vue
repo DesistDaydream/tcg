@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { ref } from "vue"
 import Paging from "./Paging.vue"
-import type { CardsDescResp } from "./models/CardsDescResp"
-import axios from "axios"
+import type { CardsDescResp } from "./api/v1/models/CardsDescResp"
+import { postCardsDesc } from "./api/v1/api"
 import type { AxiosResponse } from "axios"
+import axios from "axios"
 
 let respData: CardsDescResp
 
