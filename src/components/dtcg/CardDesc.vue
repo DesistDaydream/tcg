@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue"
-import type { Data } from "./api/v1/models/tableData"
+import type { Data } from "./api/v1/models/CardsDescResp"
 import { getCardsDesc } from "./api/v1/api"
 
 const currentPage = ref<number>(1)
@@ -16,7 +16,6 @@ const tableHeader = ref({
 
 function genTableData() {
   getCardsDesc(pageSize.value, currentPage.value).then((resp) => {
-    console.log(resp)
     tableData.value = resp.data
     cardsCount.value = resp.count
   })
@@ -25,13 +24,9 @@ function genTableData() {
 genTableData()
 
 const handleSizeChange = (val: number) => {
-  console.log(`${val} 条/页`)
-
   genTableData()
 }
 const handleCurrentChange = (val: number) => {
-  console.log(`当前页: ${val}`)
-
   genTableData()
 }
 </script>

@@ -36,3 +36,15 @@ export interface Data {
   rarity_sc: string
   image: string
 }
+
+export const NewCardsDescResp = (): CardsDescResp => {
+  let tableData: CardsDescResp = {
+    count: 0,
+    page_size: 0,
+    page_current: 0,
+    page_total: 0,
+    data: [],
+  }
+
+  return tableData
+}

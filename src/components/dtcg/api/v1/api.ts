@@ -1,9 +1,9 @@
 import request from "./request"
 import type { CardsDescResp } from "./models/CardsDescResp"
+import { NewCardsDescResp } from "./models/CardsDescResp"
 import type { CardsDescReq } from "./models/CardsDescReq"
 import type { DeckPriceResp } from "./models/DeckPriceResp"
 import type { DeckPriceReq } from "./models/DeckPriceReq"
-import type { tableData } from "./models/tableData"
 
 import axios from "axios"
 import type { AxiosResponse } from "axios"
@@ -18,14 +18,8 @@ export const postDeckPrice = (data: DeckPriceReq) =>
 export const getCardsDesc = async (
   pageSize: number,
   pageNum: number
-): Promise<tableData> => {
-  const tableData: tableData = {
-    count: 0,
-    page_size: 0,
-    page_current: 0,
-    page_total: 0,
-    data: [],
-  }
+): Promise<CardsDescResp> => {
+  let cardsDescResp: CardsDescResp = NewCardsDescResp()
 
   await axios({
     method: "POST",
@@ -35,19 +29,9 @@ export const getCardsDesc = async (
       page_num: pageNum,
     }),
   }).then((resp: AxiosResponse) => {
-    let respData: CardsDescResp = resp.data
-
-    // 处理响应体数据
-    respData.data.forEach((element) => {
-      tableData.data.push({
-        sc_name: element.sc_name,
-        serial: element.serial,
-        alternative_art: element.alternative_art,
-      })
-    })
-    tableData.count = respData.count
+    cardsDescResp = resp.data
   })
 
-  console.log("检查数据：", tableData.data)
-  return tableData
+  console.log("通过接口获取获取到数据后检查：", cardsDescResp.data)
+  return cardsDescResp
 }
