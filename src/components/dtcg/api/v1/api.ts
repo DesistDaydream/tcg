@@ -3,10 +3,10 @@ import type { CardsDescResp } from "./models/CardsDescResp"
 import type { CardsDescReq } from "./models/CardsDescReq"
 import type { DeckPriceResp } from "./models/DeckPriceResp"
 import type { DeckPriceReq } from "./models/DeckPriceReq"
-import type { AxiosResponse } from "axios"
-import axios from "axios"
+import type { tableData } from "./models/tableData"
 
-import type { tableRow } from "./models/tableRow"
+import axios from "axios"
+import type { AxiosResponse } from "axios"
 
 export const postCardsDesc = (data: CardsDescReq) =>
   request.post("/card/desc", data)
@@ -14,29 +14,40 @@ export const postCardsDesc = (data: CardsDescReq) =>
 export const postDeckPrice = (data: DeckPriceReq) =>
   request.post("/deck/price", data)
 
-export const getCardsDesc = (pn: number): tableRow[] => {
-  let TableItems: tableRow[] = new Array<tableRow>()
-  let respData: CardsDescResp
+// TODO: 如何简化？
+export const getCardsDesc = async (
+  pageSize: number,
+  pageNum: number
+): Promise<tableData> => {
+  const tableData: tableData = {
+    count: 0,
+    page_size: 0,
+    page_current: 0,
+    page_total: 0,
+    data: [],
+  }
 
-  axios({
+  await axios({
     method: "POST",
     url: "https://tcg.102205.xyz:8443/api/v1/card/desc",
     data: JSON.stringify({
-      page_size: 10,
-      page_num: pn,
+      page_size: pageSize,
+      page_num: pageNum,
     }),
   }).then((resp: AxiosResponse) => {
-    respData = resp.data
+    let respData: CardsDescResp = resp.data
 
     // 处理响应体数据
     respData.data.forEach((element) => {
-      TableItems.push({
+      tableData.data.push({
         sc_name: element.sc_name,
         serial: element.serial,
         alternative_art: element.alternative_art,
       })
     })
+    tableData.count = respData.count
   })
 
-  return TableItems
+  console.log("检查数据：", tableData.data)
+  return tableData
 }

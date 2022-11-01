@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue"
-import type { CardsDescResp } from "./api/v1/models/CardsDescResp"
-import type { AxiosResponse } from "axios"
-import axios from "axios"
-import type { tableData, Data } from "./api/v1/models/tableRow"
+import type { Data } from "./api/v1/models/tableData"
+import { getCardsDesc } from "./api/v1/api"
 
 const currentPage = ref<number>(1)
 const pageSize = ref<number>(5)
@@ -16,48 +14,25 @@ const tableHeader = ref({
   alternative_art: "异画",
 })
 
-const fetchData = async (pageSize: number, pageNum: number) => {
-  const TableItems: tableData = {
-    count: 0,
-    page_size: 0,
-    page_current: 0,
-    page_total: 0,
-    data: [],
-  }
-
-  await axios({
-    method: "POST",
-    url: "https://tcg.102205.xyz:8443/api/v1/card/desc",
-    data: JSON.stringify({
-      page_size: pageSize,
-      page_num: pageNum,
-    }),
-  }).then((resp: AxiosResponse) => {
-    let respData: CardsDescResp = resp.data
-
-    // 处理响应体数据
-    cardsCount.value = respData.count
-    respData.data.forEach((element, index) => {
-      TableItems.data.push({
-        sc_name: element.sc_name,
-        serial: element.serial,
-        alternative_art: element.alternative_art,
-      })
-    })
-    tableData.value = TableItems.data
+function genTableData() {
+  getCardsDesc(pageSize.value, currentPage.value).then((resp) => {
+    console.log(resp)
+    tableData.value = resp.data
+    cardsCount.value = resp.count
   })
-
-  console.log(tableData.value)
 }
 
-fetchData(pageSize.value, currentPage.value)
+genTableData()
 
 const handleSizeChange = (val: number) => {
   console.log(`${val} 条/页`)
+
+  genTableData()
 }
 const handleCurrentChange = (val: number) => {
   console.log(`当前页: ${val}`)
-  fetchData(pageSize.value, val)
+
+  genTableData()
 }
 </script>
 
