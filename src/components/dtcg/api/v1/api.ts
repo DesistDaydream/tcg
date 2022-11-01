@@ -14,20 +14,18 @@ export const postCardsDesc = (data: CardsDescReq) =>
 export const postDeckPrice = (data: DeckPriceReq) =>
   request.post("/deck/price", data)
 
-let respData: CardsDescResp
-let TableItems: tableRow[] = new Array<tableRow>()
-
 export const getCardsDesc = (pn: number): tableRow[] => {
-  let req = axios({
+  let TableItems: tableRow[] = new Array<tableRow>()
+  let respData: CardsDescResp
+
+  axios({
     method: "POST",
     url: "https://tcg.102205.xyz:8443/api/v1/card/desc",
     data: JSON.stringify({
       page_size: 10,
       page_num: pn,
     }),
-  })
-
-  req.then((resp: AxiosResponse) => {
+  }).then((resp: AxiosResponse) => {
     respData = resp.data
 
     // 处理响应体数据

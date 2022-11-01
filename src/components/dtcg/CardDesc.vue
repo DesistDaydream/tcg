@@ -3,10 +3,9 @@ import { ref } from "vue"
 import type { CardsDescResp } from "./api/v1/models/CardsDescResp"
 import type { AxiosResponse } from "axios"
 import axios from "axios"
-import type { tableRow } from "./api/v1/models/tableRow"
+import type { tableData } from "./api/v1/models/tableRow"
 
-const TableItems: tableRow[] = new Array<tableRow>()
-const tableData = ref<tableRow[]>()
+const tableData = ref<tableData[]>()
 const tableHeader = ref({
   sc_name: "名称",
   serial: "编号",
@@ -18,6 +17,14 @@ const pageSize = ref<number>(5)
 const cardsCount = ref<number>(0)
 
 const fetchData = async (pageSize: number, pageNum: number) => {
+  const TableItems: tableData = {
+    count: 0,
+    page_size: 0,
+    page_current: 0,
+    page_total: 0,
+    data: [],
+  }
+
   await axios({
     method: "POST",
     url: "https://tcg.102205.xyz:8443/api/v1/card/desc",
@@ -26,29 +33,31 @@ const fetchData = async (pageSize: number, pageNum: number) => {
       page_num: pageNum,
     }),
   }).then((resp: AxiosResponse) => {
-    console.log(resp.data)
     let respData: CardsDescResp = resp.data
 
     // 处理响应体数据
     cardsCount.value = respData.count
     respData.data.forEach((element, index) => {
-      TableItems.push({
+      TableItems.data.push({
         sc_name: element.sc_name,
         serial: element.serial,
         alternative_art: element.alternative_art,
       })
     })
-    tableData.value = TableItems
+    tableData.value = TableItems.data
   })
+
+  console.log(tableData.value)
 }
 
-fetchData(1000, currentPage.value)
+fetchData(pageSize.value, currentPage.value)
 
 const handleSizeChange = (val: number) => {
   console.log(`${val} 条/页`)
 }
 const handleCurrentChange = (val: number) => {
   console.log(`当前页: ${val}`)
+  fetchData(pageSize.value, val)
 }
 </script>
 
@@ -57,12 +66,7 @@ const handleCurrentChange = (val: number) => {
   <!-- 卡拉云表格 -->
   <!-- 当一次性获取所有数据时，可以使用 :data="tableData?.slice((currentPage - 1) * pageSize, currentPage * pageSize)"
     如何使用 :data="tableData" 的时候，在点击页面后再渲染后面的数据呢？ -->
-  <el-table
-    :data="
-      tableData?.slice((currentPage - 1) * pageSize, currentPage * pageSize)
-    "
-    style="width: 100%"
-  >
+  <el-table :data="tableData" style="width: 100%">
     <el-table-column
       v-for="(item, index) in tableHeader"
       :prop="index"
