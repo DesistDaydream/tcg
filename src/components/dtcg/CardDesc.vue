@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue"
 import type { Data } from "./api/v1/models/CardsDescResp"
-import { getCardsDesc } from "./api/v1/api"
+import { getCardsDesc, postCardsDesc } from "./api/v1/api"
 
 const currentPage = ref<number>(1)
 const pageSize = ref<number>(5)
@@ -13,6 +13,17 @@ const tableHeader = ref({
   serial: "编号",
   alternative_art: "异画",
 })
+
+// TODO: 这样会跨域，怎么解决？
+// function genTableData() {
+//   postCardsDesc({
+//     page_size: pageSize.value,
+//     page_num: currentPage.value,
+//   }).then((resp) => {
+//     tableData.value = resp.data.data
+//     cardsCount.value = resp.data.total
+//   })
+// }
 
 function genTableData() {
   getCardsDesc(pageSize.value, currentPage.value).then((resp) => {

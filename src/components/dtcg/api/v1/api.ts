@@ -14,7 +14,7 @@ export const postCardsDesc = (data: CardsDescReq) =>
 export const postDeckPrice = (data: DeckPriceReq) =>
   request.post("/deck/price", data)
 
-// TODO: 如何简化？
+// TODO: 如何简化成上面的方式？上面的方式会出现跨域问题
 export const getCardsDesc = async (
   pageSize: number,
   pageNum: number
