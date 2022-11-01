@@ -1,4 +1,4 @@
-export interface DeckPrice {
+export interface DeckPriceResp {
   min_price: string
   avg_price: string
   data: Data[]
