@@ -3,18 +3,18 @@ import { ref } from "vue"
 import type { CardsDescResp } from "./api/v1/models/CardsDescResp"
 import type { AxiosResponse } from "axios"
 import axios from "axios"
-import type { tableData } from "./api/v1/models/tableRow"
+import type { tableData, Data } from "./api/v1/models/tableRow"
 
-const tableData = ref<tableData[]>()
+const currentPage = ref<number>(1)
+const pageSize = ref<number>(5)
+const cardsCount = ref<number>(0)
+
+const tableData = ref<Data[]>()
 const tableHeader = ref({
   sc_name: "名称",
   serial: "编号",
   alternative_art: "异画",
 })
-
-const currentPage = ref<number>(1)
-const pageSize = ref<number>(5)
-const cardsCount = ref<number>(0)
 
 const fetchData = async (pageSize: number, pageNum: number) => {
   const TableItems: tableData = {
