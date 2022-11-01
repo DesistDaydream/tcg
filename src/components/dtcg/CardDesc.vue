@@ -1,13 +1,9 @@
 <script setup lang="ts">
 import { ref } from "vue"
-import Paging from "./Paging.vue"
 import type { CardsDescResp } from "./api/v1/models/CardsDescResp"
-import { postCardsDesc } from "./api/v1/api"
 import type { AxiosResponse } from "axios"
 import axios from "axios"
 import type { tableRow } from "./api/v1/models/tableRow"
-
-let respData: CardsDescResp
 
 const TableItems: tableRow[] = new Array<tableRow>()
 const tableData = ref<tableRow[]>()
@@ -16,45 +12,57 @@ const tableHeader = ref({
   serial: "编号",
   alternative_art: "异画",
 })
-const cardsCount = ref<number>(0)
+
+const currentPage = ref<number>(1)
 const pageSize = ref<number>(5)
-const pageNum = ref<number>(1)
+const cardsCount = ref<number>(0)
 
-let req = axios({
-  method: "POST",
-  url: "https://tcg.102205.xyz:8443/api/v1/card/desc",
-  data: JSON.stringify({
-    page_size: pageSize.value,
-    page_num: pageNum.value,
-  }),
-}).then((resp: AxiosResponse) => {
-  console.log(resp.data)
-  respData = resp.data
+const fetchData = async (pageSize: number, pageNum: number) => {
+  await axios({
+    method: "POST",
+    url: "https://tcg.102205.xyz:8443/api/v1/card/desc",
+    data: JSON.stringify({
+      page_size: pageSize,
+      page_num: pageNum,
+    }),
+  }).then((resp: AxiosResponse) => {
+    console.log(resp.data)
+    let respData: CardsDescResp = resp.data
 
-  // 处理响应体数据
-  cardsCount.value = respData.count
-  respData.data.forEach((element, index) => {
-    TableItems.push({
-      sc_name: element.sc_name,
-      serial: element.serial,
-      alternative_art: element.alternative_art,
+    // 处理响应体数据
+    cardsCount.value = respData.count
+    respData.data.forEach((element, index) => {
+      TableItems.push({
+        sc_name: element.sc_name,
+        serial: element.serial,
+        alternative_art: element.alternative_art,
+      })
     })
+    tableData.value = TableItems
   })
-  tableData.value = TableItems
-})
+}
+
+fetchData(1000, currentPage.value)
 
 const handleSizeChange = (val: number) => {
-  console.log(`${val} items per page`)
+  console.log(`${val} 条/页`)
 }
 const handleCurrentChange = (val: number) => {
-  console.log(`current page: ${val}`)
+  console.log(`当前页: ${val}`)
 }
 </script>
 
 <template>
   <h2>Vue3 + Element plus 动态表格</h2>
   <!-- 卡拉云表格 -->
-  <el-table :data="tableData" style="width: 100%">
+  <!-- 当一次性获取所有数据时，可以使用 :data="tableData?.slice((currentPage - 1) * pageSize, currentPage * pageSize)"
+    如何使用 :data="tableData" 的时候，在点击页面后再渲染后面的数据呢？ -->
+  <el-table
+    :data="
+      tableData?.slice((currentPage - 1) * pageSize, currentPage * pageSize)
+    "
+    style="width: 100%"
+  >
     <el-table-column
       v-for="(item, index) in tableHeader"
       :prop="index"
@@ -70,14 +78,14 @@ const handleCurrentChange = (val: number) => {
     <el-table-column prop="alternative_art" label="异画" />
   </el-table> -->
   <div class="demo-pagination-block">
-    <div class="demonstration">All combined</div>
+    <div class="demonstration"></div>
     <el-pagination
-      v-model:currentPage="pageNum"
+      v-model:current-page="currentPage"
       v-model:page-size="pageSize"
-      :page-sizes="[10, 50, 100]"
-      :background="true"
       layout="total, sizes, prev, pager, next, jumper"
+      :page-sizes="[5, 10, 20, 50, 100]"
       :total="cardsCount"
+      :background="true"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
     />
