@@ -5,13 +5,7 @@ import type { CardsDescResp } from "./models/CardsDescResp"
 import axios from "axios"
 import type { AxiosResponse } from "axios"
 
-let respData: CardsDescResp = {
-  count: 0,
-  page_size: 0,
-  page_current: 0,
-  page_total: 0,
-  data: [],
-}
+let respData: CardsDescResp
 
 interface tableRow {
   serial: string
@@ -19,26 +13,32 @@ interface tableRow {
   alternative_art: string
 }
 
-let TableItems: tableRow[] = new Array<tableRow>()
-let tableData = ref<tableRow[]>()
-let tableHeader = ref({
-  serial: "编号",
+const TableItems: tableRow[] = new Array<tableRow>()
+const tableData = ref<tableRow[]>()
+const tableHeader = ref({
   sc_name: "名称",
+  serial: "编号",
   alternative_art: "异画",
 })
+const cardsCount = ref<number>(0)
+const pageSize = ref<number>(4)
+const pageNum = ref<number>(1)
 
 let req = axios({
   method: "POST",
   url: "https://tcg.102205.xyz:8443/api/v1/card/desc",
   data: JSON.stringify({
-    page_size: 4,
-    page_num: 1,
+    page_size: pageSize.value,
+    page_num: pageNum.value,
   }),
 })
 
 req.then((resp: AxiosResponse) => {
   console.log(resp.data)
   respData = resp.data
+
+  // 处理响应体数据
+  cardsCount.value = respData.count
   respData.data.forEach((element, index) => {
     TableItems.push({
       sc_name: element.sc_name,
@@ -55,22 +55,22 @@ req.then((resp: AxiosResponse) => {
   <!-- 卡拉云表格 -->
   <el-table :data="tableData" style="width: 100%">
     <el-table-column
+      v-for="(item, index) in tableHeader"
       :prop="index"
       :label="item"
-      v-for="(item, index) in tableHeader"
       :key="index"
     >
     </el-table-column>
   </el-table>
   <!-- 官网表格 -->
   <!-- <el-table :data="tableData" style="width: 100%">
-    <el-table-column prop="scname" label="名称" />
+    <el-table-column prop="sc_name" label="名称" />
     <el-table-column prop="serial" label="编号" />
     <el-table-column prop="alternative_art" label="异画" />
   </el-table> -->
 
   <div>
-    <Paging />
+    <Paging :cardsCount="cardsCount" :pageSize="pageSize" :pageNum="pageNum" />
   </div>
 </template>
 
