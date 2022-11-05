@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue"
-import type { DeckPriceResp } from "./api/v1/models/DeckPriceResp"
+import type { DeckPriceResp } from "../../api/v1/models/DeckPriceResp"
 
 let deck = ref<string>("")
 let resp = ref<DeckPriceResp>({

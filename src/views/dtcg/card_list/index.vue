@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import Tools from "../components/tools/Tools.vue"
+import CardDesc from "@/components/dtcg/CardListTable.vue"
 </script>
 
 <template>
   <div>
-    <Tools />
+    <CardDesc />
   </div>
 </template>

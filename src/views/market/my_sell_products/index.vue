@@ -3,7 +3,8 @@ import { ref } from "vue"
 </script>
 
 <template>
-  <div>展示我在卖的商品</div>
+  <h1>我在卖的商品</h1>
+  <div></div>
 </template>
 
 <style scoped></style>

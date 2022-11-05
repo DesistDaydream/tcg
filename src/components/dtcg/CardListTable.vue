@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue"
-import type { Data } from "./api/v1/models/CardsDescResp"
-import { getCardsDesc, postCardsDesc } from "./api/v1/api"
+import type { Data } from "@/api/v1/models/CardsDescResp"
+import { getCardsDesc, postCardsDesc } from "@/api/v1/api"
 
 const currentPage = ref<number>(1)
 const pageSize = ref<number>(5)

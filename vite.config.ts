@@ -9,6 +9,7 @@ export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: {
+      // 代码中使用 import 导入文件时，会自动将 @ 替换为 src 目录
       "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
   },

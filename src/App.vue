@@ -12,6 +12,7 @@ import { RouterLink, RouterView } from "vue-router"
       <div class="dropdown">
         <RouterLink to="/dtcg">DTCG</RouterLink>
         <div class="dropdown-content">
+          <RouterLink to="/dtcg/price">卡牌与卡组价格</RouterLink>
           <RouterLink to="/dtcg/carddesc">卡牌列表</RouterLink>
         </div>
       </div>
@@ -30,8 +31,8 @@ import { RouterLink, RouterView } from "vue-router"
       <div class="dropdown">
         <a href="#" class="dropbtn">交易市场</a>
         <div class="dropdown-content">
-          <RouterLink to="/jhs/market">市场动态</RouterLink>
-          <RouterLink to="/jhs/products">我在卖</RouterLink>
+          <RouterLink to="/market/dynamics">市场动态</RouterLink>
+          <RouterLink to="/market/products">我在卖</RouterLink>
         </div>
       </div>
     </li>

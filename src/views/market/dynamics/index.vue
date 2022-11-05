@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import { ref } from "vue"
-import ProductsInSale from "../components/jhs/ProductsInSale.vue"
 </script>
 
 <template>
-  <div>
-    <ProductsInSale />
-  </div>
+  <h1>市场动态</h1>
+  <div></div>
 </template>
 
 <style scoped></style>

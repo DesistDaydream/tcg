@@ -6,37 +6,48 @@ const router = createRouter({
     {
       path: "/",
       name: "home",
-      component: () => import("../views/HomeView.vue"),
+      component: () => import("@/views/HomeView.vue"),
     },
     {
       path: "/wowtcg",
       name: "wowtcg",
-      component: () => import("../views/WOWTCG.vue"),
+      component: () => import("@/views/WOWTcgView.vue"),
     },
     {
       path: "/dtcg",
       name: "dtcg",
-      component: () => import("../views/DTCG.vue"),
+      component: () => import("@/views/dtcg/index.vue"),
+      children: [],
+    },
+    {
+      path: "/dtcg/price",
+      name: "price",
+      component: () => import("@/views/dtcg/price/index.vue"),
     },
     {
       path: "/dtcg/carddesc",
       name: "dtcgdesc",
-      component: () => import("../views/DtcgCardDesc.vue"),
+      component: () => import("@/views/dtcg/card_list/index.vue"),
     },
     {
       path: "/ygo",
       name: "ygo",
-      component: () => import("../views/YGO.vue"),
+      component: () => import("@/views/YgoTcgView.vue"),
     },
     {
-      path: "/jhs/products",
+      path: "/market/dynamics",
+      name: "dynamics",
+      component: () => import("@/views/market/dynamics/index.vue"),
+    },
+    {
+      path: "/market/products",
       name: "products",
-      component: () => import("../views/Products.vue"),
+      component: () => import("@/views/market/my_sell_products/index.vue"),
     },
     {
       path: "/tools",
       name: "tools",
-      component: () => import("../views/Tools.vue"),
+      component: () => import("@/views/ToolsView.vue"),
     },
   ],
 })

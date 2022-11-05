@@ -12,10 +12,10 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const handleSizeChange = (val: number) => {
-  console.log(`${val} items per page`)
+  console.log(`每页 ${val} 条项目`)
 }
 const handleCurrentChange = (val: number) => {
-  console.log(`current page: ${val}`)
+  console.log(`当前页: ${val}`)
 }
 </script>
 
