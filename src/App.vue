@@ -5,7 +5,9 @@ import { RouterLink, RouterView } from "vue-router"
 <template>
   <ul>
     <li><RouterLink to="/">首页</RouterLink></li>
+
     <li><RouterLink to="/wowtcg">WOWTCG</RouterLink></li>
+
     <li>
       <div class="dropdown">
         <RouterLink to="/dtcg">DTCG</RouterLink>
@@ -14,6 +16,7 @@ import { RouterLink, RouterView } from "vue-router"
         </div>
       </div>
     </li>
+
     <li>
       <div class="dropdown">
         <RouterLink to="/ygo">YGO</RouterLink>
@@ -22,6 +25,17 @@ import { RouterLink, RouterView } from "vue-router"
         </div>
       </div>
     </li>
+
+    <li>
+      <div class="dropdown">
+        <a href="#" class="dropbtn">交易市场</a>
+        <div class="dropdown-content">
+          <RouterLink to="/jhs/market">市场动态</RouterLink>
+          <RouterLink to="/jhs/products">我在卖</RouterLink>
+        </div>
+      </div>
+    </li>
+
     <li>
       <div class="dropdown">
         <RouterLink to="/tools">工具</RouterLink>

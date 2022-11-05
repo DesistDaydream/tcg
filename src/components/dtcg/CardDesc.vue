@@ -8,11 +8,6 @@ const pageSize = ref<number>(5)
 const cardsCount = ref<number>(0)
 
 const tableData = ref<Data[]>()
-const tableHeader = ref({
-  sc_name: "名称",
-  serial: "编号",
-  alternative_art: "异画",
-})
 
 // TODO: 这样会跨域，怎么解决？
 // function genTableData() {
@@ -44,24 +39,31 @@ const handleCurrentChange = (val: number) => {
 
 <template>
   <h2>Vue3 + Element plus 动态表格</h2>
-  <!-- 卡拉云表格 -->
-  <!-- 当一次性获取所有数据时，可以使用 :data="tableData?.slice((currentPage - 1) * pageSize, currentPage * pageSize)"
-    如何使用 :data="tableData" 的时候，在点击页面后再渲染后面的数据呢？ -->
-  <el-table :data="tableData" style="width: 100%">
-    <el-table-column
-      v-for="(item, index) in tableHeader"
-      :prop="index"
-      :label="item"
-      :key="index"
-    >
+  <!-- 当一次性获取所有数据时，可以使用 :data="tableData?.slice((currentPage - 1) * pageSize, currentPage * pageSize)" -->
+  <el-table :data="tableData" style="width: 100%" border>
+    <el-table-column type="expand">
+      <template #default="props">
+        <div m="4">
+          <p m="t-0 b-2">效果：{{ props.row.effect }}</p>
+          <p m="t-0 b-2">进化源效果：{{ props.row.evo_cover_effect }}</p>
+        </div>
+      </template>
     </el-table-column>
-  </el-table>
-  <!-- 官网表格 -->
-  <!-- <el-table :data="tableData" style="width: 100%">
     <el-table-column prop="sc_name" label="名称" />
     <el-table-column prop="serial" label="编号" />
     <el-table-column prop="alternative_art" label="异画" />
-  </el-table> -->
+    <el-table-column prop="image" label="图片">
+      <template #default="scope">
+        <img
+          :src="scope.row.image"
+          referrerpolicy="no-referrer"
+          min-width="70"
+          height="70"
+        />
+      </template>
+    </el-table-column>
+  </el-table>
+
   <div class="demo-pagination-block">
     <div class="demonstration"></div>
     <el-pagination

@@ -29,6 +29,11 @@ const router = createRouter({
       component: () => import("../views/YGO.vue"),
     },
     {
+      path: "/jhs/products",
+      name: "products",
+      component: () => import("../views/Products.vue"),
+    },
+    {
       path: "/tools",
       name: "tools",
       component: () => import("../views/Tools.vue"),
