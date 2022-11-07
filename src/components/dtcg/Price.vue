@@ -73,7 +73,6 @@ function commitForHID(hid: string) {
         align="center"
       />
       <el-table-column
-        class="price"
         prop="avg_price"
         label="集换价"
         sortable
@@ -87,8 +86,5 @@ function commitForHID(hid: string) {
 <style scoped>
 table {
   color: blue;
-}
-.price {
-  width: 100px;
 }
 </style>
