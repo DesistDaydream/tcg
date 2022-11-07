@@ -30,7 +30,7 @@ const handleCurrentChange = (val: number) => {
 </script>
 
 <template>
-  <h2 align="center">卡牌价格列表</h2>
+  <h2>卡牌价格列表</h2>
   <!-- <el-input class="el-inp" v-model="inputQuery" placeholder="请搜索" /> -->
   <!-- 当一次性获取所有数据时，可以使用 :data="tableData?.slice((currentPage - 1) * pageSize, currentPage * pageSize)" -->
   <div>

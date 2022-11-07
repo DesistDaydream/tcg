@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue"
-import type { DeckPriceResp } from "@/api/v1/models/DeckPriceResp"
+import type { DeckPriceResp, Data } from "@/api/v1/models/DeckPriceResp"
 import { NewDeckPriceResp } from "@/api/v1/models/DeckPriceResp"
 import { postDeckPrice, getDeckPriceWithHID } from "@/api/v1/services"
 
@@ -19,7 +19,7 @@ function commitWithOfficialJSON(deck: string) {
   })
 }
 
-// 示例HID: 6cea907f6a001007281eaa8f52feb517a811a5bd
+// 示例HID: f078e7f43203337c507850c58ccd2d2312f135a3
 function commitWithHID(hid: string) {
   let req = hid
   getDeckPriceWithHID(req).then((resp) => {
@@ -27,6 +27,14 @@ function commitWithHID(hid: string) {
     tableDataForDeckPriceResp.value.min_price = resp.min_price
     tableDataForDeckPriceResp.value.avg_price = resp.avg_price
   })
+}
+
+// 集换价和最低价这两列的排序逻辑
+const sortAvgPrice = (a: Data, b: Data) => {
+  return Number(a.avg_price) - Number(b.avg_price)
+}
+const sortMinPrice = (a: Data, b: Data) => {
+  return Number(a.avg_price) - Number(b.avg_price)
 }
 </script>
 
@@ -62,8 +70,18 @@ function commitWithHID(hid: string) {
       <el-table-column prop="count" label="数量" />
       <el-table-column prop="serial" label="编号" />
       <el-table-column prop="alternative_art" label="异画" sortable />
-      <el-table-column prop="min_price" label="最低价" sortable />
-      <el-table-column prop="avg_price" label="集换价" sortable />
+      <el-table-column
+        prop="min_price"
+        label="最低价"
+        sortable
+        :sort-method="sortMinPrice"
+      />
+      <el-table-column
+        prop="avg_price"
+        label="集换价"
+        sortable
+        :sort-method="sortAvgPrice"
+      />
     </el-table>
   </div>
 </template>

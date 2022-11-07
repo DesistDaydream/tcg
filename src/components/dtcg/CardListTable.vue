@@ -41,7 +41,7 @@ const handleCurrentChange = (val: number) => {
 </script>
 
 <template>
-  <h2 align="center">卡牌详情</h2>
+  <h2>卡牌详情</h2>
   <!-- 当一次性获取所有数据时，可以使用 :data="tableData?.slice((currentPage - 1) * pageSize, currentPage * pageSize)" -->
   <el-table :data="tableData" style="width: 100%" border>
     <el-table-column type="expand">
