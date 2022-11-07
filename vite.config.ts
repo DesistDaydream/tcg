@@ -17,7 +17,7 @@ export default defineConfig({
     // 监听地址
     host: "0.0.0.0",
     // 端口
-    port: 12205,
+    port: 62205,
     // proxy: {
     //   "/api/v1": {
     //     target: "https://tcg.102205.xyz:8443",

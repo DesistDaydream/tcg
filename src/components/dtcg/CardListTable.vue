@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue"
-import type { Data } from "@/api/v1/models/CardsDescResp"
-import { getCardsDesc, postCardsDesc } from "@/api/v1/api"
+import type { Data, CardsDescResp } from "@/api/v1/models/CardsDescResp"
+import { getCardsDesc, postCardsDesc } from "@/api/v1/services"
 
 const currentPage = ref<number>(1)
 const pageSize = ref<number>(5)
@@ -9,23 +9,26 @@ const cardsCount = ref<number>(0)
 
 const tableData = ref<Data[]>()
 
-// TODO: 这样会跨域，怎么解决？
-// function genTableData() {
-//   postCardsDesc({
-//     page_size: pageSize.value,
-//     page_num: currentPage.value,
-//   }).then((resp) => {
-//     tableData.value = resp.data.data
-//     cardsCount.value = resp.data.total
-//   })
-// }
-
 function genTableData() {
-  getCardsDesc(pageSize.value, currentPage.value).then((resp) => {
+  postCardsDesc({
+    page_size: pageSize.value,
+    page_num: currentPage.value,
+  }).then((resp) => {
     tableData.value = resp.data
     cardsCount.value = resp.count
   })
 }
+
+// 自己实现的与后端接口交互，没有使用 axios.create
+// function genTableData() {
+//   getCardsDesc({
+//     page_size: pageSize.value,
+//     page_num: currentPage.value,
+//   }).then((resp) => {
+//     tableData.value = resp.data
+//     cardsCount.value = resp.count
+//   })
+// }
 
 genTableData()
 

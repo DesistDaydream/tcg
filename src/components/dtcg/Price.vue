@@ -43,8 +43,11 @@ function commitTwo(params: string) {
 </script>
 
 <template>
-  <div>卡组HID：<input v-model="hid" type="text" /></div>
-  <button @click="commitTwo(hid)">提交</button>
+  <div>
+    卡组HID：<input v-model="hid" type="text" />
+    <button @click="commitTwo(hid)">提交</button>
+  </div>
+
   <div>
     <p>卡组：</p>
     <textarea
