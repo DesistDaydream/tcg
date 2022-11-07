@@ -1,15 +1,11 @@
 <script setup lang="ts">
-import Price from "@/components/dtcg/Price.vue"
-import Search from "@/components/dtcg/Search.vue"
+import DeckPriceTable from "@/components/dtcg/DeckPriceTable.vue"
+import CardPriceTable from "@/components/dtcg/CardPriceTable.vue"
 </script>
 
 <template>
-  <h1>数码宝贝卡牌对战</h1>
-  <div>
-    <Price />
-  </div>
+  <h2 align="center">卡组价格查询</h2>
+  <div><DeckPriceTable /></div>
 
-  <div>
-    <Search />
-  </div>
+  <div><CardPriceTable /></div>
 </template>

@@ -38,13 +38,11 @@ export interface Data {
 }
 
 export const NewCardsDescResp = (): CardsDescResp => {
-  let tableData: CardsDescResp = {
+  return {
     count: 0,
     page_size: 0,
     page_current: 0,
     page_total: 0,
     data: [],
   }
-
-  return tableData
 }

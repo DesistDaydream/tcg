@@ -1,7 +1,9 @@
 import requestInstance from "./core/core"
-import type { CardsDescResp } from "./models/CardsDescResp"
-import { NewCardsDescResp } from "./models/CardsDescResp"
 import type { CardsDescReq } from "./models/CardsDescReq"
+import type { CardsDescResp } from "./models/CardsDescResp"
+import type { CardsPriceReq } from "./models/CardsPriceReq"
+import type { CardsPriceResp } from "./models/CardsPriceResp"
+import { NewCardsDescResp } from "./models/CardsDescResp"
 import type { DeckPriceResp } from "./models/DeckPriceResp"
 import type { DeckPriceReq } from "./models/DeckPriceReq"
 
@@ -34,6 +36,12 @@ export const postDeckPrice = async (
   data: DeckPriceReq
 ): Promise<DeckPriceResp> => {
   const resp = await requestInstance.post("/deck/price", JSON.stringify(data))
+  return resp.data
+}
+export const postCardsPrice = async (
+  data: CardsPriceReq
+): Promise<CardsPriceResp> => {
+  const resp = await requestInstance.post("/card/price", JSON.stringify(data))
   return resp.data
 }
 export const getDeckPriceWithHID = async (

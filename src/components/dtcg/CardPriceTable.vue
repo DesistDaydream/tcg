@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue"
-import type { Data, CardsDescResp } from "@/api/v1/models/CardsDescResp"
-import { getCardsDesc, postCardsDesc } from "@/api/v1/services"
+import type { Data } from "@/api/v1/models/CardsPriceResp"
+import { postCardsPrice } from "@/api/v1/services"
 
 const currentPage = ref<number>(1)
 const pageSize = ref<number>(5)
@@ -10,7 +10,7 @@ const cardsCount = ref<number>(0)
 const tableData = ref<Data[]>()
 
 function genTableData() {
-  postCardsDesc({
+  postCardsPrice({
     page_size: pageSize.value,
     page_num: currentPage.value,
   }).then((resp) => {
@@ -18,17 +18,6 @@ function genTableData() {
     cardsCount.value = resp.count
   })
 }
-
-// 自己实现的与后端接口交互，没有使用 axios.create
-// function genTableData() {
-//   getCardsDesc({
-//     page_size: pageSize.value,
-//     page_num: currentPage.value,
-//   }).then((resp) => {
-//     tableData.value = resp.data
-//     cardsCount.value = resp.count
-//   })
-// }
 
 genTableData()
 
@@ -41,31 +30,29 @@ const handleCurrentChange = (val: number) => {
 </script>
 
 <template>
-  <h2 align="center">卡牌详情</h2>
+  <h2 align="center">卡牌价格列表</h2>
+  <!-- <el-input class="el-inp" v-model="inputQuery" placeholder="请搜索" /> -->
   <!-- 当一次性获取所有数据时，可以使用 :data="tableData?.slice((currentPage - 1) * pageSize, currentPage * pageSize)" -->
-  <el-table :data="tableData" style="width: 100%" border>
-    <el-table-column type="expand">
-      <template #default="props">
-        <div m="4">
-          <p m="t-0 b-2">效果：{{ props.row.effect }}</p>
-          <p m="t-0 b-2">进化源效果：{{ props.row.evo_cover_effect }}</p>
-        </div>
-      </template>
-    </el-table-column>
-    <el-table-column prop="sc_name" label="名称" />
-    <el-table-column prop="serial" label="编号" />
-    <el-table-column prop="alternative_art" label="异画" />
-    <el-table-column prop="image" label="图片">
+  <div>
+    <el-table :data="tableData" style="width: 100%" border>
+      <el-table-column prop="sc_name" label="名称" />
+      <el-table-column prop="serial" label="编号" />
+      <el-table-column prop="alternative_art" label="异画" />
+      <el-table-column prop="rarity" label="稀有度" />
+      <el-table-column prop="min_price" label="最低价" />
+      <el-table-column prop="avg_price" label="集换价" />
+      <!-- <el-table-column prop="image_url" label="图片">
       <template #default="scope">
         <img
-          :src="scope.row.image"
+          :src="scope.row.image_url"
           referrerpolicy="no-referrer"
           min-width="70"
           height="70"
         />
       </template>
-    </el-table-column>
-  </el-table>
+    </el-table-column> -->
+    </el-table>
+  </div>
 
   <div class="demo-pagination-block">
     <div class="demonstration"></div>
