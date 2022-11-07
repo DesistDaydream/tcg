@@ -12,3 +12,11 @@ export interface Data {
   min_price: string
   avg_price: string
 }
+
+export const NewDeckPriceResp = (): DeckPriceResp => {
+  return {
+    min_price: "",
+    avg_price: "",
+    data: [],
+  }
+}

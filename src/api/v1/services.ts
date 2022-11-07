@@ -36,6 +36,12 @@ export const postDeckPrice = async (
   const resp = await requestInstance.post("/deck/price", JSON.stringify(data))
   return resp.data
 }
+export const getDeckPriceWithHID = async (
+  hid: string
+): Promise<DeckPriceResp> => {
+  const resp = await requestInstance.get("/deck/price/hid/" + hid)
+  return resp.data
+}
 
 // 自己实现的与后端接口交互，没有使用 axios.create
 // const baseURL: string = "https://tcg.102205.xyz:8443/api/v1"

@@ -1,63 +1,44 @@
 <script setup lang="ts">
 import { ref } from "vue"
-import type { DeckPriceResp } from "../../api/v1/models/DeckPriceResp"
+import type { DeckPriceResp } from "@/api/v1/models/DeckPriceResp"
+import { NewDeckPriceResp } from "@/api/v1/models/DeckPriceResp"
+import { postDeckPrice, getDeckPriceWithHID } from "@/api/v1/services"
 
 let deck = ref<string>("")
 let hid = ref<string>("")
-let resp = ref<DeckPriceResp>({
-  min_price: "",
-  avg_price: "",
-  data: [],
-})
+let tableDataForDeckPriceResp = ref<DeckPriceResp>(NewDeckPriceResp())
 
-function commit(params: string) {
-  console.log(params)
-  let xhr = new XMLHttpRequest()
-  xhr.open("POST", "https://tcg.102205.xyz:8443/api/v1/deck/price")
-  xhr.send(
-    JSON.stringify({
-      deck: params,
-      envir: "chs",
-    })
-  )
-
-  xhr.onload = function () {
-    resp.value = JSON.parse(xhr.responseText)
-    console.log(resp.value)
-  }
+function commitForOfficialJSON(deck: string) {
+  let req = { deck: deck, envir: "chs" }
+  postDeckPrice(req).then((resp) => {
+    tableDataForDeckPriceResp.value.data = resp.data
+    tableDataForDeckPriceResp.value.min_price = resp.min_price
+    tableDataForDeckPriceResp.value.avg_price = resp.avg_price
+  })
 }
 
-function commitTwo(params: string) {
-  console.log(params)
-  let url = "https://tcg.102205.xyz:8443/api/v1/deck/price/hid/" + params
-  let xhr = new XMLHttpRequest()
-  console.log(url)
-
-  xhr.open("GET", url)
-  xhr.send(null)
-  xhr.onload = function () {
-    resp.value = JSON.parse(xhr.responseText)
-    console.log(resp.value)
-  }
+function commitForHID(hid: string) {
+  let req = hid
+  getDeckPriceWithHID(req).then((resp) => {
+    tableDataForDeckPriceResp.value.data = resp.data
+    tableDataForDeckPriceResp.value.min_price = resp.min_price
+    tableDataForDeckPriceResp.value.avg_price = resp.avg_price
+  })
 }
 </script>
 
 <template>
   <div>
     卡组HID：<input v-model="hid" type="text" />
-    <button @click="commitTwo(hid)">提交</button>
+    <button @click="commitForHID(hid)">提交</button>
   </div>
 
   <div>
-    <p>卡组：</p>
-    <textarea
-      v-model="deck"
-      placeholder="输入卡组"
-      cols="45"
-      rows="5"
-    ></textarea>
-    <button @click="commit(deck)">提交</button>
+    卡组：<textarea v-model="deck" cols="45" rows="5"></textarea>
+    <button @click="commitForOfficialJSON(deck)">提交</button>
+  </div>
 
+  <div>
     <table border="1">
       <thead>
         <tr>
@@ -66,38 +47,48 @@ function commitTwo(params: string) {
         </tr>
       </thead>
       <tr>
-        <th>{{ resp.min_price }}</th>
-        <th>{{ resp.avg_price }}</th>
+        <th>{{ tableDataForDeckPriceResp.min_price }}</th>
+        <th>{{ tableDataForDeckPriceResp.avg_price }}</th>
       </tr>
     </table>
+  </div>
 
-    <table border="1">
-      <thead>
-        <tr>
-          <th>名称</th>
-          <th>数量</th>
-          <th>编号</th>
-          <th>异画</th>
-          <th>最低价</th>
-          <th>集换价</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="item in resp.data">
-          <th>{{ item.sc_name }}</th>
-          <th>{{ item.count }}</th>
-          <th>{{ item.serial }}</th>
-          <th>{{ item.alternative_art }}</th>
-          <th>{{ item.min_price }}</th>
-          <th>{{ item.avg_price }}</th>
-        </tr>
-      </tbody>
-    </table>
+  <div>
+    <el-table :data="tableDataForDeckPriceResp.data" border>
+      <el-table-column prop="sc_name" label="名称" width="200" />
+      <el-table-column prop="count" label="数量" width="60" align="center" />
+      <el-table-column prop="serial" label="编号" width="100" align="center" />
+      <el-table-column
+        prop="alternative_art"
+        label="异画"
+        sortable
+        width="80"
+        align="center"
+      />
+      <el-table-column
+        prop="min_price"
+        label="最低价"
+        sortable
+        width="100"
+        align="center"
+      />
+      <el-table-column
+        class="price"
+        prop="avg_price"
+        label="集换价"
+        sortable
+        width="100"
+        align="center"
+      />
+    </el-table>
   </div>
 </template>
 
 <style scoped>
 table {
   color: blue;
+}
+.price {
+  width: 100px;
 }
 </style>
