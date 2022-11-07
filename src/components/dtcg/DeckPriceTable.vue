@@ -19,7 +19,7 @@ function commitWithOfficialJSON(deck: string) {
   })
 }
 
-// 示例HID：6cea907f6a001007281eaa8f52feb517a811a5bd
+// 示例HID: 6cea907f6a001007281eaa8f52feb517a811a5bd
 function commitWithHID(hid: string) {
   let req = hid
   getDeckPriceWithHID(req).then((resp) => {
