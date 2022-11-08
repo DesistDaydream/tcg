@@ -47,12 +47,7 @@ const sortMinPrice = (a: Data, b: Data) => {
   </div>
 
   <div>
-    <el-table
-      :data="tableDataForDeckPriceResp.data"
-      show-summary
-      table-layout
-      border
-    >
+    <el-table :data="tableDataForDeckPriceResp.data" show-summary border>
       <el-table-column prop="sc_name" label="名称" width="250" />
       <el-table-column prop="count" label="数量" width="70" />
       <el-table-column prop="serial" label="编号" width="100" />
