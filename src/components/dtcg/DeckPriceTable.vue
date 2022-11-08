@@ -14,8 +14,6 @@ function commitWithDeckJSON(deckJSON: string) {
   let req = { deck: deckJSON, envir: "chs" }
   postDeckPrice(req).then((resp) => {
     tableDataForDeckPriceResp.value.data = resp.data
-    tableDataForDeckPriceResp.value.min_price = resp.min_price
-    tableDataForDeckPriceResp.value.avg_price = resp.avg_price
   })
 }
 
@@ -25,8 +23,6 @@ function commitWithDeckHID(deckHID: string) {
   let req = deckHID
   getDeckPriceWithHID(req).then((resp) => {
     tableDataForDeckPriceResp.value.data = resp.data
-    tableDataForDeckPriceResp.value.min_price = resp.min_price
-    tableDataForDeckPriceResp.value.avg_price = resp.avg_price
   })
 }
 
@@ -51,35 +47,32 @@ const sortMinPrice = (a: Data, b: Data) => {
   </div>
 
   <div>
-    <table border="1">
-      <thead>
-        <tr>
-          <th>最低价</th>
-          <th>集换价</th>
-        </tr>
-      </thead>
-      <tr>
-        <th>{{ tableDataForDeckPriceResp.min_price }}</th>
-        <th>{{ tableDataForDeckPriceResp.avg_price }}</th>
-      </tr>
-    </table>
-  </div>
-
-  <div>
-    <el-table :data="tableDataForDeckPriceResp.data" border>
-      <el-table-column prop="sc_name" label="名称" />
-      <el-table-column prop="count" label="数量" />
-      <el-table-column prop="serial" label="编号" />
-      <el-table-column prop="alternative_art" label="异画" sortable />
+    <el-table
+      :data="tableDataForDeckPriceResp.data"
+      show-summary
+      table-layout
+      border
+    >
+      <el-table-column prop="sc_name" label="名称" width="250" />
+      <el-table-column prop="count" label="数量" width="70" />
+      <el-table-column prop="serial" label="编号" width="100" />
+      <el-table-column
+        prop="alternative_art"
+        label="异画"
+        width="80"
+        sortable
+      />
       <el-table-column
         prop="min_price"
         label="最低价"
+        width="100"
         sortable
         :sort-method="sortMinPrice"
       />
       <el-table-column
         prop="avg_price"
         label="集换价"
+        width="100"
         sortable
         :sort-method="sortAvgPrice"
       />
