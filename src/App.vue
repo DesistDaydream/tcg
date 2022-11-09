@@ -48,6 +48,8 @@ const handleSelect = (key: string, keyPath: string[]) => {
       </el-menu-item>
       <el-menu-item index="market-products">我在卖</el-menu-item>
     </el-sub-menu>
+
+    <el-menu-item index="tools" route="/tools">工具</el-menu-item>
   </el-menu>
 
   <RouterView />

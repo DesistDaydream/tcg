@@ -1,8 +1,13 @@
 <script setup lang="ts"></script>
 
 <template>
-  <!-- 链接 -->
+  <h1>工具</h1>
   <a href="https://tcg.102205.xyz:8443/tools/probability/">抽卡概率计算器</a>
 </template>
 
-<style></style>
+<style scoped>
+a {
+  text-decoration: none;
+  color: rgb(24, 27, 238);
+}
+</style>
