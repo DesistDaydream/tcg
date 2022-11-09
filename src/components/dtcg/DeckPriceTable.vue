@@ -37,18 +37,20 @@ const sortMinPrice = (a: Data, b: Data) => {
 
 <template>
   <div>
-    卡组HID：<input v-model="deckHID" type="text" />
+    卡组HID：
+    <input v-model="deckHID" type="text" />
     <button @click="commitWithDeckHID(deckHID)">提交</button>
   </div>
 
   <div>
-    卡组：<textarea v-model="deckJSON" cols="45" rows="5"></textarea>
+    卡组：
+    <textarea v-model="deckJSON" cols="45" rows="5"></textarea>
     <button @click="commitWithDeckJSON(deckJSON)">提交</button>
   </div>
 
   <div>
     <el-table :data="tableDataForDeckPriceResp.data" show-summary border>
-      <el-table-column prop="sc_name" label="名称" width="250" />
+      <el-table-column prop="sc_name" label="名称" />
       <el-table-column prop="count" label="数量" width="70" />
       <el-table-column prop="serial" label="编号" width="100" />
       <el-table-column
@@ -75,8 +77,4 @@ const sortMinPrice = (a: Data, b: Data) => {
   </div>
 </template>
 
-<style scoped>
-table {
-  color: blue;
-}
-</style>
+<style scoped></style>

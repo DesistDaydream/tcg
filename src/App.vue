@@ -1,107 +1,67 @@
 <script setup lang="ts">
+import { ref } from "vue"
 import { RouterLink, RouterView } from "vue-router"
+const activeIndex = ref("index")
+const handleSelect = (key: string, keyPath: string[]) => {
+  console.log(key, keyPath)
+}
 </script>
 
 <template>
-  <ul>
-    <li><RouterLink to="/">首页</RouterLink></li>
+  <el-menu
+    :default-active="activeIndex"
+    router
+    class="el-menu-demo"
+    mode="horizontal"
+    background-color="#545c64"
+    text-color="#fff"
+    active-text-color="#ffd04b"
+    @select="handleSelect"
+  >
+    <el-menu-item index="index" route="/">首页</el-menu-item>
 
-    <li><RouterLink to="/wowtcg">WOWTCG</RouterLink></li>
+    <el-menu-item index="wowtcg" route="/wowtcg">WOWTCG</el-menu-item>
 
-    <li>
-      <div class="dropdown">
+    <el-sub-menu index="dtcg">
+      <template #title>
         <RouterLink to="/dtcg">DTCG</RouterLink>
-        <div class="dropdown-content">
-          <RouterLink to="/dtcg/price">卡牌与卡组价格</RouterLink>
-          <RouterLink to="/dtcg/carddesc">卡牌列表</RouterLink>
-        </div>
-      </div>
-    </li>
+      </template>
+      <el-menu-item index="dtcg-price" route="/dtcg/price">
+        卡牌与卡组价格
+      </el-menu-item>
+      <el-menu-item index="dtcg-carddesc" route="/dtcg/carddesc">
+        卡牌列表
+      </el-menu-item>
+      <el-sub-menu index="3-3">
+        <template #title>第三项</template>
+        <el-menu-item index="3-3-1">第一项</el-menu-item>
+        <el-menu-item index="3-3-2">第二项</el-menu-item>
+      </el-sub-menu>
+    </el-sub-menu>
 
-    <li>
-      <div class="dropdown">
-        <RouterLink to="/ygo">YGO</RouterLink>
-        <div class="dropdown-content">
-          <!-- <RouterLink to="/ygo/carddesc">卡牌列表</RouterLink> -->
-        </div>
-      </div>
-    </li>
+    <el-menu-item index="ygo" route="/ygo" disabled>YGO</el-menu-item>
 
-    <li>
-      <div class="dropdown">
-        <a href="#" class="dropbtn">交易市场</a>
-        <div class="dropdown-content">
-          <RouterLink to="/market/dynamics">市场动态</RouterLink>
-          <RouterLink to="/market/products">我在卖</RouterLink>
-        </div>
-      </div>
-    </li>
-
-    <li>
-      <div class="dropdown">
-        <RouterLink to="/tools">工具</RouterLink>
-        <div class="dropdown-content">
-          <!-- <RouterLink to="/tools/probability">抽卡概率计算器</RouterLink> -->
-        </div>
-      </div>
-    </li>
-  </ul>
+    <el-sub-menu index="market">
+      <template #title>交易市场</template>
+      <el-menu-item index="market-dynamics" route="/market/dynamics">
+        市场动态
+      </el-menu-item>
+      <el-menu-item index="market-products">我在卖</el-menu-item>
+    </el-sub-menu>
+  </el-menu>
 
   <RouterView />
 </template>
 
 <style scoped>
 ul {
-  border-radius: 15px; /* 圆角 */
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #333;
+  border-radius: 15px;
+  /* 圆角 */
 }
 
-li {
-  float: left;
-}
-
-li a,
-.dropbtn {
-  display: inline-block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
+/* RouterLink 的文本会被渲染成 a 标签，通过对 a 标签的设置，来这是带链接的字符串的样式 */
+a {
   text-decoration: none;
-}
-
-li a:hover,
-.dropdown:hover .dropbtn {
-  background-color: #111;
-}
-
-.dropdown {
-  display: inline-block;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-}
-
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-.dropdown-content a:hover {
-  background-color: #f1f1f1;
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
+  color: #fff;
 }
 </style>
