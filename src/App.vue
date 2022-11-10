@@ -57,8 +57,8 @@ const handleSelect = (key: string, keyPath: string[]) => {
 
 <style scoped>
 ul {
-  border-radius: 15px;
-  /* 圆角 */
+  border-radius: 15px; /* 圆角 */
+  overflow: hidden; /* 隐藏超出部分 */
 }
 
 /* RouterLink 的文本会被渲染成 a 标签，通过对 a 标签的设置，来这是带链接的字符串的样式 */
