@@ -25,6 +25,11 @@ const router = createRouter({
       component: () => import("@/views/dtcg/price/index.vue"),
     },
     {
+      path: "/dtcg/cardset",
+      name: "dtcgset",
+      component: () => import("@/views/dtcg/cardset_list/index.vue"),
+    },
+    {
       path: "/dtcg/carddesc",
       name: "dtcgdesc",
       component: () => import("@/views/dtcg/card_list/index.vue"),

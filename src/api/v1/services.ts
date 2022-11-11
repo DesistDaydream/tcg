@@ -1,4 +1,5 @@
 import requestInstance from "./core/core"
+import type { CardSetReq } from "./models/CardSetReq"
 import type { CardsDescReq } from "./models/CardsDescReq"
 import type { CardsDescResp } from "./models/CardsDescResp"
 import type { CardsPriceReq } from "./models/CardsPriceReq"
@@ -9,6 +10,7 @@ import type { DeckPriceReq } from "./models/DeckPriceReq"
 
 import axios from "axios"
 import type { AxiosResponse } from "axios"
+import type { CardSetResp } from "./models/CardSetResp"
 
 // export const postCardsDesc = (data: CardsDescReq): Promise<CardsDescResp> => {
 //   return requestInstance
@@ -26,6 +28,10 @@ import type { AxiosResponse } from "axios"
 // }
 
 // IDE 推荐转为异步？？？
+export const postCardSet = async (data: CardSetReq): Promise<CardSetResp> => {
+  const resp = await requestInstance.post("/set/desc", JSON.stringify(data))
+  return resp.data
+}
 export const postCardsDesc = async (
   data: CardsDescReq
 ): Promise<CardsDescResp> => {

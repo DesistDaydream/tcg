@@ -29,6 +29,9 @@ const handleSelect = (key: string, keyPath: string[]) => {
       <el-menu-item index="dtcg-price" route="/dtcg/price">
         卡牌与卡组价格
       </el-menu-item>
+      <el-menu-item index="dtcg-cardset" route="/dtcg/cardset">
+        卡集列表
+      </el-menu-item>
       <el-menu-item index="dtcg-carddesc" route="/dtcg/carddesc">
         卡牌列表
       </el-menu-item>
