@@ -28,31 +28,27 @@ import type { CardSetResp } from "./models/CardSetResp"
 // }
 
 // IDE 推荐转为异步？？？
-export const postCardSet = async (data: CardSetReq): Promise<CardSetResp> => {
-  const resp = await requestInstance.post("/set/desc", JSON.stringify(data))
+export const postCardSet = async (cardSetReq: CardSetReq): Promise<CardSetResp> => {
+  const resp = await requestInstance.post("/set/desc", JSON.stringify(cardSetReq))
   return resp.data
 }
-export const postCardsDesc = async (
-  data: CardsDescReq
-): Promise<CardsDescResp> => {
-  const resp = await requestInstance.post("/card/desc", JSON.stringify(data))
+
+export const postCardsDesc = async (cardsDescReq: CardsDescReq): Promise<CardsDescResp> => {
+  const resp = await requestInstance.post("/card/desc", JSON.stringify(cardsDescReq))
   return resp.data
 }
-export const postDeckPrice = async (
-  data: DeckPriceReq
-): Promise<DeckPriceResp> => {
-  const resp = await requestInstance.post("/deck/price", JSON.stringify(data))
+
+export const postCardsPrice = async (cardsPriceReq: CardsPriceReq): Promise<CardsPriceResp> => {
+  const resp = await requestInstance.post("/card/price", JSON.stringify(cardsPriceReq))
   return resp.data
 }
-export const postCardsPrice = async (
-  data: CardsPriceReq
-): Promise<CardsPriceResp> => {
-  const resp = await requestInstance.post("/card/price", JSON.stringify(data))
+
+export const postDeckPrice = async (data: DeckPriceReq): Promise<DeckPriceResp> => {
+  const resp = await requestInstance.post("/deck/price/json", JSON.stringify(data))
   return resp.data
 }
-export const getDeckPriceWithHID = async (
-  hid: string
-): Promise<DeckPriceResp> => {
+
+export const getDeckPriceWithHID = async (hid: string): Promise<DeckPriceResp> => {
   const resp = await requestInstance.get("/deck/price/hid/" + hid)
   return resp.data
 }
@@ -60,9 +56,7 @@ export const getDeckPriceWithHID = async (
 // 自己实现的与后端接口交互，没有使用 axios.create
 // const baseURL: string = "https://tcg.102205.xyz:8443/api/v1"
 const baseURL: string = "http://localhost:52205/api/v1"
-export const getCardsDesc = async (
-  reqBody: CardsDescReq
-): Promise<CardsDescResp> => {
+export const getCardsDesc = async (reqBody: CardsDescReq): Promise<CardsDescResp> => {
   let cardsDescResp: CardsDescResp = NewCardsDescResp()
 
   await axios({

@@ -64,8 +64,7 @@ const handleCurrentChange = (val: number) => {
       :total="cardsCount"
       :background="true"
       @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-    />
+      @current-change="handleCurrentChange" />
   </div>
 </template>
 

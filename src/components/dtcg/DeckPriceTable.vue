@@ -38,22 +38,12 @@ const sortMinPrice = (a: Data, b: Data) => {
 <template>
   <el-row :gutter="20">
     <el-col :span="12">
-      <textarea
-        v-model="deckHID"
-        cols="45"
-        rows="5"
-        placeholder="卡组HID"
-      ></textarea>
+      <textarea v-model="deckHID" cols="45" rows="5" placeholder="卡组HID"></textarea>
       <button @click="commitWithDeckHID(deckHID)">提交</button>
     </el-col>
 
     <el-col :span="12">
-      <textarea
-        v-model="deckJSON"
-        cols="45"
-        rows="5"
-        placeholder="卡组JSON"
-      ></textarea>
+      <textarea v-model="deckJSON" cols="45" rows="5" placeholder="卡组JSON"></textarea>
       <button @click="commitWithDeckJSON(deckJSON)">提交</button>
     </el-col>
   </el-row>
@@ -63,26 +53,19 @@ const sortMinPrice = (a: Data, b: Data) => {
       <el-table-column prop="sc_name" label="名称" />
       <el-table-column prop="count" label="数量" width="70" />
       <el-table-column prop="serial" label="编号" width="100" />
-      <el-table-column
-        prop="alternative_art"
-        label="异画"
-        width="80"
-        sortable
-      />
+      <el-table-column prop="alternative_art" label="异画" width="80" sortable />
       <el-table-column
         prop="min_price"
         label="最低价"
         width="100"
         sortable
-        :sort-method="sortMinPrice"
-      />
+        :sort-method="sortMinPrice" />
       <el-table-column
         prop="avg_price"
         label="集换价"
         width="100"
         sortable
-        :sort-method="sortAvgPrice"
-      />
+        :sort-method="sortAvgPrice" />
     </el-table>
   </div>
 </template>

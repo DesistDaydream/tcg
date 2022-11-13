@@ -57,12 +57,7 @@ const handleCurrentChange = (val: number) => {
     <el-table-column prop="alternative_art" label="异画" />
     <el-table-column prop="image" label="图片">
       <template #default="scope">
-        <img
-          :src="scope.row.image"
-          referrerpolicy="no-referrer"
-          min-width="70"
-          height="70"
-        />
+        <img :src="scope.row.image" referrerpolicy="no-referrer" min-width="70" height="70" />
       </template>
     </el-table-column>
   </el-table>
@@ -77,8 +72,7 @@ const handleCurrentChange = (val: number) => {
       :total="cardsCount"
       :background="true"
       @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-    />
+      @current-change="handleCurrentChange" />
   </div>
 </template>
 

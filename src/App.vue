@@ -16,8 +16,7 @@ const handleSelect = (key: string, keyPath: string[]) => {
     background-color="#545c64"
     text-color="#fff"
     active-text-color="#ffd04b"
-    @select="handleSelect"
-  >
+    @select="handleSelect">
     <el-menu-item index="index" route="/">首页</el-menu-item>
 
     <el-menu-item index="wowtcg" route="/wowtcg">WOWTCG</el-menu-item>
@@ -26,15 +25,9 @@ const handleSelect = (key: string, keyPath: string[]) => {
       <template #title>
         <RouterLink to="/dtcg">DTCG</RouterLink>
       </template>
-      <el-menu-item index="dtcg-price" route="/dtcg/price">
-        卡牌与卡组价格
-      </el-menu-item>
-      <el-menu-item index="dtcg-cardset" route="/dtcg/cardset">
-        卡集列表
-      </el-menu-item>
-      <el-menu-item index="dtcg-carddesc" route="/dtcg/carddesc">
-        卡牌列表
-      </el-menu-item>
+      <el-menu-item index="dtcg-price" route="/dtcg/price">卡牌与卡组价格</el-menu-item>
+      <el-menu-item index="dtcg-cardset" route="/dtcg/cardset">卡集列表</el-menu-item>
+      <el-menu-item index="dtcg-carddesc" route="/dtcg/carddesc">卡牌列表</el-menu-item>
       <el-sub-menu index="3-3">
         <template #title>第三项</template>
         <el-menu-item index="3-3-1">第一项</el-menu-item>
@@ -46,9 +39,7 @@ const handleSelect = (key: string, keyPath: string[]) => {
 
     <el-sub-menu index="market">
       <template #title>交易市场</template>
-      <el-menu-item index="market-dynamics" route="/market/dynamics">
-        市场动态
-      </el-menu-item>
+      <el-menu-item index="market-dynamics" route="/market/dynamics">市场动态</el-menu-item>
       <el-menu-item index="market-products">我在卖</el-menu-item>
     </el-sub-menu>
 
