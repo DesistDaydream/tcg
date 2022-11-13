@@ -2,7 +2,7 @@
 import { ref } from "vue"
 import type { DeckPriceResp, Data } from "@/api/v1/models/DeckPriceResp"
 import { NewDeckPriceResp } from "@/api/v1/models/DeckPriceResp"
-import { postDeckPrice, getDeckPriceWithHID } from "@/api/v1/services"
+import { postDeckPrice, getDeckPriceWithHID, getDeckPriceWithCDID } from "@/api/v1/services"
 
 // 表格中的数据
 let tableDataForDeckPriceResp = ref<DeckPriceResp>(NewDeckPriceResp())
@@ -26,6 +26,15 @@ function commitWithDeckJSON(deckJSON: string) {
   })
 }
 
+let deckCDID = ref<string>("")
+// 示例CDID: 106981
+function commitWithDeckCDID(deckCDID: string) {
+  let req = deckCDID
+  getDeckPriceWithCDID(req).then((resp) => {
+    tableDataForDeckPriceResp.value.data = resp.data
+  })
+}
+
 // 集换价和最低价这两列的排序逻辑
 const sortAvgPrice = (a: Data, b: Data) => {
   return Number(a.avg_price) - Number(b.avg_price)
@@ -37,14 +46,19 @@ const sortMinPrice = (a: Data, b: Data) => {
 
 <template>
   <el-row :gutter="20">
-    <el-col :span="12">
-      <textarea v-model="deckHID" cols="45" rows="5" placeholder="卡组HID"></textarea>
+    <el-col :span="8">
+      <textarea v-model="deckHID" cols="33" rows="5" placeholder="卡组HID"></textarea>
       <button @click="commitWithDeckHID(deckHID)">提交</button>
     </el-col>
 
-    <el-col :span="12">
-      <textarea v-model="deckJSON" cols="45" rows="5" placeholder="卡组JSON"></textarea>
+    <el-col :span="8">
+      <textarea v-model="deckJSON" cols="33" rows="5" placeholder="卡组JSON"></textarea>
       <button @click="commitWithDeckJSON(deckJSON)">提交</button>
+    </el-col>
+
+    <el-col :span="8">
+      <textarea v-model="deckCDID" cols="33" rows="5" placeholder="卡组CDID"></textarea>
+      <button @click="commitWithDeckCDID(deckCDID)">提交</button>
     </el-col>
   </el-row>
 

@@ -53,6 +53,11 @@ export const getDeckPriceWithHID = async (hid: string): Promise<DeckPriceResp> =
   return resp.data
 }
 
+export const getDeckPriceWithCDID = async (cdid: string): Promise<DeckPriceResp> => {
+  const resp = await requestInstance.get("/deck/price/cdid/" + cdid)
+  return resp.data
+}
+
 // 自己实现的与后端接口交互，没有使用 axios.create
 // const baseURL: string = "https://tcg.102205.xyz:8443/api/v1"
 const baseURL: string = "http://localhost:52205/api/v1"
