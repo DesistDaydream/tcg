@@ -10,7 +10,8 @@ const cardsCount = ref<number>(0)
 const tableData = ref<Data[]>()
 
 function genTableData() {
-  postCardsDesc({
+  getCardsDesc({
+    // postCardsDesc({
     page_size: pageSize.value,
     page_num: currentPage.value,
   }).then((resp) => {
@@ -18,6 +19,9 @@ function genTableData() {
     cardsCount.value = resp.count
   })
 }
+
+// TODO: 根据条件获取卡牌描述
+// postCardsDesc
 
 // 自己实现的与后端接口交互，没有使用 axios.create
 // function genTableData() {

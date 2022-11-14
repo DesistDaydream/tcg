@@ -1,6 +1,6 @@
 import requestInstance from "./core/core"
 import type { CardSetReq } from "./models/CardSetReq"
-import type { CardsDescReq } from "./models/CardsDescReq"
+import type { CardsDescReq, CardsDescReqQuery } from "./models/CardsDescReq"
 import type { CardsDescResp } from "./models/CardsDescResp"
 import type { CardsPriceReq } from "./models/CardsPriceReq"
 import type { CardsPriceResp } from "./models/CardsPriceResp"
@@ -33,6 +33,14 @@ export const postCardSet = async (cardSetReq: CardSetReq): Promise<CardSetResp> 
   return resp.data
 }
 
+export const getCardsDesc = async (
+  cardsDescRespQuery: CardsDescReqQuery
+): Promise<CardsDescResp> => {
+  const resp = await requestInstance.get("/card/desc", { params: cardsDescRespQuery })
+  return resp.data
+}
+
+// TODO: 修改接口请求体，以适应后端的修改
 export const postCardsDesc = async (cardsDescReq: CardsDescReq): Promise<CardsDescResp> => {
   const resp = await requestInstance.post("/card/desc", JSON.stringify(cardsDescReq))
   return resp.data
@@ -60,18 +68,18 @@ export const getDeckPriceWithCDID = async (cdid: string): Promise<DeckPriceResp>
 
 // 自己实现的与后端接口交互，没有使用 axios.create
 // const baseURL: string = "https://tcg.102205.xyz:8443/api/v1"
-const baseURL: string = "http://localhost:52205/api/v1"
-export const getCardsDesc = async (reqBody: CardsDescReq): Promise<CardsDescResp> => {
-  let cardsDescResp: CardsDescResp = NewCardsDescResp()
+// const baseURL: string = "http://localhost:52205/api/v1"
+// export const getCardsDesc = async (reqBody: CardsDescReq): Promise<CardsDescResp> => {
+//   let cardsDescResp: CardsDescResp = NewCardsDescResp()
 
-  await axios({
-    method: "POST",
-    url: baseURL + "/card/desc",
-    data: JSON.stringify(reqBody),
-  }).then((resp: AxiosResponse) => {
-    cardsDescResp = resp.data
-  })
+//   await axios({
+//     method: "POST",
+//     url: baseURL + "/card/desc",
+//     data: JSON.stringify(reqBody),
+//   }).then((resp: AxiosResponse) => {
+//     cardsDescResp = resp.data
+//   })
 
-  console.log("从接口获取到数据后检查：", cardsDescResp.data)
-  return cardsDescResp
-}
+//   console.log("从接口获取到数据后检查：", cardsDescResp.data)
+//   return cardsDescResp
+// }
