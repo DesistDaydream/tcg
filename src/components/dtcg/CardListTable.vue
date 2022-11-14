@@ -9,23 +9,9 @@ const cardsCount = ref<number>(0)
 
 const tableData = ref<Data[]>()
 
-function genTableData() {
-  getCardsDesc({
-    // postCardsDesc({
-    page_size: pageSize.value,
-    page_num: currentPage.value,
-  }).then((resp) => {
-    tableData.value = resp.data
-    cardsCount.value = resp.count
-  })
-}
-
-// TODO: 根据条件获取卡牌描述
-// postCardsDesc
-
-// 自己实现的与后端接口交互，没有使用 axios.create
 // function genTableData() {
 //   getCardsDesc({
+//     // postCardsDesc({
 //     page_size: pageSize.value,
 //     page_num: currentPage.value,
 //   }).then((resp) => {
@@ -33,6 +19,35 @@ function genTableData() {
 //     cardsCount.value = resp.count
 //   })
 // }
+
+// TODO: 根据条件获取卡牌描述
+// postCardsDesc
+
+function genTableData() {
+  postCardsDesc(
+    {
+      page_size: pageSize.value,
+      page_num: currentPage.value,
+    },
+    {
+      keyword: "",
+      language: "",
+      class_input: false,
+      card_pack: 0,
+      type: "",
+      color: [],
+      rarity: [],
+      tags: [],
+      tags__logic: "",
+      order_type: "",
+      evo_cond: [],
+      qField: [],
+    }
+  ).then((resp) => {
+    tableData.value = resp.data
+    cardsCount.value = resp.count
+  })
+}
 
 genTableData()
 
@@ -42,10 +57,26 @@ const handleSizeChange = (val: number) => {
 const handleCurrentChange = (val: number) => {
   genTableData()
 }
+
+let inputQuery = ref("")
+const searchClick = () => {}
 </script>
 
 <template>
   <h2>卡牌详情</h2>
+  <!-- <el-input v-model="input3" placeholder="Please input" class="input-with-select">
+    <template #prepend>
+      <el-select v-model="select" placeholder="Select" style="width: 115px">
+        <el-option label="Restaurant" value="1" />
+        <el-option label="Order No." value="2" />
+        <el-option label="Tel" value="3" />
+      </el-select>
+    </template>
+    <template #append>
+      <el-button :icon="Search" />
+    </template>
+  </el-input> -->
+
   <!-- 当一次性获取所有数据时，可以使用 :data="tableData?.slice((currentPage - 1) * pageSize, currentPage * pageSize)" -->
   <el-table :data="tableData" style="width: 100%" border>
     <el-table-column type="expand">
