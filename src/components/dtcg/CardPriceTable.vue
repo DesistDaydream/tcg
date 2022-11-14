@@ -2,6 +2,7 @@
 import { ref } from "vue"
 import type { Data } from "@/api/v1/models/CardsPriceResp"
 import { postCardsPrice } from "@/api/v1/services"
+import SearchForm from "./SearchForm.vue"
 
 const currentPage = ref<number>(1)
 const pageSize = ref<number>(5)
@@ -9,11 +10,29 @@ const cardsCount = ref<number>(0)
 
 const tableData = ref<Data[]>()
 
+let keyword = ref("")
+
 function genTableData() {
-  postCardsPrice({
-    page_size: pageSize.value,
-    page_num: currentPage.value,
-  }).then((resp) => {
+  postCardsPrice(
+    {
+      page_size: pageSize.value,
+      page_num: currentPage.value,
+    },
+    {
+      keyword: keyword.value,
+      language: "",
+      class_input: false,
+      card_pack: 0,
+      type: "",
+      color: [],
+      rarity: [],
+      tags: [],
+      tags__logic: "",
+      order_type: "",
+      evo_cond: [],
+      qField: [],
+    }
+  ).then((resp) => {
     tableData.value = resp.data
     cardsCount.value = resp.count
   })
@@ -27,11 +46,17 @@ const handleSizeChange = (val: number) => {
 const handleCurrentChange = (val: number) => {
   genTableData()
 }
+
+const handleSearch = () => {
+  genTableData()
+}
 </script>
 
 <template>
   <h2>卡牌价格列表</h2>
-  <!-- <el-input class="el-inp" v-model="inputQuery" placeholder="请搜索" /> -->
+  <!-- 搜索表单 -->
+  <SearchForm v-model:keyword="keyword" @handle-search="handleSearch"></SearchForm>
+
   <!-- 当一次性获取所有数据时，可以使用 :data="tableData?.slice((currentPage - 1) * pageSize, currentPage * pageSize)" -->
   <div>
     <el-table :data="tableData" style="width: 100%" border>

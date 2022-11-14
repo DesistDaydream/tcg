@@ -2,6 +2,7 @@
 import { ref } from "vue"
 import type { Data, CardsDescResp } from "@/api/v1/models/CardsDescResp"
 import { getCardsDesc, postCardsDesc } from "@/api/v1/services"
+import SearchForm from "./SearchForm.vue"
 
 const currentPage = ref<number>(1)
 const pageSize = ref<number>(5)
@@ -9,19 +10,7 @@ const cardsCount = ref<number>(0)
 
 const tableData = ref<Data[]>()
 
-// function genTableData() {
-//   getCardsDesc({
-//     // postCardsDesc({
-//     page_size: pageSize.value,
-//     page_num: currentPage.value,
-//   }).then((resp) => {
-//     tableData.value = resp.data
-//     cardsCount.value = resp.count
-//   })
-// }
-
-// TODO: 根据条件获取卡牌描述
-// postCardsDesc
+let keyword = ref("")
 
 function genTableData() {
   postCardsDesc(
@@ -30,7 +19,7 @@ function genTableData() {
       page_num: currentPage.value,
     },
     {
-      keyword: "",
+      keyword: keyword.value,
       language: "",
       class_input: false,
       card_pack: 0,
@@ -58,24 +47,15 @@ const handleCurrentChange = (val: number) => {
   genTableData()
 }
 
-let inputQuery = ref("")
-const searchClick = () => {}
+const handleSearch = () => {
+  genTableData()
+}
 </script>
 
 <template>
   <h2>卡牌详情</h2>
-  <!-- <el-input v-model="input3" placeholder="Please input" class="input-with-select">
-    <template #prepend>
-      <el-select v-model="select" placeholder="Select" style="width: 115px">
-        <el-option label="Restaurant" value="1" />
-        <el-option label="Order No." value="2" />
-        <el-option label="Tel" value="3" />
-      </el-select>
-    </template>
-    <template #append>
-      <el-button :icon="Search" />
-    </template>
-  </el-input> -->
+  <!-- 搜索表单 -->
+  <SearchForm v-model:keyword="keyword" @handle-search="handleSearch"></SearchForm>
 
   <!-- 当一次性获取所有数据时，可以使用 :data="tableData?.slice((currentPage - 1) * pageSize, currentPage * pageSize)" -->
   <el-table :data="tableData" style="width: 100%" border>
