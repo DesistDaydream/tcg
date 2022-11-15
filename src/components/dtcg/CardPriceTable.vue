@@ -2,7 +2,7 @@
 import { ref } from "vue"
 import type { Data } from "@/api/v1/models/CardsPriceResp"
 import { postCardsPrice } from "@/api/v1/services"
-import SearchForm from "./SearchForm.vue"
+import { Search } from "@element-plus/icons-vue"
 
 const currentPage = ref<number>(1)
 const pageSize = ref<number>(5)
@@ -55,7 +55,9 @@ const handleSearch = () => {
 <template>
   <h2>卡牌价格列表</h2>
   <!-- 搜索表单 -->
-  <SearchForm v-model:keyword="keyword" @handle-search="handleSearch"></SearchForm>
+  <!-- <SearchForm v-model:keyword="keyword" @handle-search="handleSearch"></SearchForm> -->
+  <el-input v-model="keyword" placeholder="关键字" class="input-with-select"></el-input>
+  <el-button :icon="Search" @click="handleSearch">搜索</el-button>
 
   <!-- 当一次性获取所有数据时，可以使用 :data="tableData?.slice((currentPage - 1) * pageSize, currentPage * pageSize)" -->
   <div>
