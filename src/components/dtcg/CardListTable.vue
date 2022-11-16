@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue"
 import type { Data, CardsDescResp } from "@/api/v1/models/CardsDescResp"
+import type { CardsDescReqQuery, CardsDescReqBody } from "@/api/v1/models/CardsDescReq"
 import { getCardsDesc, postCardsDesc } from "@/api/v1/services"
 import { Search } from "@element-plus/icons-vue"
 
@@ -13,26 +14,25 @@ const tableData = ref<Data[]>()
 let keyword = ref<string>("")
 
 function genTableData() {
-  postCardsDesc(
-    {
-      page_size: pageSize.value,
-      page_num: currentPage.value,
-    },
-    {
-      keyword: keyword.value,
-      language: "",
-      class_input: false,
-      card_pack: 0,
-      type: "",
-      color: [],
-      rarity: [],
-      tags: [],
-      tags__logic: "",
-      order_type: "",
-      evo_cond: [],
-      qField: [],
-    }
-  ).then((resp) => {
+  const cardsDescReqQuery: CardsDescReqQuery = {
+    page_size: pageSize.value,
+    page_num: currentPage.value,
+  }
+  const cardsDescReqBody: CardsDescReqBody = {
+    keyword: keyword.value,
+    language: "",
+    class_input: false,
+    card_pack: 0,
+    type: "",
+    color: [],
+    rarity: [],
+    tags: [],
+    tags__logic: "",
+    order_type: "",
+    evo_cond: [],
+    qField: [],
+  }
+  postCardsDesc(cardsDescReqQuery, cardsDescReqBody).then((resp) => {
     tableData.value = resp.data
     cardsCount.value = resp.count
   })
