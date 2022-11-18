@@ -1,4 +1,4 @@
-export interface DeckPriceReq {
+export interface DeckPriceReqQuery {
   deck: string
   envir: string
 }

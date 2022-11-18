@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue"
-import type { Data, CardsDescResp } from "@/api/v1/models/CardsDescResp"
+import type { Data } from "@/api/v1/models/CardsDescResp"
 import type { CardsDescReqQuery, CardsDescReqBody } from "@/api/v1/models/CardsDescReq"
-import { getCardsDesc, postCardsDesc } from "@/api/v1/services"
+import { postCardsDesc } from "@/api/v1/services"
 import { Search } from "@element-plus/icons-vue"
 
 const currentPage = ref<number>(1)
@@ -32,6 +32,7 @@ function genTableData() {
     evo_cond: [],
     qField: [],
   }
+
   postCardsDesc(cardsDescReqQuery, cardsDescReqBody).then((resp) => {
     tableData.value = resp.data
     cardsCount.value = resp.count

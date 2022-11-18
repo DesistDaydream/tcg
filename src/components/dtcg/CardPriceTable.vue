@@ -1,38 +1,37 @@
 <script setup lang="ts">
-import { ref } from "vue"
-import type { Data } from "@/api/v1/models/CardsPriceResp"
-import { postCardsPrice } from "@/api/v1/services"
+import { ref, toRefs, reactive } from "vue"
 import { Search } from "@element-plus/icons-vue"
+import type { CardsPriceReqQuery, CardsPriceReqBody } from "@/api/v1/models/CardsPriceReq"
+import { NewTableState } from "./interface/models/card_price_table"
+import { postCardsPrice } from "@/api/v1/services"
 
-const currentPage = ref<number>(1)
-const pageSize = ref<number>(5)
-const cardsCount = ref<number>(0)
+let objRef = reactive(NewTableState())
 
-const tableData = ref<Data[]>()
+let { currentPage, pageSize, cardsCount, tableData } = toRefs(objRef)
 
 let keyword = ref("")
 
 function genTableData() {
-  postCardsPrice(
-    {
-      page_size: pageSize.value,
-      page_num: currentPage.value,
-    },
-    {
-      keyword: keyword.value,
-      language: "",
-      class_input: false,
-      card_pack: 0,
-      type: "",
-      color: [],
-      rarity: [],
-      tags: [],
-      tags__logic: "",
-      order_type: "",
-      evo_cond: [],
-      qField: [],
-    }
-  ).then((resp) => {
+  const cardsPriceReqQuery: CardsPriceReqQuery = {
+    page_size: pageSize.value,
+    page_num: currentPage.value,
+  }
+  const cardsPriceReqBody: CardsPriceReqBody = {
+    keyword: keyword.value,
+    language: "",
+    class_input: false,
+    card_pack: 0,
+    type: "",
+    color: [],
+    rarity: [],
+    tags: [],
+    tags__logic: "",
+    order_type: "",
+    evo_cond: [],
+    qField: [],
+  }
+
+  postCardsPrice(cardsPriceReqQuery, cardsPriceReqBody).then((resp) => {
     tableData.value = resp.data
     cardsCount.value = resp.count
   })
@@ -49,6 +48,26 @@ const handleCurrentChange = (val: number) => {
 
 const handleSearch = () => {
   genTableData()
+}
+
+const handleAdd = (index: number) => {
+  // TODO: 将选中的卡牌添加到卡组价格的列表中
+  // 这涉及到多个组件之间的数据传递，待研究
+  console.log(
+    "添加：cardIDFromDB %s; cardVersionID %s",
+    tableData.value[index].card_id_from_db,
+    tableData.value[index].card_version_id
+  )
+}
+
+const handleDel = (index: number) => {
+  // TODO: 从卡组价格的列表中删除选中的卡牌
+  // 这涉及到多个组件之间的数据传递，待研究
+  console.log(
+    "删除：cardIDFromDB %s; cardVersionID %s",
+    tableData.value[index].card_id_from_db,
+    tableData.value[index].card_version_id
+  )
 }
 </script>
 
@@ -68,6 +87,12 @@ const handleSearch = () => {
       <el-table-column prop="rarity" label="稀有度" />
       <el-table-column prop="min_price" label="最低价" />
       <el-table-column prop="avg_price" label="集换价" />
+      <el-table-column fixed="right" label="操作" width="120">
+        <template #default="scope">
+          <el-button link type="primary" @click="handleAdd(scope.$index)">添加</el-button>
+          <el-button link type="primary" @click="handleDel(scope.$index)">删除</el-button>
+        </template>
+      </el-table-column>
       <!-- <el-table-column prop="image_url" label="图片">
       <template #default="scope">
         <img
