@@ -2,7 +2,7 @@
 import { ref, toRefs, reactive } from "vue"
 import { Search } from "@element-plus/icons-vue"
 import type { CardsPriceReqQuery, CardsPriceReqBody } from "@/api/v1/models/CardsPriceReq"
-import { NewTableState } from "./interface/models/card_price_table"
+import { NewTableState } from "../../../../components/dtcg/interface/models/card_price_table"
 import { postCardsPrice } from "@/api/v1/services"
 
 let objRef = reactive(NewTableState())
@@ -53,28 +53,13 @@ const handleSearch = () => {
 const handleAdd = (index: number) => {
   // TODO: 将选中的卡牌添加到卡组价格的列表中
   // 这涉及到多个组件之间的数据传递，待研究
-  console.log(
-    "添加：cardIDFromDB %s; cardVersionID %s",
-    tableData.value[index].card_id_from_db,
-    tableData.value[index].card_version_id
-  )
-}
-
-const handleDel = (index: number) => {
-  // TODO: 从卡组价格的列表中删除选中的卡牌
-  // 这涉及到多个组件之间的数据传递，待研究
-  console.log(
-    "删除：cardIDFromDB %s; cardVersionID %s",
-    tableData.value[index].card_id_from_db,
-    tableData.value[index].card_version_id
-  )
+  console.log("添加：cardIDFromDB %s; cardVersionID %s", tableData.value[index].card_id_from_db, tableData.value[index].card_version_id)
 }
 </script>
 
 <template>
   <h2>卡牌价格列表</h2>
   <!-- 搜索表单 -->
-  <!-- <SearchForm v-model:keyword="keyword" @handle-search="handleSearch"></SearchForm> -->
   <el-input v-model="keyword" placeholder="关键字" class="input-with-select"></el-input>
   <el-button :icon="Search" @click="handleSearch">搜索</el-button>
 
@@ -90,7 +75,6 @@ const handleDel = (index: number) => {
       <el-table-column fixed="right" label="操作" width="120">
         <template #default="scope">
           <el-button link type="primary" @click="handleAdd(scope.$index)">添加</el-button>
-          <el-button link type="primary" @click="handleDel(scope.$index)">删除</el-button>
         </template>
       </el-table-column>
       <!-- <el-table-column prop="image_url" label="图片">

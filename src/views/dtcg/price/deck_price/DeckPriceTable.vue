@@ -40,7 +40,31 @@ const sortAvgPrice = (a: Data, b: Data) => {
   return Number(a.avg_price) - Number(b.avg_price)
 }
 const sortMinPrice = (a: Data, b: Data) => {
-  return Number(a.avg_price) - Number(b.avg_price)
+  return Number(a.min_price) - Number(b.min_price)
+}
+
+// 添加表格中一个卡牌的数量
+const handleAdd = (row: any) => {
+  // 添加卡牌数量，即 data.count += 1
+  row.count += 1
+  // 更新最低价和集换价
+  row.avg_price = (Number(row.avg_price) + Number(row.avg_unit_price)).toString()
+  row.min_price = (Number(row.min_price) + Number(row.min_unit_price)).toString()
+  console.log(row)
+}
+// 删除表格中的一行
+const handleDel = (row: any) => {
+  row.count -= 1
+  // 更新最低价和集换价
+  row.avg_price = (Number(row.avg_price) - Number(row.avg_unit_price)).toString()
+  row.min_price = (Number(row.min_price) - Number(row.min_unit_price)).toString()
+
+  // 若卡牌数量为0，则删除该行
+  if (row.count === 0) {
+    tableDataForDeckPriceResp.value.data = tableDataForDeckPriceResp.value.data.filter((item) => item !== row)
+  }
+
+  console.log(row)
 }
 </script>
 
@@ -68,18 +92,16 @@ const sortMinPrice = (a: Data, b: Data) => {
       <el-table-column prop="count" label="数量" width="70" />
       <el-table-column prop="serial" label="编号" width="100" />
       <el-table-column prop="alternative_art" label="异画" width="80" sortable />
-      <el-table-column
-        prop="min_price"
-        label="最低价"
-        width="100"
-        sortable
-        :sort-method="sortMinPrice" />
-      <el-table-column
-        prop="avg_price"
-        label="集换价"
-        width="100"
-        sortable
-        :sort-method="sortAvgPrice" />
+      <el-table-column prop="min_unit_price" label="最低单价" width="110" sortable />
+      <el-table-column prop="avg_unit_price" label="集换单价" width="110" sortable />
+      <el-table-column prop="min_price" label="最低价" width="100" sortable :sort-method="sortMinPrice" />
+      <el-table-column prop="avg_price" label="集换价" width="100" sortable :sort-method="sortAvgPrice" />
+      <el-table-column fixed="right" label="操作" width="120" sortable>
+        <template #default="scope">
+          <el-button link type="primary" @click="handleAdd(scope.row)">添加</el-button>
+          <el-button link type="primary" @click="handleDel(scope.row)">删除</el-button>
+        </template>
+      </el-table-column>
     </el-table>
   </div>
 </template>

@@ -29,43 +29,31 @@ export const postCardSet = async (cardSetReq: CardSetReq): Promise<CardSetResp> 
   return resp.data
 }
 
-export const getCardsDesc = async (
-  cardsDescRespQuery: CardsDescReqQuery
-): Promise<CardsDescResp> => {
+export const getCardsDesc = async (cardsDescRespQuery: CardsDescReqQuery): Promise<CardsDescResp> => {
   const resp = await requestInstance.get("/card/desc", { params: cardsDescRespQuery })
   return resp.data
 }
 
-export const postCardsDesc = async (
-  cardsDescRespQuery: CardsDescReqQuery,
-  cardsDescReqBody: CardsDescReqBody
-): Promise<CardsDescResp> => {
+export const postCardsDesc = async (cardsDescRespQuery: CardsDescReqQuery, cardsDescReqBody: CardsDescReqBody): Promise<CardsDescResp> => {
   const resp = await requestInstance.post("/card/desc", JSON.stringify(cardsDescReqBody), {
     params: cardsDescRespQuery,
   })
   return resp.data
 }
 
-export const getCardsPrice = async (
-  cardsPriceReqQuery: CardsPriceReqQuery
-): Promise<CardsPriceResp> => {
+export const getCardsPrice = async (cardsPriceReqQuery: CardsPriceReqQuery): Promise<CardsPriceResp> => {
   const resp = await requestInstance.get("/card/price", { params: cardsPriceReqQuery })
   return resp.data
 }
 
-export const postCardsPrice = async (
-  cardsPriceRespQuery: CardsPriceReqQuery,
-  cardsPriceReqBody: CardsPriceReqBody
-): Promise<CardsPriceResp> => {
+export const postCardsPrice = async (cardsPriceRespQuery: CardsPriceReqQuery, cardsPriceReqBody: CardsPriceReqBody): Promise<CardsPriceResp> => {
   const resp = await requestInstance.post("/card/price", JSON.stringify(cardsPriceReqBody), {
     params: cardsPriceRespQuery,
   })
   return resp.data
 }
 
-export const postDeckPrice = async (
-  deckPriceReqQuery: DeckPriceReqQuery
-): Promise<DeckPriceResp> => {
+export const postDeckPrice = async (deckPriceReqQuery: DeckPriceReqQuery): Promise<DeckPriceResp> => {
   const resp = await requestInstance.post("/deck/price/json", JSON.stringify(deckPriceReqQuery))
   return resp.data
 }
