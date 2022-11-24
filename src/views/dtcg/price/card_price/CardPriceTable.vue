@@ -50,17 +50,17 @@ const handleSearch = () => {
   genTableData()
 }
 
-const handleAdd = (index: number) => {
+const handleAdd = (row: any) => {
   // TODO: 将选中的卡牌添加到卡组价格的列表中
   // 这涉及到多个组件之间的数据传递，待研究
-  console.log("添加：cardIDFromDB %s; cardVersionID %s", tableData.value[index].card_id_from_db, tableData.value[index].card_version_id)
+  console.log("添加：cardIDFromDB %s; cardVersionID %s", row.card_id_from_db, row.card_version_id)
 }
 </script>
 
 <template>
   <h2>卡牌价格列表</h2>
   <!-- 搜索表单 -->
-  <el-input v-model="keyword" placeholder="关键字" class="input-with-select"></el-input>
+  <el-input v-model="keyword" placeholder="关键字、编号" class="input-with-select" @keyup.enter.native="handleSearch"></el-input>
   <el-button :icon="Search" @click="handleSearch">搜索</el-button>
 
   <!-- 当一次性获取所有数据时，可以使用 :data="tableData?.slice((currentPage - 1) * pageSize, currentPage * pageSize)" -->
@@ -73,20 +73,15 @@ const handleAdd = (index: number) => {
       <el-table-column prop="min_price" label="最低价" />
       <el-table-column prop="avg_price" label="集换价" />
       <el-table-column fixed="right" label="操作" width="120">
-        <template #default="scope">
-          <el-button link type="primary" @click="handleAdd(scope.$index)">添加</el-button>
+        <template #default="slotProps">
+          <el-button link type="primary" @click="handleAdd(slotProps.row)">添加</el-button>
         </template>
       </el-table-column>
       <!-- <el-table-column prop="image_url" label="图片">
-      <template #default="scope">
-        <img
-          :src="scope.row.image_url"
-          referrerpolicy="no-referrer"
-          min-width="70"
-          height="70"
-        />
-      </template>
-    </el-table-column> -->
+        <template #default="slotProps">
+          <img :src="slotProps.row.image_url" referrerpolicy="no-referrer" min-width="70" height="70" />
+        </template>
+      </el-table-column> -->
     </el-table>
   </div>
 
