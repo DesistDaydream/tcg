@@ -45,14 +45,13 @@ const sortMinPrice = (a: Data, b: Data) => {
 
 // 添加表格中一个卡牌的数量
 const handleAdd = (row: any) => {
-  // 添加卡牌数量，即 data.count += 1
   row.count += 1
   // 更新最低价和集换价
   row.avg_price = (Number(row.avg_price) + Number(row.avg_unit_price)).toString()
   row.min_price = (Number(row.min_price) + Number(row.min_unit_price)).toString()
   console.log(row)
 }
-// 删除表格中的一行
+// 减少表中一个卡牌的数量，降到0时删除该卡
 const handleDel = (row: any) => {
   row.count -= 1
   // 更新最低价和集换价
