@@ -3,10 +3,10 @@ export interface CardsDescResp {
   page_size: number
   page_current: number
   page_total: number
-  data: Data[]
+  data: CardsDescRespData[]
 }
 
-export interface Data {
+export interface CardsDescRespData {
   id: number
   card_id_from_db: string
   set_id: number

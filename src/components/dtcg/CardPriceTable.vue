@@ -2,7 +2,7 @@
 import { ref, toRefs, reactive } from "vue"
 import { Search } from "@element-plus/icons-vue"
 import type { CardsPriceReqQuery, CardsPriceReqBody } from "@/api/v1/models/CardsPriceReq"
-import type { CardsPriceResp, CardsPriceRespData } from "@/api/v1/models/CardsPriceResp"
+import type { CardsPriceRespData } from "@/api/v1/models/CardsPriceResp"
 import { NewTableState } from "@/components/dtcg/interface/models/card_price_table"
 import { postCardsPrice } from "@/api/v1/services"
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue"
 import { postDeckPrice, getDeckPriceWithHID, getDeckPriceWithCDID } from "@/api/v1/services"
-import type { DeckPriceResp, DeckPriceRespData } from "@/api/v1/models/DeckPriceResp"
+import type { DeckPriceResp } from "@/api/v1/models/DeckPriceResp"
 
 const props = defineProps<{
   tableDataForDeckPriceResp: DeckPriceResp

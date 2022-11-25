@@ -3,10 +3,10 @@ export interface CardSetResp {
   page_size: number
   page_current: number
   page_total: number
-  data: Data[]
+  data: CardSetRespData[]
 }
 
-export interface Data {
+export interface CardSetRespData {
   id: number
   series_id: number
   series_name: string
