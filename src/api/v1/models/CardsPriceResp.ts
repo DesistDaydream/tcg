@@ -32,3 +32,26 @@ export const NewCardsPriceResp = (): CardsPriceResp => {
     data: [],
   }
 }
+
+export interface CardsPriceWithDtcgDBImgResp {
+  count: number
+  page_size: number
+  page_current: number
+  page_total: number
+  data: CardsPriceWithDtcgDBImgRespData[]
+}
+
+export interface CardsPriceWithDtcgDBImgRespData {
+  id: number
+  card_id_from_db: number
+  set_id: number
+  set_prefix: string
+  serial: string
+  sc_name: string
+  alternative_art: string
+  rarity: string
+  card_version_id: number
+  min_price: number
+  avg_price: number
+  image: string
+}

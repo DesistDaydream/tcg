@@ -2,11 +2,15 @@ import { fileURLToPath, URL } from "node:url"
 
 import { defineConfig } from "vite"
 import vue from "@vitejs/plugin-vue"
+// import mkcert from "vite-plugin-mkcert"
 
 // https://vitejs.dev/config/
 export default defineConfig({
   base: "/",
-  plugins: [vue()],
+  plugins: [
+    vue(),
+    //  mkcert()
+  ],
   resolve: {
     alias: {
       // 代码中使用 import 导入文件时，会自动将 @ 替换为 src 目录
@@ -14,6 +18,7 @@ export default defineConfig({
     },
   },
   server: {
+    // https: true,
     // 监听地址
     host: "0.0.0.0",
     // 端口
