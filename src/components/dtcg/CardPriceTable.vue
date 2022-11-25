@@ -101,7 +101,7 @@ const handleAdd = (row: CardsPriceRespData) => {
       </el-table-column>
       <el-table-column prop="image" label="图片">
         <template #default="slotProps">
-          <img :src="slotProps.row.image" referrerpolicy="no-referrer" min-width="70" height="70" />
+          <img :src="slotProps.row.image" referrerpolicy="no-referrer" min-width="70" height="70" v-viewer />
         </template>
       </el-table-column>
     </el-table>
