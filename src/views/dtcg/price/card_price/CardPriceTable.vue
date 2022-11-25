@@ -2,8 +2,15 @@
 import { ref, toRefs, reactive } from "vue"
 import { Search } from "@element-plus/icons-vue"
 import type { CardsPriceReqQuery, CardsPriceReqBody } from "@/api/v1/models/CardsPriceReq"
-import { NewTableState } from "../../../../components/dtcg/interface/models/card_price_table"
+import type { CardsPriceResp, CardsPriceRespData } from "@/api/v1/models/CardsPriceResp"
+import { NewTableState } from "@/components/dtcg/interface/models/card_price_table"
 import { postCardsPrice } from "@/api/v1/services"
+
+import type { DeckPriceResp, DeckPriceRespData } from "@/api/v1/models/DeckPriceResp"
+
+let props = defineProps<{
+  tableDataForDeckPriceResp: DeckPriceResp
+}>()
 
 let objRef = reactive(NewTableState())
 
@@ -50,10 +57,24 @@ const handleSearch = () => {
   genTableData()
 }
 
-const handleAdd = (row: any) => {
+const handleAdd = (row: CardsPriceRespData) => {
   // TODO: 将选中的卡牌添加到卡组价格的列表中
   // 这涉及到多个组件之间的数据传递，待研究
   console.log("添加：cardIDFromDB %s; cardVersionID %s", row.card_id_from_db, row.card_version_id)
+
+  let newData: DeckPriceRespData = {
+    count: 1,
+    serial: row.serial,
+    sc_name: row.sc_name,
+    alternative_art: row.alternative_art,
+    min_price: row.min_price.toString(),
+    avg_price: row.avg_price.toString(),
+    min_unit_price: row.min_price.toString(),
+    avg_unit_price: row.avg_price.toString(),
+  }
+
+  // 将 row 追加到 tableDataForDeckPriceResp.data 中
+  props.tableDataForDeckPriceResp.data.push(newData)
 }
 </script>
 
@@ -77,11 +98,11 @@ const handleAdd = (row: any) => {
           <el-button link type="primary" @click="handleAdd(slotProps.row)">添加</el-button>
         </template>
       </el-table-column>
-      <!-- <el-table-column prop="image_url" label="图片">
+      <el-table-column prop="image_url" label="图片">
         <template #default="slotProps">
           <img :src="slotProps.row.image_url" referrerpolicy="no-referrer" min-width="70" height="70" />
         </template>
-      </el-table-column> -->
+      </el-table-column>
     </el-table>
   </div>
 

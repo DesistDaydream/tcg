@@ -3,10 +3,10 @@ export interface CardsPriceResp {
   page_size: number
   page_current: number
   page_total: number
-  data: Data[]
+  data: CardsPriceRespData[]
 }
 
-export interface Data {
+export interface CardsPriceRespData {
   id: number
   card_id_from_db: number
   set_id: number

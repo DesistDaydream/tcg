@@ -1,10 +1,10 @@
 export interface DeckPriceResp {
   min_price: string
   avg_price: string
-  data: Data[]
+  data: DeckPriceRespData[]
 }
 
-export interface Data {
+export interface DeckPriceRespData {
   count: number
   serial: string
   sc_name: string

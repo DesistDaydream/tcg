@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import { ref } from "vue"
-import type { DeckPriceResp, Data } from "@/api/v1/models/DeckPriceResp"
-import { NewDeckPriceResp } from "@/api/v1/models/DeckPriceResp"
+import type { DeckPriceResp, DeckPriceRespData } from "@/api/v1/models/DeckPriceResp"
 import { postDeckPrice, getDeckPriceWithHID, getDeckPriceWithCDID } from "@/api/v1/services"
 
-// 表格中的数据
-let tableDataForDeckPriceResp = ref<DeckPriceResp>(NewDeckPriceResp())
+const props = defineProps<{
+  tableDataForDeckPriceResp: DeckPriceResp
+}>()
 
 let deckHID = ref<string>("")
 // 示例HID: f078e7f43203337c507850c58ccd2d2312f135a3
 function commitWithDeckHID(deckHID: string) {
   let req = deckHID
   getDeckPriceWithHID(req).then((resp) => {
-    tableDataForDeckPriceResp.value.data = resp.data
+    props.tableDataForDeckPriceResp.data = resp.data
   })
 }
 
@@ -22,7 +22,7 @@ let deckJSON = ref<string>("")
 function commitWithDeckJSON(deckJSON: string) {
   let req = { deck: deckJSON, envir: "chs" }
   postDeckPrice(req).then((resp) => {
-    tableDataForDeckPriceResp.value.data = resp.data
+    props.tableDataForDeckPriceResp.data = resp.data
   })
 }
 
@@ -31,36 +31,36 @@ let deckCDID = ref<string>("")
 function commitWithDeckCDID(deckCDID: string) {
   let req = deckCDID
   getDeckPriceWithCDID(req).then((resp) => {
-    tableDataForDeckPriceResp.value.data = resp.data
+    props.tableDataForDeckPriceResp.data = resp.data
   })
 }
 
 // 集换价和最低价这两列的排序逻辑
-const sortAvgPrice = (a: Data, b: Data) => {
+const sortAvgPrice = (a: DeckPriceRespData, b: DeckPriceRespData) => {
   return Number(a.avg_price) - Number(b.avg_price)
 }
-const sortMinPrice = (a: Data, b: Data) => {
+const sortMinPrice = (a: DeckPriceRespData, b: DeckPriceRespData) => {
   return Number(a.min_price) - Number(b.min_price)
 }
 
 // 添加表格中一个卡牌的数量
-const handleAdd = (row: any) => {
+const handleAdd = (row: DeckPriceRespData) => {
   row.count += 1
-  // 更新最低价和集换价
-  row.avg_price = (Number(row.avg_price) + Number(row.avg_unit_price)).toString()
-  row.min_price = (Number(row.min_price) + Number(row.min_unit_price)).toString()
+  // 更新最低价和集换价，保留小数点后两位
+  row.avg_price = (Number(row.avg_price) + Number(row.avg_unit_price)).toFixed(2).toString()
+  row.min_price = (Number(row.min_price) + Number(row.min_unit_price)).toFixed(2).toString()
   console.log(row)
 }
 // 减少表中一个卡牌的数量，降到0时删除该卡
-const handleDel = (row: any) => {
+const handleDel = (row: DeckPriceRespData) => {
   row.count -= 1
   // 更新最低价和集换价
-  row.avg_price = (Number(row.avg_price) - Number(row.avg_unit_price)).toString()
-  row.min_price = (Number(row.min_price) - Number(row.min_unit_price)).toString()
+  row.avg_price = (Number(row.avg_price) - Number(row.avg_unit_price)).toFixed(2).toString()
+  row.min_price = (Number(row.min_price) - Number(row.min_unit_price)).toFixed(2).toString()
 
   // 若卡牌数量为0，则删除该行
   if (row.count === 0) {
-    tableDataForDeckPriceResp.value.data = tableDataForDeckPriceResp.value.data.filter((item) => item !== row)
+    props.tableDataForDeckPriceResp.data = props.tableDataForDeckPriceResp.data.filter((item) => item !== row)
   }
 
   console.log(row)

@@ -1,10 +1,10 @@
-import type { Data } from "@/api/v1/models/CardsPriceResp"
+import type { CardsPriceRespData } from "@/api/v1/models/CardsPriceResp"
 
 export interface tableState {
   currentPage: number
   pageSize: number
   cardsCount: number
-  tableData: Data[]
+  tableData: CardsPriceRespData[]
 }
 
 export const NewTableState = (): tableState => {
