@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue"
-import type { Data } from "@/api/v1/models/CardsDescResp"
+import type { CardsDescRespData } from "@/api/v1/models/CardsDescResp"
 import type { CardsDescReqQuery, CardsDescReqBody } from "@/api/v1/models/CardsDescReq"
 import { postCardsDesc } from "@/api/v1/services"
 import { Search } from "@element-plus/icons-vue"
@@ -9,7 +9,7 @@ const currentPage = ref<number>(1)
 const pageSize = ref<number>(5)
 const cardsCount = ref<number>(0)
 
-const tableData = ref<Data[]>()
+const tableData = ref<CardsDescRespData[]>()
 
 let keyword = ref<string>("")
 

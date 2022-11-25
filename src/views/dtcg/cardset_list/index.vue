@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ref } from "vue"
-import type { Data } from "@/api/v1/models/CardSetResp"
+import type { CardSetRespData } from "@/api/v1/models/CardSetResp"
 import { postCardSet } from "@/api/v1/services"
 
 const currentPage = ref<number>(1)
 const pageSize = ref<number>(20)
 const cardsCount = ref<number>(0)
-const tableData = ref<Data[]>()
+const tableData = ref<CardSetRespData[]>()
 
 function genTableData() {
   postCardSet({
