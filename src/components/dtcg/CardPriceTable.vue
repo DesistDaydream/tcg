@@ -40,11 +40,16 @@ let handleAdd = (row: CardsPriceRespData) => {
 
   <!-- 当一次性获取所有数据时，可以使用 :data="tableData?.slice((currentPage - 1) * pageSize, currentPage * pageSize)" -->
   <div>
-    <el-table :data="tableData" style="width: 100%" border>
+    <el-table
+      :data="tableData"
+      style="width: 100%"
+      border
+      :cell-style="{ 'text-align': 'center' }"
+      :header-cell-style="{ 'text-align': 'center', padding: '0px' }">
       <el-table-column fixed="left" label="操作" width="120">
         <template #default="slotProps">
           <!-- <el-button link type="primary" @click="handleAdd(slotProps.row)">添加</el-button> -->
-          <el-button type="success" :icon="Plus" circle @click="handleAdd(slotProps.row)" />
+          <el-button size="small" type="success" :icon="Plus" circle @click="handleAdd(slotProps.row)" />
         </template>
       </el-table-column>
       <el-table-column prop="image" label="图片" width="120">

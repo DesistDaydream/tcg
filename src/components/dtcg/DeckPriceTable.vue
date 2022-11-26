@@ -48,7 +48,20 @@ const handleDel = (row: DeckPriceRespData) => {
 </script>
 
 <template>
-  <el-table :data="tableDataForDeckPriceResp.data" show-summary border>
+  <el-table
+    class="tableBox"
+    :data="tableDataForDeckPriceResp.data"
+    show-summary
+    border
+    :cell-style="{ 'text-align': 'center', padding: '0px' }"
+    :header-cell-style="{ 'text-align': 'center' }"
+    :row-style="{ height: '30px' }">
+    <el-table-column fixed="left" label="操作" width="120" sortable>
+      <template #default="scope">
+        <el-button size="small" type="success" :icon="Plus" circle @click="handleAdd(scope.row)" />
+        <el-button size="small" type="danger" :icon="Minus" circle @click="handleDel(scope.row)" />
+      </template>
+    </el-table-column>
     <el-table-column prop="sc_name" label="名称" />
     <el-table-column prop="count" label="数量" width="70" />
     <el-table-column prop="serial" label="编号" width="100" />
@@ -57,12 +70,6 @@ const handleDel = (row: DeckPriceRespData) => {
     <el-table-column prop="avg_unit_price" label="集换单价" width="110" sortable :sort-method="sortAvgUnitPrice" />
     <el-table-column prop="min_price" label="最低价" width="100" sortable :sort-method="sortMinPrice" />
     <el-table-column prop="avg_price" label="集换价" width="100" sortable :sort-method="sortAvgPrice" />
-    <el-table-column fixed="right" label="操作" width="120" sortable>
-      <template #default="scope">
-        <el-button type="success" :icon="Plus" circle @click="handleAdd(scope.row)" />
-        <el-button type="danger" :icon="Minus" circle @click="handleDel(scope.row)" />
-      </template>
-    </el-table-column>
   </el-table>
 </template>
 

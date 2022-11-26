@@ -14,11 +14,13 @@ let tableDataForDeckPriceResp = ref<DeckPriceResp>(NewDeckPriceResp())
 
 <template>
   <h1>卡组价格查询</h1>
-  <el-row :gutter="20" justify="center" align="middle">
-    <el-col :span="24">
-      <div><DeckPriceTable :tableDataForDeckPriceResp="tableDataForDeckPriceResp"></DeckPriceTable></div>
-    </el-col>
-  </el-row>
+  <div class="table">
+    <el-row :gutter="20" justify="center" align="middle">
+      <el-col :span="24">
+        <div><DeckPriceTable :tableDataForDeckPriceResp="tableDataForDeckPriceResp"></DeckPriceTable></div>
+      </el-col>
+    </el-row>
+  </div>
 
   <el-row :gutter="20">
     <el-col :span="24">
@@ -26,9 +28,13 @@ let tableDataForDeckPriceResp = ref<DeckPriceResp>(NewDeckPriceResp())
     </el-col>
   </el-row>
 
-  <el-row :gutter="20">
-    <el-col :span="24">
-      <CardPriceTable :tableDataForDeckPriceResp="tableDataForDeckPriceResp"></CardPriceTable>
-    </el-col>
-  </el-row>
+  <div class="table">
+    <el-row :gutter="20">
+      <el-col :span="24">
+        <CardPriceTable :tableDataForDeckPriceResp="tableDataForDeckPriceResp"></CardPriceTable>
+      </el-col>
+    </el-row>
+  </div>
 </template>
+
+<style scoped></style>
