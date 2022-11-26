@@ -15,13 +15,13 @@ let tableDataForDeckPriceResp = ref<DeckPriceResp>(NewDeckPriceResp())
 <template>
   <h1>卡组价格查询</h1>
   <el-row :gutter="20">
-    <el-col :span="12">
+    <el-col :span="24">
       <div><DeckPriceTable :tableDataForDeckPriceResp="tableDataForDeckPriceResp"></DeckPriceTable></div>
     </el-col>
   </el-row>
 
   <el-row :gutter="20">
-    <el-col :span="12">
+    <el-col :span="24">
       <DeckInput :tableDataForDeckPriceResp="tableDataForDeckPriceResp" />
     </el-col>
   </el-row>

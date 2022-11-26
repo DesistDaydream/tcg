@@ -1,65 +1,17 @@
 <script setup lang="ts">
-import { ref, toRefs, reactive } from "vue"
+import { ref } from "vue"
 import { Search } from "@element-plus/icons-vue"
-import type { CardsPriceReqQuery, CardsPriceReqBody } from "@/api/v1/models/CardsPriceReq"
 import type { CardsPriceRespData } from "@/api/v1/models/CardsPriceResp"
-import { NewTableState } from "@/components/dtcg/interface/models/card_price_table"
-import { postCardsPrice, postCardsPriceWithDtcgDBImg } from "@/api/v1/services"
 
 import type { DeckPriceResp, DeckPriceRespData } from "@/api/v1/models/DeckPriceResp"
+
+import { usePriceTable } from "@/components/dtcg/interface/use_price_table"
 
 let props = defineProps<{
   tableDataForDeckPriceResp: DeckPriceResp
 }>()
 
-let objRef = reactive(NewTableState())
-
-let { currentPage, pageSize, cardsCount, tableData } = toRefs(objRef)
-
-let keyword = ref("")
-
-function genTableData() {
-  const cardsPriceReqQuery: CardsPriceReqQuery = {
-    page_size: pageSize.value,
-    page_num: currentPage.value,
-  }
-  const cardsPriceReqBody: CardsPriceReqBody = {
-    keyword: keyword.value,
-    language: "",
-    class_input: false,
-    card_pack: 0,
-    type: "",
-    color: [],
-    rarity: [],
-    tags: [],
-    tags__logic: "",
-    order_type: "",
-    evo_cond: [],
-    qField: [],
-  }
-
-  postCardsPriceWithDtcgDBImg(cardsPriceReqQuery, cardsPriceReqBody).then((resp) => {
-    tableData.value = resp.data
-    cardsCount.value = resp.count
-  })
-  // postCardsPrice(cardsPriceReqQuery, cardsPriceReqBody).then((resp) => {
-  //   tableData.value = resp.data
-  //   cardsCount.value = resp.count
-  // })
-}
-
-genTableData()
-
-const handleSizeChange = (val: number) => {
-  genTableData()
-}
-const handleCurrentChange = (val: number) => {
-  genTableData()
-}
-
-const handleSearch = () => {
-  genTableData()
-}
+let { pageNum, pageSize, cardsCount, tableData, searchParam, handleSearch, handlePageSizeChange, handlePageNumChange } = usePriceTable()
 
 const handleAdd = (row: CardsPriceRespData) => {
   console.log("添加：cardIDFromDB %s; cardVersionID %s", row.card_id_from_db, row.card_version_id)
@@ -82,7 +34,7 @@ const handleAdd = (row: CardsPriceRespData) => {
 <template>
   <h2>卡牌价格列表</h2>
   <!-- 搜索表单 -->
-  <el-input v-model="keyword" placeholder="关键字、编号" class="input-with-select" @keyup.enter.native="handleSearch"></el-input>
+  <el-input v-model="searchParam.keyword" placeholder="关键字、编号" class="input-with-select" @keyup.enter.native="handleSearch"></el-input>
   <el-button :icon="Search" @click="handleSearch">搜索</el-button>
 
   <!-- 当一次性获取所有数据时，可以使用 :data="tableData?.slice((currentPage - 1) * pageSize, currentPage * pageSize)" -->
@@ -110,14 +62,14 @@ const handleAdd = (row: CardsPriceRespData) => {
   <div class="demo-pagination-block">
     <div class="demonstration"></div>
     <el-pagination
-      v-model:current-page="currentPage"
+      v-model:current-page="pageNum"
       v-model:page-size="pageSize"
       layout="total, sizes, prev, pager, next, jumper"
       :page-sizes="[5, 10, 20, 50, 100]"
       :total="cardsCount"
       :background="true"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange" />
+      @size-change="handlePageSizeChange"
+      @current-change="handlePageNumChange" />
   </div>
 </template>
 

@@ -5,6 +5,14 @@ const props = defineProps<{
   tableDataForDeckPriceResp: DeckPriceResp
 }>()
 
+// 最低单价和集换单价这两列的排序逻辑
+const sortAvgUnitPrice = (a: DeckPriceRespData, b: DeckPriceRespData) => {
+  return Number(a.avg_unit_price) - Number(b.avg_unit_price)
+}
+const sortMinUnitPrice = (a: DeckPriceRespData, b: DeckPriceRespData) => {
+  return Number(a.min_unit_price) - Number(b.min_unit_price)
+}
+
 // 集换价和最低价这两列的排序逻辑
 const sortAvgPrice = (a: DeckPriceRespData, b: DeckPriceRespData) => {
   return Number(a.avg_price) - Number(b.avg_price)
@@ -43,8 +51,8 @@ const handleDel = (row: DeckPriceRespData) => {
     <el-table-column prop="count" label="数量" width="70" />
     <el-table-column prop="serial" label="编号" width="100" />
     <el-table-column prop="alternative_art" label="异画" width="80" sortable />
-    <el-table-column prop="min_unit_price" label="最低单价" width="110" sortable />
-    <el-table-column prop="avg_unit_price" label="集换单价" width="110" sortable />
+    <el-table-column prop="min_unit_price" label="最低单价" width="110" sortable :sort-method="sortMinUnitPrice" />
+    <el-table-column prop="avg_unit_price" label="集换单价" width="110" sortable :sort-method="sortAvgUnitPrice" />
     <el-table-column prop="min_price" label="最低价" width="100" sortable :sort-method="sortMinPrice" />
     <el-table-column prop="avg_price" label="集换价" width="100" sortable :sort-method="sortAvgPrice" />
     <el-table-column fixed="right" label="操作" width="120" sortable>
