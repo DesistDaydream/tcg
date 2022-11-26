@@ -1,8 +1,8 @@
 <script setup lang="ts">
 interface PaginationProps {
-  cardsCount: number
   pageSize: number
   pageNum: number
+  cardsCount: number
   handlePageSizeChange: (pageSize: number) => void
   handlePageNumChange: (pageNum: number) => void
 }

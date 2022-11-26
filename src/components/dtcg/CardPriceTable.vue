@@ -7,6 +7,7 @@ import type { DeckPriceResp, DeckPriceRespData } from "@/api/v1/models/DeckPrice
 import { usePriceTable } from "@/components/dtcg/interface/use_price_table"
 
 import Pagination from "@/components/table/Pagination.vue"
+import SearchForm from "@/components/table/SearchForm.vue"
 
 let props = defineProps<{
   tableDataForDeckPriceResp: DeckPriceResp
@@ -34,9 +35,10 @@ let handleAdd = (row: CardsPriceRespData) => {
 
 <template>
   <h2>卡牌价格列表</h2>
-  <!-- 搜索表单 -->
-  <el-input v-model="searchParam.keyword" placeholder="关键字、编号" class="input-with-select" @keyup.enter.native="handleSearch"></el-input>
-  <el-button :icon="Search" @click="handleSearch">搜索</el-button>
+  <!-- 搜索表单组件 -->
+  <SearchForm :searchParam="searchParam" :handleSearch="handleSearch"></SearchForm>
+  <!-- <el-input v-model="searchParam.keyword" placeholder="关键字、编号" class="input-with-select" @keyup.enter.native="handleSearch"></el-input>
+  <el-button :icon="Search" @click="handleSearch">搜索</el-button> -->
 
   <!-- 当一次性获取所有数据时，可以使用 :data="tableData?.slice((currentPage - 1) * pageSize, currentPage * pageSize)" -->
   <div>

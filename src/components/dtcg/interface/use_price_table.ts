@@ -53,8 +53,8 @@ export let usePriceTable = () => {
     genTableData()
   })
 
-  let handleSearch = (searchParam: SearchParam) => {
-    console.log("执行搜索")
+  let handleSearch = () => {
+    // console.log("通过 %s 参数执行搜索", searchParam.keyword)
 
     state.pageNum = 1
     // state.searchParam = searchParam
@@ -62,6 +62,7 @@ export let usePriceTable = () => {
   }
 
   let handlePageSizeChange = (pageSize: number) => {
+    console.log("切换页容量")
     state.pageNum = 1
     state.pageSize = pageSize
     genTableData()
