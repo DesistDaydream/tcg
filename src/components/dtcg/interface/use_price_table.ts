@@ -1,5 +1,5 @@
-import { onMounted, reactive, toRefs, computed } from "vue"
-import type { TableState } from "@/components/dtcg/interface/models/card_price_table"
+import { onMounted, reactive, toRefs } from "vue"
+import type { TableState, SearchParam } from "@/components/dtcg/interface/models/card_price_table"
 import { postCardsPrice, postCardsPriceWithDtcgDBImg } from "@/api/v1/services"
 import type { CardsPriceReqQuery, CardsPriceReqBody } from "@/api/v1/models/CardsPriceReq"
 
@@ -53,18 +53,22 @@ export let usePriceTable = () => {
     genTableData()
   })
 
-  let handleSearch = () => {
+  let handleSearch = (searchParam: SearchParam) => {
     console.log("执行搜索")
 
     state.pageNum = 1
+    // state.searchParam = searchParam
     genTableData()
   }
 
-  let handlePageSizeChange = (val: number) => {
+  let handlePageSizeChange = (pageSize: number) => {
     state.pageNum = 1
+    state.pageSize = pageSize
     genTableData()
   }
-  let handlePageNumChange = (val: number) => {
+  let handlePageNumChange = (pageNum: number) => {
+    console.log("切换页码")
+    state.pageNum = pageNum
     genTableData()
   }
 

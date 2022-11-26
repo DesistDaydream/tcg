@@ -2,7 +2,7 @@
 import type { CardsPriceWithDtcgDBImgRespData } from "@/api/v1/models/CardsPriceResp"
 
 export interface TableState {
-  searchParam: searchParam
+  searchParam: SearchParam
   // tableData: CardsPriceRespData[]
   tableData: CardsPriceWithDtcgDBImgRespData[]
   pageNum: number
@@ -10,6 +10,6 @@ export interface TableState {
   cardsCount: number
 }
 
-export interface searchParam {
+export interface SearchParam {
   keyword: string
 }

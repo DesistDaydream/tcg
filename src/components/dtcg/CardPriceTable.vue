@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { ref } from "vue"
 import { Search } from "@element-plus/icons-vue"
-import type { CardsPriceRespData } from "@/api/v1/models/CardsPriceResp"
 
+import type { CardsPriceRespData } from "@/api/v1/models/CardsPriceResp"
 import type { DeckPriceResp, DeckPriceRespData } from "@/api/v1/models/DeckPriceResp"
 
 import { usePriceTable } from "@/components/dtcg/interface/use_price_table"
+
+import Pagination from "@/components/table/Pagination.vue"
 
 let props = defineProps<{
   tableDataForDeckPriceResp: DeckPriceResp
@@ -13,7 +14,7 @@ let props = defineProps<{
 
 let { pageNum, pageSize, cardsCount, tableData, searchParam, handleSearch, handlePageSizeChange, handlePageNumChange } = usePriceTable()
 
-const handleAdd = (row: CardsPriceRespData) => {
+let handleAdd = (row: CardsPriceRespData) => {
   console.log("添加：cardIDFromDB %s; cardVersionID %s", row.card_id_from_db, row.card_version_id)
 
   let newData: DeckPriceRespData = {
@@ -59,25 +60,13 @@ const handleAdd = (row: CardsPriceRespData) => {
     </el-table>
   </div>
 
-  <div class="demo-pagination-block">
-    <div class="demonstration"></div>
-    <el-pagination
-      v-model:current-page="pageNum"
-      v-model:page-size="pageSize"
-      layout="total, sizes, prev, pager, next, jumper"
-      :page-sizes="[5, 10, 20, 50, 100]"
-      :total="cardsCount"
-      :background="true"
-      @size-change="handlePageSizeChange"
-      @current-change="handlePageNumChange" />
-  </div>
+  <!-- 分页组件 -->
+  <Pagination
+    :pageNum="pageNum"
+    :pageSize="pageSize"
+    :cardsCount="cardsCount"
+    :handlePageSizeChange="handlePageSizeChange"
+    :handlePageNumChange="handlePageNumChange"></Pagination>
 </template>
 
-<style scoped>
-.demo-pagination-block + .demo-pagination-block {
-  margin-top: 10px;
-}
-.demo-pagination-block .demonstration {
-  margin-bottom: 16px;
-}
-</style>
+<style scoped></style>

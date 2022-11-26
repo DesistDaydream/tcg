@@ -1,49 +1,25 @@
 <script setup lang="ts">
-interface Props {
+interface PaginationProps {
+  cardsCount: number
   pageSize: number
   pageNum: number
-  cardsCount: number
+  handlePageSizeChange: (pageSize: number) => void
+  handlePageNumChange: (pageNum: number) => void
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  pageSize: 10,
-  pageNum: 1,
-  totalCards: 100,
-})
-
-const handleSizeChange = (val: number) => {
-  console.log(`每页 ${val} 条项目`)
-}
-const handleCurrentChange = (val: number) => {
-  console.log(`当前页: ${val}`)
-}
+defineProps<PaginationProps>()
 </script>
 
 <template>
-  <div class="flex items-center mb-4"></div>
-
-  <hr class="my-4" />
-
-  <div class="demo-pagination-block">
-    <div class="demonstration">All combined</div>
-    <el-pagination
-      v-model:currentPage="pageNum"
-      v-model:page-size="pageSize"
-      :page-sizes="[10, 50, 100]"
-      :background="true"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="cardsCount"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-    />
-  </div>
+  <el-pagination
+    v-model:current-page="pageNum"
+    v-model:page-size="pageSize"
+    layout="total, sizes, prev, pager, next, jumper"
+    :page-sizes="[5, 10, 20, 50, 100]"
+    :total="cardsCount"
+    :background="true"
+    @sizeChange="handlePageSizeChange"
+    @currentChange="handlePageNumChange"></el-pagination>
 </template>
 
-<style scoped>
-.demo-pagination-block + .demo-pagination-block {
-  margin-top: 10px;
-}
-.demo-pagination-block .demonstration {
-  margin-bottom: 16px;
-}
-</style>
+<style scoped></style>
