@@ -14,7 +14,7 @@ let tableDataForDeckPriceResp = ref<DeckPriceResp>(NewDeckPriceResp())
 
 <template>
   <h1>卡组价格查询</h1>
-  <el-row :gutter="20">
+  <el-row :gutter="20" justify="center" align="middle">
     <el-col :span="24">
       <div><DeckPriceTable :tableDataForDeckPriceResp="tableDataForDeckPriceResp"></DeckPriceTable></div>
     </el-col>

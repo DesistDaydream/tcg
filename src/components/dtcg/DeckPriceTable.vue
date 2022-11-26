@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Plus, Minus } from "@element-plus/icons-vue"
+
 import type { DeckPriceResp, DeckPriceRespData } from "@/api/v1/models/DeckPriceResp"
 
 const props = defineProps<{
@@ -57,8 +59,8 @@ const handleDel = (row: DeckPriceRespData) => {
     <el-table-column prop="avg_price" label="集换价" width="100" sortable :sort-method="sortAvgPrice" />
     <el-table-column fixed="right" label="操作" width="120" sortable>
       <template #default="scope">
-        <el-button link type="primary" @click="handleAdd(scope.row)">添加</el-button>
-        <el-button link type="primary" @click="handleDel(scope.row)">删除</el-button>
+        <el-button type="success" :icon="Plus" circle @click="handleAdd(scope.row)" />
+        <el-button type="danger" :icon="Minus" circle @click="handleDel(scope.row)" />
       </template>
     </el-table-column>
   </el-table>

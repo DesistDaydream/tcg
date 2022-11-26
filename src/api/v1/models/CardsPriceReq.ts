@@ -16,6 +16,7 @@ export interface CardsPriceReqBody {
   order_type: string
   evo_cond: EvoCond[]
   qField: string[]
+  alternative_art: string
 }
 
 export interface EvoCond {

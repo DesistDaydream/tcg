@@ -12,4 +12,5 @@ export interface TableState {
 
 export interface SearchParam {
   keyword: string
+  alternativeArt: string
 }

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Search } from "@element-plus/icons-vue"
+import { Plus } from "@element-plus/icons-vue"
 
 import type { CardsPriceRespData } from "@/api/v1/models/CardsPriceResp"
 import type { DeckPriceResp, DeckPriceRespData } from "@/api/v1/models/DeckPriceResp"
@@ -37,28 +37,27 @@ let handleAdd = (row: CardsPriceRespData) => {
   <h2>卡牌价格列表</h2>
   <!-- 搜索表单组件 -->
   <SearchForm :searchParam="searchParam" :handleSearch="handleSearch"></SearchForm>
-  <!-- <el-input v-model="searchParam.keyword" placeholder="关键字、编号" class="input-with-select" @keyup.enter.native="handleSearch"></el-input>
-  <el-button :icon="Search" @click="handleSearch">搜索</el-button> -->
 
   <!-- 当一次性获取所有数据时，可以使用 :data="tableData?.slice((currentPage - 1) * pageSize, currentPage * pageSize)" -->
   <div>
     <el-table :data="tableData" style="width: 100%" border>
+      <el-table-column fixed="left" label="操作" width="120">
+        <template #default="slotProps">
+          <!-- <el-button link type="primary" @click="handleAdd(slotProps.row)">添加</el-button> -->
+          <el-button type="success" :icon="Plus" circle @click="handleAdd(slotProps.row)" />
+        </template>
+      </el-table-column>
+      <el-table-column prop="image" label="图片" width="120">
+        <template #default="slotProps">
+          <img :src="slotProps.row.image" referrerpolicy="no-referrer" min-width="70" height="70" v-viewer />
+        </template>
+      </el-table-column>
       <el-table-column prop="sc_name" label="名称" />
       <el-table-column prop="serial" label="编号" />
       <el-table-column prop="alternative_art" label="异画" />
       <el-table-column prop="rarity" label="稀有度" />
       <el-table-column prop="min_price" label="最低价" />
       <el-table-column prop="avg_price" label="集换价" />
-      <el-table-column fixed="right" label="操作" width="120">
-        <template #default="slotProps">
-          <el-button link type="primary" @click="handleAdd(slotProps.row)">添加</el-button>
-        </template>
-      </el-table-column>
-      <el-table-column prop="image" label="图片">
-        <template #default="slotProps">
-          <img :src="slotProps.row.image" referrerpolicy="no-referrer" min-width="70" height="70" v-viewer />
-        </template>
-      </el-table-column>
     </el-table>
   </div>
 
