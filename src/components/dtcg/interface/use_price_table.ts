@@ -26,7 +26,7 @@ export let usePriceTable = () => {
       keyword: state.searchParam.keyword,
       language: "",
       class_input: false,
-      card_pack: 0,
+      card_set: 0,
       type: "",
       color: [],
       rarity: [],

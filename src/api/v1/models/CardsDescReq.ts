@@ -7,7 +7,7 @@ export interface CardsDescReqBody {
   keyword: string
   language: string
   class_input: boolean
-  card_pack: number
+  card_set: number
   type: string
   color: any[]
   rarity: any[]
