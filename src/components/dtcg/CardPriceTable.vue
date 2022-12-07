@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Plus } from "@element-plus/icons-vue"
 
-import type { CardsPriceRespData } from "@/api/v1/models/CardsPriceResp"
+import type { CardsPriceWithDtcgDBImgRespData } from "@/api/v1/models/CardsPriceResp"
 import type { DeckPriceResp, DeckPriceRespData } from "@/api/v1/models/DeckPriceResp"
 
 import { usePriceTable } from "@/components/dtcg/interface/use_price_table"
@@ -15,7 +15,7 @@ let props = defineProps<{
 
 let { pageNum, pageSize, cardsCount, tableData, searchParam, handleSearch, handlePageSizeChange, handlePageNumChange } = usePriceTable()
 
-let handleAdd = (row: CardsPriceRespData) => {
+let handleAdd = (row: CardsPriceWithDtcgDBImgRespData) => {
   console.log("添加：cardIDFromDB %s; cardVersionID %s", row.card_id_from_db, row.card_version_id)
 
   // 若该卡牌已经在表格中，则数量加1
@@ -44,6 +44,7 @@ let handleAdd = (row: CardsPriceRespData) => {
     avg_price: row.avg_price.toString(),
     min_unit_price: row.min_price.toString(),
     avg_unit_price: row.avg_price.toString(),
+    image: row.image,
   }
 
   props.tableDataForDeckPriceResp.data.push(newData)

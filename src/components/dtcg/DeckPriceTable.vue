@@ -62,6 +62,11 @@ const handleDel = (row: DeckPriceRespData) => {
         <el-button size="small" type="danger" :icon="Minus" circle @click="handleDel(scope.row)" />
       </template>
     </el-table-column>
+    <el-table-column prop="image" label="图片" width="120">
+      <template #default="slotProps">
+        <img :src="slotProps.row.image" referrerpolicy="no-referrer" min-width="30" height="30" v-viewer />
+      </template>
+    </el-table-column>
     <el-table-column prop="sc_name" label="名称" />
     <el-table-column prop="count" label="数量" width="70" />
     <el-table-column prop="serial" label="编号" width="100" />

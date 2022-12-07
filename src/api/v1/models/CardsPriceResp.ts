@@ -1,3 +1,4 @@
+// 卡牌价格
 export interface CardsPriceResp {
   count: number
   page_size: number
@@ -33,6 +34,7 @@ export const NewCardsPriceResp = (): CardsPriceResp => {
   }
 }
 
+// 卡牌价格，带着 dtcg 数据库中的图片
 export interface CardsPriceWithDtcgDBImgResp {
   count: number
   page_size: number

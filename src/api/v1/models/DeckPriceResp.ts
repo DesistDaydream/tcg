@@ -14,6 +14,7 @@ export interface DeckPriceRespData {
   avg_price: string
   min_unit_price: string
   avg_unit_price: string
+  image: string
 }
 
 export const NewDeckPriceResp = (): DeckPriceResp => {
