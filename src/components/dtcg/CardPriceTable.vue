@@ -18,7 +18,24 @@ let { pageNum, pageSize, cardsCount, tableData, searchParam, handleSearch, handl
 let handleAdd = (row: CardsPriceRespData) => {
   console.log("添加：cardIDFromDB %s; cardVersionID %s", row.card_id_from_db, row.card_version_id)
 
+  // 若该卡牌已经在表格中，则数量加1
+  for (let i = 0; i < props.tableDataForDeckPriceResp.data.length; i++) {
+    if (props.tableDataForDeckPriceResp.data[i].card_id_from_db === row.card_id_from_db) {
+      props.tableDataForDeckPriceResp.data[i].count++
+      // 集换价和最低价也要随数量变化而增加
+      props.tableDataForDeckPriceResp.data[i].avg_price = (Number(props.tableDataForDeckPriceResp.data[i].avg_price) + Number(row.avg_price))
+        .toFixed(2)
+        .toString()
+      props.tableDataForDeckPriceResp.data[i].min_price = (Number(props.tableDataForDeckPriceResp.data[i].min_price) + Number(row.min_price))
+        .toFixed(2)
+        .toString()
+
+      return
+    }
+  }
+
   let newData: DeckPriceRespData = {
+    card_id_from_db: row.card_id_from_db,
     count: 1,
     serial: row.serial,
     sc_name: row.sc_name,
@@ -61,8 +78,8 @@ let handleAdd = (row: CardsPriceRespData) => {
       <el-table-column prop="serial" label="编号" />
       <el-table-column prop="alternative_art" label="异画" />
       <el-table-column prop="rarity" label="稀有度" />
-      <el-table-column prop="min_price" label="最低价" />
       <el-table-column prop="avg_price" label="集换价" />
+      <el-table-column prop="min_price" label="最低价" />
     </el-table>
   </div>
 

@@ -5,6 +5,7 @@ export interface DeckPriceResp {
 }
 
 export interface DeckPriceRespData {
+  card_id_from_db: number
   count: number
   serial: string
   sc_name: string
