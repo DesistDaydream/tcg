@@ -1,10 +1,13 @@
 <script setup lang="ts">
+import { ref } from "vue"
+
 import { Plus, Minus } from "@element-plus/icons-vue"
 
 import type { DeckPriceResp, DeckPriceRespData } from "@/api/v1/models/DeckPriceResp"
 
 const props = defineProps<{
   tableDataForDeckPriceResp: DeckPriceResp
+  tableLoading: { loading: boolean }
 }>()
 
 // 最低单价和集换单价这两列的排序逻辑
@@ -49,6 +52,7 @@ const handleDel = (row: DeckPriceRespData) => {
 
 <template>
   <el-table
+    v-loading="tableLoading.loading"
     class="tableBox"
     :data="tableDataForDeckPriceResp.data"
     show-summary
@@ -62,7 +66,7 @@ const handleDel = (row: DeckPriceRespData) => {
         <el-button size="small" type="danger" :icon="Minus" circle @click="handleDel(scope.row)" />
       </template>
     </el-table-column>
-    <el-table-column prop="image" label="图片" width="120">
+    <el-table-column prop="image" label="图片" width="80">
       <template #default="slotProps">
         <img :src="slotProps.row.image" referrerpolicy="no-referrer" min-width="30" height="30" v-viewer />
       </template>

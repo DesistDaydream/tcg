@@ -52,7 +52,6 @@ let handleAdd = (row: CardsPriceWithDtcgDBImgRespData) => {
 </script>
 
 <template>
-  <h2>卡牌价格列表</h2>
   <!-- 搜索表单组件 -->
   <SearchForm :searchParam="searchParam" :handleSearch="handleSearch"></SearchForm>
 
