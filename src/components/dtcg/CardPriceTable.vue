@@ -47,7 +47,7 @@ let handleAdd = (row: CardsPriceWithDtcgDBImgRespData) => {
     image: row.image,
   }
 
-  props.tableDataForDeckPriceResp.data.push(newData)
+  props.tableDataForDeckPriceResp.data.unshift(newData)
 }
 </script>
 
