@@ -4,23 +4,13 @@ export interface CardsPriceReqQuery {
 }
 
 export interface CardsPriceReqBody {
+  card_set: number
+  color: any[]
   keyword: string
   language: string
-  class_input: boolean
-  card_set: number
-  type: string
-  color: any[]
-  rarity: any[]
-  tags: any[]
-  tags__logic: string
-  order_type: string
-  evo_cond: EvoCond[]
   qField: string[]
+  rarity: any[]
   alternative_art: string
-}
-
-export interface EvoCond {
-  Color: string
-  Cost: string
-  Level: string
+  min_price: number
+  avg_price: number
 }

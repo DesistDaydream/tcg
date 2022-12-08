@@ -16,25 +16,19 @@ export let usePriceTable = () => {
     cardsCount: 0,
   })
 
-  // 生成表格数据
-  let genTableData = () => {
+  // 生成卡牌价格表的数据
+  let genCardPriceTableData = () => {
     const cardsPriceReqQuery: CardsPriceReqQuery = {
       page_size: state.pageSize,
       page_num: state.pageNum,
     }
     const cardsPriceReqBody: CardsPriceReqBody = {
+      card_set: 0,
+      color: [],
       keyword: state.searchParam.keyword,
       language: "",
-      class_input: false,
-      card_set: 0,
-      type: "",
-      color: [],
-      rarity: [],
-      tags: [],
-      tags__logic: "",
-      order_type: "",
-      evo_cond: [],
       qField: [],
+      rarity: [],
       alternative_art: state.searchParam.alternativeArt,
     }
 
@@ -52,25 +46,25 @@ export let usePriceTable = () => {
   onMounted(() => {
     state.pageNum = 1
     state.pageSize = 5
-    genTableData()
+    genCardPriceTableData()
   })
 
   let handleSearch = () => {
     console.log("搜索表单数据: ", state.searchParam)
     state.pageNum = 1
-    genTableData()
+    genCardPriceTableData()
   }
 
   let handlePageSizeChange = (pageSize: number) => {
     console.log("切换页容量: ", state.pageSize)
     state.pageNum = 1
     state.pageSize = pageSize
-    genTableData()
+    genCardPriceTableData()
   }
   let handlePageNumChange = (pageNum: number) => {
     console.log("切换页码: ", state.pageNum, pageNum)
     state.pageNum = pageNum
-    genTableData()
+    genCardPriceTableData()
   }
 
   return {
