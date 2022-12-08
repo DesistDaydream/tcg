@@ -23,13 +23,16 @@ export let usePriceTable = () => {
       page_num: state.pageNum,
     }
     const cardsPriceReqBody: CardsPriceReqBody = {
-      card_set: 0,
+      card_version_id: 0,
+      sets_prefix: [],
       color: [],
       keyword: state.searchParam.keyword,
       language: "",
       qField: [],
       rarity: [],
       alternative_art: state.searchParam.alternativeArt,
+      min_price_range: "",
+      avg_price_range: "",
     }
 
     postCardsPriceWithDtcgDBImg(cardsPriceReqQuery, cardsPriceReqBody).then((resp) => {

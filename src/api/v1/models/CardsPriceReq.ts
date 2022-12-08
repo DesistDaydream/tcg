@@ -4,13 +4,14 @@ export interface CardsPriceReqQuery {
 }
 
 export interface CardsPriceReqBody {
-  card_set: number
+  card_version_id: number
+  sets_prefix: string[]
   color: any[]
   keyword: string
   language: string
   qField: string[]
   rarity: any[]
   alternative_art: string
-  min_price: number
-  avg_price: number
+  min_price_range: string
+  avg_price_range: string
 }
