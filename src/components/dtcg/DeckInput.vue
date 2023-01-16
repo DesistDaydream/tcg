@@ -51,7 +51,7 @@ function commitWithDeckJSON(deckJSON: string) {
 <template>
   <el-form :inline="true">
     <el-form-item label="卡组HID">
-      <el-input v-model="deckHID" placeholder="卡组HID" @keyup.enter.native="commitWithDeckHID(deckHID)">
+      <el-input v-model="deckHID" placeholder="卡组广场的url中的ID" @keyup.enter.native="commitWithDeckHID(deckHID)">
         <template #append>
           <el-button :icon="Search" @click="commitWithDeckHID(deckHID)"></el-button>
         </template>
@@ -59,7 +59,7 @@ function commitWithDeckJSON(deckJSON: string) {
     </el-form-item>
 
     <el-form-item label="卡组CDID">
-      <el-input v-model="deckCDID" placeholder="卡组CDID" @keyup.enter.native="commitWithDeckCDID(deckCDID)">
+      <el-input v-model="deckCDID" placeholder="个人云卡组url中的ID" @keyup.enter.native="commitWithDeckCDID(deckCDID)">
         <template #append>
           <el-button :icon="Search" @click="commitWithDeckCDID(deckCDID)"></el-button>
         </template>
