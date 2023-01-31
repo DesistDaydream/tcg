@@ -15,11 +15,14 @@ let deckHID = ref<string>("")
 function commitWithDeckHID(deckHID: string) {
   props.tableLoading.loading = true
 
-  let req = deckHID
-  getDeckPriceWithHID(deckHID).then((resp) => {
-    props.tableDataForDeckPriceResp.data = resp.data
-    props.tableLoading.loading = false
-  })
+  getDeckPriceWithHID(deckHID)
+    .then((resp) => {
+      props.tableDataForDeckPriceResp.data = resp.data
+      props.tableLoading.loading = false
+    })
+    .catch((err) => {
+      props.tableLoading.loading = false
+    })
 }
 
 let deckCDID = ref<string>("")
@@ -27,11 +30,14 @@ let deckCDID = ref<string>("")
 function commitWithDeckCDID(deckCDID: string) {
   props.tableLoading.loading = true
 
-  let req = deckCDID
-  getDeckPriceWithCDID(req).then((resp) => {
-    props.tableDataForDeckPriceResp.data = resp.data
-    props.tableLoading.loading = false
-  })
+  getDeckPriceWithCDID(deckCDID)
+    .then((resp) => {
+      props.tableDataForDeckPriceResp.data = resp.data
+      props.tableLoading.loading = false
+    })
+    .catch((err) => {
+      props.tableLoading.loading = false
+    })
 }
 
 let deckJSON = ref<string>("")
@@ -41,10 +47,14 @@ function commitWithDeckJSON(deckJSON: string) {
   props.tableLoading.loading = true
 
   let req = { deck: deckJSON, envir: "chs" }
-  postDeckPriceWithJSON(req).then((resp) => {
-    props.tableDataForDeckPriceResp.data = resp.data
-    props.tableLoading.loading = false
-  })
+  postDeckPriceWithJSON(req)
+    .then((resp) => {
+      props.tableDataForDeckPriceResp.data = resp.data
+      props.tableLoading.loading = false
+    })
+    .catch((err) => {
+      props.tableLoading.loading = false
+    })
 }
 </script>
 
