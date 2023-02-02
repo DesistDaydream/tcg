@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue"
 
-import { Plus, Minus } from "@element-plus/icons-vue"
+import { Plus, Minus, Delete } from "@element-plus/icons-vue"
 
 import type { DeckPriceResp, DeckPriceRespData } from "@/api/v1/models/DeckPriceResp"
 
@@ -27,7 +27,7 @@ const sortMinPrice = (a: DeckPriceRespData, b: DeckPriceRespData) => {
 }
 
 // 添加表格中一个卡牌的数量
-const handleAdd = (row: DeckPriceRespData) => {
+const handlePlus = (row: DeckPriceRespData) => {
   row.count += 1
   // 更新最低价和集换价，保留小数点后两位
   row.avg_price = (Number(row.avg_price) + Number(row.avg_unit_price)).toFixed(2).toString()
@@ -35,7 +35,7 @@ const handleAdd = (row: DeckPriceRespData) => {
   console.log(row)
 }
 // 减少表中一个卡牌的数量，降到0时删除该卡
-const handleDel = (row: DeckPriceRespData) => {
+const handleMinus = (row: DeckPriceRespData) => {
   row.count -= 1
   // 更新最低价和集换价
   row.avg_price = (Number(row.avg_price) - Number(row.avg_unit_price)).toFixed(2).toString()
@@ -46,6 +46,12 @@ const handleDel = (row: DeckPriceRespData) => {
     props.tableDataForDeckPriceResp.data = props.tableDataForDeckPriceResp.data.filter((item) => item !== row)
   }
 
+  console.log(row)
+}
+// 删除表中一个卡牌
+const handleDel = (row: DeckPriceRespData) => {
+  // 直接从表数据中删除该行
+  props.tableDataForDeckPriceResp.data = props.tableDataForDeckPriceResp.data.filter((item) => item !== row)
   console.log(row)
 }
 </script>
@@ -60,10 +66,11 @@ const handleDel = (row: DeckPriceRespData) => {
     :cell-style="{ 'text-align': 'center', padding: '0px' }"
     :header-cell-style="{ 'text-align': 'center' }"
     :row-style="{ height: '30px' }">
-    <el-table-column fixed="left" label="操作" width="120" sortable>
+    <el-table-column fixed="left" label="操作" width="121" sortable>
       <template #default="scope">
-        <el-button size="small" type="success" :icon="Plus" circle @click="handleAdd(scope.row)" />
-        <el-button size="small" type="danger" :icon="Minus" circle @click="handleDel(scope.row)" />
+        <el-button size="small" type="danger" :icon="Delete" circle @click="handleDel(scope.row)" />
+        <el-button size="small" type="success" :icon="Plus" circle @click="handlePlus(scope.row)" />
+        <el-button size="small" type="danger" :icon="Minus" circle @click="handleMinus(scope.row)" />
       </template>
     </el-table-column>
     <el-table-column prop="image" label="图片" width="80">
