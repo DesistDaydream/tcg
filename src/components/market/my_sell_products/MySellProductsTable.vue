@@ -26,7 +26,8 @@ function genTableData() {
     keyword: searchParam.value.keyword,
     on_sale: "1",
     page: page,
-    sorting: "published_at_desc",
+    sorting: "",
+    rarity: "",
   }
 
   getProductsList(productsListReqQuery, searchParam.value.token).then((resp) => {
