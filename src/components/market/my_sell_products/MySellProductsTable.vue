@@ -6,6 +6,7 @@ import { Search } from "@element-plus/icons-vue"
 import type { ProductsListReqQuery } from "@/api/jhs/models/ProductsListReq"
 import type { ProductsListRespData } from "@/api/jhs/models/ProductsListResp"
 import { getProductsList, putProduct } from "@/api/jhs/services"
+import type { SearchParam } from "@/components/market/interface/models/card_price_table"
 
 const currentPage = ref<number>(1)
 const pageSize = ref<number>(15)
@@ -13,21 +14,23 @@ const cardsCount = ref<number>(0)
 
 const tableData = ref<ProductsListRespData[]>()
 
-let token = ref<string>("")
-let keyword = ref<string>("")
+let searchParam = ref<SearchParam>({
+  token: "",
+  keyword: "",
+})
 
 function genTableData() {
   let page = currentPage.value.toString()
   const productsListReqQuery: ProductsListReqQuery = {
     game_key: "dgm",
     game_sub_key: "sc",
-    keyword: keyword.value,
+    keyword: searchParam.value.keyword,
     on_sale: "1",
     page: page,
     sorting: "published_at_desc",
   }
 
-  getProductsList(productsListReqQuery, token.value).then((resp) => {
+  getProductsList(productsListReqQuery, searchParam.value.token).then((resp) => {
     // 由于表格中那个可以改变数值的 input 只能接收 number，所以转换一下
     const { data } = resp
     data.forEach((item: any) => {
@@ -55,9 +58,8 @@ const handleSearch = (keyword: string) => {
   genTableData()
 }
 
-// 提交按钮点击后输出当前行数据
 const handleRowSubmit = (row: ProductsListRespData) => {
-  console.log("检查当前要更新的商品信息", row)
+  console.log("检查当前要更新的商品信息", row.product_id, row.price, row.quantity)
 
   putProduct(
     {
@@ -71,7 +73,7 @@ const handleRowSubmit = (row: ProductsListRespData) => {
       user_card_version_image: row.card_version_image,
     },
     row.product_id.toString(),
-    token.value
+    searchParam.value.token
   ).then((resp) => {
     console.log(resp)
   })
@@ -79,20 +81,24 @@ const handleRowSubmit = (row: ProductsListRespData) => {
 </script>
 
 <template>
-  <el-input v-model="token" placeholder="token" class="input-with-select"></el-input>
-  <el-button type="primary" @click="getTableData">获取数据</el-button>
-
   <div>
-    <el-form ref="formInstance" :inline="true">
+    <!-- 提交表单 -->
+    <el-form ref="formInstance" :model="searchParam" :inline="true">
+      <el-input v-model="searchParam.token" placeholder="token" class="input-with-select" @keyup.enter.native="getTableData"></el-input>
+      <el-button type="primary" @click="getTableData">获取数据</el-button>
+
       <el-form-item label="关键字" prop="keyword">
-        <el-input v-model="keyword" placeholder="关键字、编号" @keyup.enter.native="handleSearch" />
+        <el-input v-model="searchParam.keyword" placeholder="关键字、编号" @keyup.enter.native="handleSearch" />
       </el-form-item>
 
       <el-form-item>
         <el-button :icon="Search" @click="handleSearch">搜索</el-button>
       </el-form-item>
     </el-form>
+  </div>
 
+  <div>
+    <!-- 数据表格 -->
     <el-table :data="tableData" style="width: 100%" border>
       <el-table-column type="selection" />
       <el-table-column prop="product_id" label="商品编号" />
@@ -114,12 +120,13 @@ const handleRowSubmit = (row: ProductsListRespData) => {
       <el-table-column label="操作">
         <!-- 两种获取行信息的方式，这里不是用的 scope，而是 {row} -->
         <template #default="{ row }">
-          <el-button type="primary" @click="handleRowSubmit(row)">提交</el-button>
+          <el-button type="primary" @click="handleRowSubmit(row)">更新</el-button>
         </template>
       </el-table-column>
     </el-table>
   </div>
 
+  <!-- 分页 -->
   <div class="demo-pagination-block">
     <div class="demonstration"></div>
     <el-pagination
