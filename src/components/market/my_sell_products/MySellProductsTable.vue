@@ -28,6 +28,14 @@ function genTableData() {
   }
 
   getProductsList(productsListReqQuery, token.value).then((resp) => {
+    // 由于表格中那个可以改变数值的 input 只能接收 number，所以转换一下
+    const { data } = resp
+    data.forEach((item: any) => {
+      item.price = Number(item.price)
+      item.quantity = Number(item.quantity)
+    })
+    // TODO: 如果数据量大，这么转换是不是不太好？~尝试使用 computed() 来监听 tableData 的变化
+
     tableData.value = resp.data
     cardsCount.value = resp.total
   })
