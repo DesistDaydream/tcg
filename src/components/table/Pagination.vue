@@ -12,8 +12,8 @@ defineProps<PaginationProps>()
 
 <template>
   <el-pagination
-    v-model:current-page="pageNum"
-    v-model:page-size="pageSize"
+    :page-num="pageNum"
+    :page-size="pageSize"
     layout="total, sizes, prev, pager, next, jumper"
     :page-sizes="[5, 10, 20, 50, 100]"
     :total="cardsCount"

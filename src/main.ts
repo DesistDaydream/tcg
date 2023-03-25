@@ -7,8 +7,9 @@ import "./assets/main.css"
 // 第三方组件
 import ElementPlus from "element-plus"
 import "element-plus/dist/index.css"
-import VueViewer from "v-viewer"
 import "viewerjs/dist/viewer.css"
+// 图片浏览组件
+import VueViewer from "v-viewer"
 
 const app = createApp(App)
 

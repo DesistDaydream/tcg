@@ -40,7 +40,7 @@ const handleSelect = (key: string, keyPath: string[]) => {
     <el-sub-menu index="market">
       <template #title>交易市场</template>
       <el-menu-item index="market-dynamics" route="/market/dynamics">市场动态</el-menu-item>
-      <el-menu-item index="market-products">我在卖</el-menu-item>
+      <el-menu-item index="market-products" route="/market/products">我在卖</el-menu-item>
     </el-sub-menu>
 
     <el-menu-item index="tools" route="/tools">工具</el-menu-item>

@@ -1,4 +1,5 @@
-import axios, { type AxiosRequestConfig, type AxiosResponse } from "axios"
+import axios from "axios"
+import type { InternalAxiosRequestConfig, AxiosResponse } from "axios"
 
 const instance = axios.create({
   baseURL: "https://tcg.102205.xyz:8443/api/v1",
@@ -8,7 +9,7 @@ const instance = axios.create({
 
 // 拦截器
 instance.interceptors.request.use(
-  (config: AxiosRequestConfig) => {
+  (config: InternalAxiosRequestConfig) => {
     return config
   },
   (err) => {
