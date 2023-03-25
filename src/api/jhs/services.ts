@@ -1,16 +1,13 @@
 import requestInstance from "./core/core"
 
 import type { ProductsListReqQuery } from "./models/ProductsListReq"
+import type { ProductsListResp } from "./models/ProductsListResp"
 
-export const getProductsList = async (productsListReqQuery: ProductsListReqQuery, token: string) => {
+export const getProductsList = async (productsListReqQuery: ProductsListReqQuery, token: string): Promise<ProductsListResp> => {
   const resp = await requestInstance.get("/market/sellers/products", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
     params: productsListReqQuery,
+    headers: { Authorization: "Bearer " + token },
   })
-  console.log("检查 token", token)
-  console.log(resp.data)
-
+  console.log(resp)
   return resp.data
 }

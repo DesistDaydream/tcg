@@ -1,5 +1,5 @@
 export interface ProductsListReqQuery {
-  gaem_key: string
+  game_key: string
   game_sub_key: string
   keyword: string
   on_sale: string

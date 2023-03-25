@@ -8,7 +8,7 @@ const instance = axios.create({
 
 // 拦截器
 instance.interceptors.request.use(
-  (config: InternalAxiosRequestConfig) => {
+  (config) => {
     return config
   },
   (err) => {
@@ -18,7 +18,7 @@ instance.interceptors.request.use(
 
 // 拦截器
 instance.interceptors.response.use(
-  (result: AxiosResponse) => {
+  (result) => {
     return result
   },
   (err) => {
