@@ -10,6 +10,7 @@ export const getProductsList = async (productsListReqQuery: ProductsListReqQuery
     params: productsListReqQuery,
     headers: { Authorization: "Bearer " + token },
   })
+
   return resp.data
 }
 
@@ -20,7 +21,6 @@ export const putProduct = async (productUpgradeReqBody: ProductUpgradeReqBody, p
       "content-type": "application/json",
     },
   })
-  console.log(resp.data)
 
   return resp.data
 }

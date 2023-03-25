@@ -5,7 +5,6 @@ import { Search } from "@element-plus/icons-vue"
 
 import type { ProductsListReqQuery } from "@/api/jhs/models/ProductsListReq"
 import type { ProductsListRespData } from "@/api/jhs/models/ProductsListResp"
-import type { ProductUpgradeReqBody } from "@/api/jhs/models/ProductUpgradeReq"
 import { getProductsList, putProduct } from "@/api/jhs/services"
 
 const currentPage = ref<number>(1)
@@ -94,13 +93,13 @@ const handleRowSubmit = (row: ProductsListRespData) => {
 
       <el-table-column label="商品价格">
         <template #default="scope">
-          <el-input-number v-model="scope.row.price" controls-position="right" :min="0" :step="1"></el-input-number>
+          <el-input-number v-model="scope.row.price" :min="0.1" :step="0.1"></el-input-number>
         </template>
       </el-table-column>
 
       <el-table-column label="售卖数量">
         <template #default="scope">
-          <el-input-number v-model="scope.row.quantity" controls-position="right" :min="0" :step="1"></el-input-number>
+          <el-input-number v-model="scope.row.quantity" :min="1" :step="1"></el-input-number>
         </template>
       </el-table-column>
 
