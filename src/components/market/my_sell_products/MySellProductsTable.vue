@@ -8,16 +8,15 @@ import type { ProductsListRespData } from "@/api/jhs/models/ProductsListResp"
 import { getProductsList, putProduct } from "@/api/jhs/services"
 import type { SearchParam } from "@/components/market/interface/models/card_price_table"
 
+const searchParam = ref<SearchParam>({
+  token: "",
+  keyword: "",
+})
 const currentPage = ref<number>(1)
 const pageSize = ref<number>(15)
 const cardsCount = ref<number>(0)
 
 const tableData = ref<ProductsListRespData[]>()
-
-let searchParam = ref<SearchParam>({
-  token: "",
-  keyword: "",
-})
 
 function genTableData() {
   let page = currentPage.value.toString()
@@ -32,10 +31,8 @@ function genTableData() {
 
   getProductsList(productsListReqQuery, searchParam.value.token).then((resp) => {
     // 由于表格中那个可以改变数值的 input 只能接收 number，所以转换一下
-    const { data } = resp
-    data.forEach((item: any) => {
+    resp.data.forEach((item: any) => {
       item.price = Number(item.price)
-      item.quantity = Number(item.quantity)
     })
     // TODO: 如果数据量大，这么转换是不是不太好？~尝试使用 computed() 来监听 tableData 的变化
 
@@ -43,21 +40,6 @@ function genTableData() {
     cardsCount.value = resp.total
   })
 }
-
-const handleSizeChange = (val: number) => {
-  genTableData()
-}
-const handleCurrentChange = (currentPage: number) => {
-  genTableData()
-}
-const getTableData = () => {
-  genTableData()
-}
-
-const handleSearch = (keyword: string) => {
-  genTableData()
-}
-
 const handleRowSubmit = (row: ProductsListRespData) => {
   console.log("检查当前要更新的商品信息", row.product_id, row.price, row.quantity)
 
@@ -84,15 +66,15 @@ const handleRowSubmit = (row: ProductsListRespData) => {
   <div>
     <!-- 提交表单 -->
     <el-form ref="formInstance" :model="searchParam" :inline="true">
-      <el-input v-model="searchParam.token" placeholder="token" class="input-with-select" @keyup.enter.native="getTableData"></el-input>
-      <el-button type="primary" @click="getTableData">获取数据</el-button>
+      <el-input v-model="searchParam.token" placeholder="token" class="input-with-select" @keyup.enter.native="genTableData"></el-input>
+      <el-button type="primary" @click="genTableData">获取数据</el-button>
 
       <el-form-item label="关键字" prop="keyword">
-        <el-input v-model="searchParam.keyword" placeholder="关键字、编号" @keyup.enter.native="handleSearch" />
+        <el-input v-model="searchParam.keyword" placeholder="关键字、编号" @keyup.enter.native="genTableData" />
       </el-form-item>
 
       <el-form-item>
-        <el-button :icon="Search" @click="handleSearch">搜索</el-button>
+        <el-button :icon="Search" @click="genTableData">搜索</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -100,8 +82,9 @@ const handleRowSubmit = (row: ProductsListRespData) => {
   <div>
     <!-- 数据表格 -->
     <el-table :data="tableData" style="width: 100%" border>
+      <!-- TODO: 对已多选的行执行一些操作 -->
       <el-table-column type="selection" />
-      <el-table-column prop="product_id" label="商品编号" />
+      <el-table-column prop="product_id" label="商品ID" />
       <el-table-column prop="card_version_number" label="卡牌编号" />
       <el-table-column prop="card_name_cn" label="卡牌名称" />
 
@@ -136,8 +119,8 @@ const handleRowSubmit = (row: ProductsListRespData) => {
       layout="total, sizes, prev, pager, next, jumper"
       :page-sizes="[15]"
       :background="true"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange" />
+      @size-change="genTableData"
+      @current-change="genTableData" />
   </div>
 </template>
 
