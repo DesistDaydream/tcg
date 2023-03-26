@@ -29,7 +29,6 @@ let handleAdd = (row: CardsPriceWithDtcgDBImgRespData) => {
       props.tableDataForDeckPriceResp.data[i].min_price = (Number(props.tableDataForDeckPriceResp.data[i].min_price) + Number(row.min_price))
         .toFixed(2)
         .toString()
-
       return
     }
   }

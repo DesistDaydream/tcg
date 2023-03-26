@@ -41,6 +41,7 @@ function genTableData() {
     cardsCount.value = resp.total
   })
 }
+
 const handleRowSubmit = (row: ProductsListRespData) => {
   console.log("检查当前要更新的商品信息", row.product_id, row.price, row.quantity)
 
@@ -90,14 +91,14 @@ const handleRowSubmit = (row: ProductsListRespData) => {
       <el-table-column prop="card_name_cn" label="卡牌名称" />
 
       <el-table-column label="商品价格">
-        <template #default="scope">
-          <el-input-number v-model="scope.row.price" :min="0.1" :step="0.1"></el-input-number>
+        <template #default="slotProps">
+          <el-input-number v-model="slotProps.row.price" :min="0.1" :step="0.1"></el-input-number>
         </template>
       </el-table-column>
 
       <el-table-column label="售卖数量">
-        <template #default="scope">
-          <el-input-number v-model="scope.row.quantity" :min="1" :step="1"></el-input-number>
+        <template #default="slotProps">
+          <el-input-number v-model="slotProps.row.quantity" :min="1" :step="1"></el-input-number>
         </template>
       </el-table-column>
 

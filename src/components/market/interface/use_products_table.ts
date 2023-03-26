@@ -27,7 +27,8 @@ export let usePriceTable = () => {
       keyword: state.searchParam.keyword,
       on_sale: "1",
       page: page,
-      sorting: "published_at_desc",
+      sorting: "",
+      rarity: "",
     }
 
     getProductsList(productsListReqQuery, state.searchParam.token).then((resp) => {
