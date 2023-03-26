@@ -1,50 +1,14 @@
 <script setup lang="ts">
-import { ref } from "vue"
-
 import { Search } from "@element-plus/icons-vue"
+import { ElMessage } from "element-plus"
 
-import type { ProductsListReqQuery } from "@/api/jhs/models/ProductsListReq"
 import type { ProductsListRespData } from "@/api/jhs/models/ProductsListResp"
-import { getProductsList, putProduct } from "@/api/jhs/services"
-import type { SearchParam } from "@/components/market/interface/models/card_price_table"
+import { putProduct } from "@/api/jhs/services"
+import { useProductsTable } from "@/components/market/interface/use_products_table"
 
-const searchParam = ref<SearchParam>({
-  token: "",
-  keyword: "",
-})
-const currentPage = ref<number>(1)
-const pageSize = ref<number>(15)
-const cardsCount = ref<number>(0)
-
-const tableData = ref<ProductsListRespData[]>()
-
-function genTableData() {
-  let page = currentPage.value.toString()
-  const productsListReqQuery: ProductsListReqQuery = {
-    game_key: "dgm",
-    game_sub_key: "sc",
-    keyword: searchParam.value.keyword,
-    on_sale: "1",
-    page: page,
-    sorting: "",
-    rarity: "",
-  }
-
-  getProductsList(productsListReqQuery, searchParam.value.token).then((resp) => {
-    // 由于表格中那个可以改变数值的 input 只能接收 number，所以转换一下
-    resp.data.forEach((item: any) => {
-      item.price = Number(item.price)
-    })
-    // TODO: 如果数据量大，这么转换是不是不太好？~尝试使用 computed() 来监听 tableData 的变化
-
-    tableData.value = resp.data
-    cardsCount.value = resp.total
-  })
-}
+let { searchParam, tableData, pagination, genSellProductsTableData } = useProductsTable()
 
 const handleRowSubmit = (row: ProductsListRespData) => {
-  console.log("检查当前要更新的商品信息", row.product_id, row.price, row.quantity)
-
   putProduct(
     {
       authenticator_id: "",
@@ -59,7 +23,18 @@ const handleRowSubmit = (row: ProductsListRespData) => {
     row.product_id.toString(),
     searchParam.value.token
   ).then((resp) => {
-    console.log(resp)
+    if (resp.message == "success") {
+      ElMessage({
+        message: "更新成功",
+        type: "success",
+      })
+    } else {
+      console.log(resp)
+      ElMessage({
+        message: "更新失败",
+        type: "error",
+      })
+    }
   })
 }
 </script>
@@ -68,35 +43,41 @@ const handleRowSubmit = (row: ProductsListRespData) => {
   <div>
     <!-- 提交表单 -->
     <el-form ref="formInstance" :model="searchParam" :inline="true">
-      <el-input v-model="searchParam.token" placeholder="token" class="input-with-select" @keyup.enter.native="genTableData"></el-input>
-      <el-button type="primary" @click="genTableData">获取数据</el-button>
+      <el-input v-model="searchParam.token" placeholder="token" class="input-with-select" @keyup.enter.native="genSellProductsTableData"></el-input>
+      <el-button type="primary" @click="genSellProductsTableData">获取数据</el-button>
 
       <el-form-item label="关键字" prop="keyword">
-        <el-input v-model="searchParam.keyword" placeholder="关键字、编号" @keyup.enter.native="genTableData" />
+        <el-input v-model="searchParam.keyword" placeholder="关键字、编号" @keyup.enter.native="genSellProductsTableData" />
       </el-form-item>
 
       <el-form-item>
-        <el-button :icon="Search" @click="genTableData">搜索</el-button>
+        <el-button :icon="Search" @click="genSellProductsTableData">搜索</el-button>
       </el-form-item>
     </el-form>
   </div>
 
   <div>
     <!-- 数据表格 -->
-    <el-table :data="tableData" style="width: 100%" border>
+    <el-table
+      :data="tableData"
+      style="width: 100%"
+      border
+      :cell-style="{ 'text-align': 'center' }"
+      :header-cell-style="{ 'text-align': 'center', padding: '5px' }">
       <!-- TODO: 对已多选的行执行一些操作 -->
       <el-table-column type="selection" />
-      <el-table-column prop="product_id" label="商品ID" />
+      <el-table-column prop="product_id" label="商品ID" width="100" />
       <el-table-column prop="card_version_number" label="卡牌编号" />
       <el-table-column prop="card_name_cn" label="卡牌名称" />
+      <el-table-column prop="avg_price" label="集换价" />
 
-      <el-table-column label="商品价格">
+      <el-table-column label="商品价格" width="175">
         <template #default="slotProps">
-          <el-input-number v-model="slotProps.row.price" :min="0.1" :step="0.1"></el-input-number>
+          <el-input-number v-model="slotProps.row.price" :min="0" :step="0.1"></el-input-number>
         </template>
       </el-table-column>
 
-      <el-table-column label="售卖数量">
+      <el-table-column label="售卖数量" width="175">
         <template #default="slotProps">
           <el-input-number v-model="slotProps.row.quantity" :min="1" :step="1"></el-input-number>
         </template>
@@ -115,14 +96,14 @@ const handleRowSubmit = (row: ProductsListRespData) => {
   <div class="demo-pagination-block">
     <div class="demonstration"></div>
     <el-pagination
-      v-model:current-page="currentPage"
-      v-model:page-size="pageSize"
-      v-model:total="cardsCount"
+      v-model:current-page="pagination.pageNum"
+      v-model:page-size="pagination.pageSize"
+      v-model:total="pagination.cardsCount"
       layout="total, sizes, prev, pager, next, jumper"
       :page-sizes="[15]"
       :background="true"
-      @size-change="genTableData"
-      @current-change="genTableData" />
+      @size-change="genSellProductsTableData"
+      @current-change="genSellProductsTableData" />
   </div>
 </template>
 

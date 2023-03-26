@@ -1,15 +1,19 @@
 // import type { CardsPriceRespData } from "@/api/v1/models/CardsPriceResp"
 import type { ProductsListRespData } from "@/api/jhs/models/ProductsListResp"
 
-export interface TableState {
+export interface SellProductsTableState {
   searchParam: SearchParam
   tableData: ProductsListRespData[]
-  pageNum: number
-  pageSize: number
-  cardsCount: number
+  pagination: Pagination
 }
 
 export interface SearchParam {
   token: string
   keyword: string
+}
+
+export interface Pagination {
+  pageNum: number
+  pageSize: number
+  cardsCount: number
 }
