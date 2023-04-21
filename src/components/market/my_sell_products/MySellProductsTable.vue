@@ -67,6 +67,11 @@ const handleRowSubmit = (row: ProductsListRespData) => {
       <!-- TODO: 对已多选的行执行一些操作 -->
       <el-table-column type="selection" />
       <el-table-column prop="product_id" label="商品ID" width="100" />
+      <el-table-column prop="card_version_image" label="图片" width="120">
+        <template #default="slotProps">
+          <img :src="slotProps.row.card_version_image" referrerpolicy="no-referrer" min-width="70" height="70" v-viewer />
+        </template>
+      </el-table-column>
       <el-table-column prop="card_version_number" label="卡牌编号" />
       <el-table-column prop="card_name_cn" label="卡牌名称" />
       <el-table-column prop="avg_price" label="集换价" />
