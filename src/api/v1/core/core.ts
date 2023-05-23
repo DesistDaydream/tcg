@@ -2,7 +2,7 @@ import axios from "axios"
 import type { InternalAxiosRequestConfig, AxiosResponse } from "axios"
 
 const instance = axios.create({
-  baseURL: "https://tcg.102205.xyz:8443/api/v1",
+  baseURL: "https://tcg.102205.xyz:10443/api/v1",
   // baseURL: "http://localhost:52205/api/v1",
   timeout: 15000,
 })

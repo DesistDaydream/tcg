@@ -25,7 +25,7 @@ export default defineConfig({
     port: 42205,
     // proxy: {
     //   "/api/v1": {
-    //     target: "https://tcg.102205.xyz:8443",
+    //     target: "https://tcg.102205.xyz:10443",
     //     changeOrigin: true,
     //     rewrite: (path) => path.replace(/^\/api/, ""),
     //   },
