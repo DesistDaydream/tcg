@@ -19,7 +19,7 @@ const handleSelect = (key: string, keyPath: string[]) => {
     @select="handleSelect">
     <el-menu-item index="index" route="/">首页</el-menu-item>
 
-    <el-menu-item index="wowtcg" route="/wowtcg">WOWTCG</el-menu-item>
+    <el-menu-item index="wowtcg" route="/wowtcg" disabled>WOWTCG</el-menu-item>
 
     <el-sub-menu index="dtcg">
       <template #title>
@@ -35,7 +35,9 @@ const handleSelect = (key: string, keyPath: string[]) => {
       </el-sub-menu>
     </el-sub-menu>
 
-    <el-menu-item index="ygo" route="/ygo" disabled>YGO</el-menu-item>
+    <el-menu-item index="ygo" route="/ygo">YGO</el-menu-item>
+
+    <el-menu-item index="ptcg" route="/ptcg">PTCG</el-menu-item>
 
     <el-sub-menu index="market">
       <template #title>交易市场</template>

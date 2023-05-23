@@ -40,6 +40,11 @@ const router = createRouter({
       component: () => import("@/views/YgoTcgView.vue"),
     },
     {
+      path: "/ptcg",
+      name: "ptcg",
+      component: () => import("@/views/PTCGView.vue"),
+    },
+    {
       path: "/market/dynamics",
       name: "dynamics",
       component: () => import("@/views/market/dynamics/index.vue"),
