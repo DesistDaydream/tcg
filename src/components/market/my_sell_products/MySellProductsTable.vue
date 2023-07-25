@@ -74,6 +74,8 @@ const handleRowSubmit = (row: ProductsListRespData) => {
       </el-table-column>
       <el-table-column prop="card_version_number" label="卡牌编号" />
       <el-table-column prop="card_name_cn" label="卡牌名称" />
+      <el-table-column prop="card_version_rarity" label="稀有度" />
+      <el-table-column prop="min_price" label="最低价" />
       <el-table-column prop="avg_price" label="集换价" />
 
       <el-table-column label="商品价格" width="175">
