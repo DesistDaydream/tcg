@@ -7,6 +7,7 @@ import type { CardsPriceReqQuery, CardsPriceReqBody } from "./models/CardsPriceR
 import type { CardsPriceResp, CardsPriceWithDtcgDBImgResp } from "./models/CardsPriceResp"
 import type { DeckPriceReqQuery } from "./models/DeckPriceReq"
 import type { DeckPriceResp } from "./models/DeckPriceResp"
+import type { UserInfoResp } from "./models/UserInfoResp"
 
 // export const postCardsDesc = (data: CardsDescReq): Promise<CardsDescResp> => {
 //   return requestInstance
@@ -81,5 +82,11 @@ export const getDeckPriceWithHID = async (hid: string): Promise<DeckPriceResp> =
 
 export const getDeckPriceWithCDID = async (cdid: string): Promise<DeckPriceResp> => {
   const resp = await requestInstance.get("/deck/price/cdid/" + cdid)
+  return resp.data
+}
+
+// 获取用户信息
+export const getUserWithUID = async (uid: string): Promise<UserInfoResp> => {
+  const resp = await requestInstance.get("/user/info/" + uid)
   return resp.data
 }

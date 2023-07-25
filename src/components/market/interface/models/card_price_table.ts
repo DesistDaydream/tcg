@@ -8,7 +8,7 @@ export interface SellProductsTableState {
 }
 
 export interface SearchParam {
-  token: string
+  // userID: string
   keyword: string
 }
 

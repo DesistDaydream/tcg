@@ -5,8 +5,13 @@ import { ElMessage } from "element-plus"
 import type { ProductsListRespData } from "@/api/jhs/models/ProductsListResp"
 import { putProduct } from "@/api/jhs/services"
 import { useProductsTable } from "@/components/market/interface/use_products_table"
+import { getUserWithUID } from "@/api/v1/services"
 
-let { searchParam, tableData, pagination, genSellProductsTableData } = useProductsTable()
+let { searchParam, tableData, pagination, genSellProductsTableData, token } = useProductsTable()
+
+getUserWithUID("1").then((resp) => {
+  token.value = resp.jhs_token
+})
 
 const handleRowSubmit = (row: ProductsListRespData) => {
   putProduct(
@@ -21,7 +26,7 @@ const handleRowSubmit = (row: ProductsListRespData) => {
       user_card_version_image: row.card_version_image,
     },
     row.product_id.toString(),
-    searchParam.value.token
+    token.value
   ).then((resp) => {
     if (resp.message == "success") {
       ElMessage({
@@ -43,7 +48,7 @@ const handleRowSubmit = (row: ProductsListRespData) => {
   <div>
     <!-- 提交表单 -->
     <el-form ref="formInstance" :model="searchParam" :inline="true">
-      <el-input v-model="searchParam.token" placeholder="token" class="input-with-select" @keyup.enter.native="genSellProductsTableData"></el-input>
+      <!-- <el-input v-model="searchParam.userID" placeholder="userID" class="input-with-select" @keyup.enter.native="genSellProductsTableData"></el-input> -->
       <el-button type="primary" @click="genSellProductsTableData">获取数据</el-button>
 
       <el-form-item label="关键字" prop="keyword">

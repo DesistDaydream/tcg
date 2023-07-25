@@ -1,15 +1,17 @@
-import { onMounted, reactive, toRefs } from "vue"
+import { onMounted, reactive, toRefs, ref } from "vue"
 import type { SellProductsTableState } from "@/components/market/interface/models/card_price_table"
 
 import type { ProductsListReqQuery } from "@/api/jhs/models/ProductsListReq"
 import type { ProductsListRespData } from "@/api/jhs/models/ProductsListResp"
 import { getProductsList, putProduct } from "@/api/jhs/services"
 
+import { getUserWithUID } from "@/api/v1/services"
+
 export let useProductsTable = () => {
   // 声明响应式数据。用于存储表格数据
   const state = reactive<SellProductsTableState>({
     searchParam: {
-      token: "",
+      // userID: "",
       keyword: "",
     },
     tableData: [],
@@ -18,6 +20,12 @@ export let useProductsTable = () => {
       pageSize: 15,
       cardsCount: 0,
     },
+  })
+
+  const token = ref<string>("")
+
+  getUserWithUID("1").then((resp) => {
+    token.value = resp.jhs_token
   })
 
   let genSellProductsTableData = () => {
@@ -31,7 +39,7 @@ export let useProductsTable = () => {
       rarity: "",
     }
 
-    getProductsList(productsListReqQuery, state.searchParam.token).then((resp) => {
+    getProductsList(productsListReqQuery, token.value).then((resp) => {
       // 由于表格中那个可以改变数值的 input 只能接收 number，所以转换一下
       resp.data.forEach((item: any) => {
         item.price = Number(item.price)
@@ -46,5 +54,6 @@ export let useProductsTable = () => {
   return {
     ...toRefs(state),
     genSellProductsTableData,
+    token,
   }
 }

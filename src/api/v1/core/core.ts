@@ -4,7 +4,7 @@ import type { InternalAxiosRequestConfig, AxiosResponse } from "axios"
 const instance = axios.create({
   baseURL: "https://tcg.102205.xyz:10443/api/v1",
   // baseURL: "http://localhost:52205/api/v1",
-  timeout: 15000,
+  timeout: 30000,
 })
 
 // 拦截器
