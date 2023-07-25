@@ -75,18 +75,26 @@ const handleRowSubmit = (row: ProductsListRespData) => {
       <el-table-column prop="card_version_number" label="卡牌编号" />
       <el-table-column prop="card_name_cn" label="卡牌名称" />
       <el-table-column prop="card_version_rarity" label="稀有度" />
-      <el-table-column prop="min_price" label="最低价" />
-      <el-table-column prop="avg_price" label="集换价" />
+      <!-- <el-table-column prop="min_price" label="最低价" />
+      <el-table-column prop="avg_price" label="集换价" /> -->
 
-      <el-table-column label="商品价格" width="175">
+      <el-table-column label="市场价" width="140">
         <template #default="slotProps">
-          <el-input-number v-model="slotProps.row.price" :min="0" :step="0.1"></el-input-number>
+          最低价:
+          <span>{{ slotProps.row.min_price }}</span>
+          <br />
+          集换价:
+          <span>{{ slotProps.row.avg_price }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="售卖数量" width="175">
+      <el-table-column label="售卖价格/数量" width="250">
         <template #default="slotProps">
-          <el-input-number v-model="slotProps.row.quantity" :min="1" :step="1"></el-input-number>
+          价格:
+          <el-input-number v-model="slotProps.row.price" :min="0" :step="0.1" />
+          <br />
+          数量:
+          <el-input-number v-model="slotProps.row.quantity" :min="1" :step="1" />
         </template>
       </el-table-column>
 
