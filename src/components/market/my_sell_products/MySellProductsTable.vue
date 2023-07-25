@@ -5,9 +5,8 @@ import { ElMessage } from "element-plus"
 import type { ProductsListRespData } from "@/api/jhs/models/ProductsListResp"
 import { putProduct } from "@/api/jhs/services"
 import { useProductsTable } from "@/components/market/interface/use_products_table"
-import { getUserWithUID } from "@/api/v1/services"
 
-let { searchParam, tableData, pagination, genSellProductsTableData, token } = useProductsTable()
+let { searchParam, tableData, pagination, genSellProductsTableData, userInfo } = useProductsTable()
 
 const handleRowSubmit = (row: ProductsListRespData) => {
   putProduct(
@@ -22,7 +21,7 @@ const handleRowSubmit = (row: ProductsListRespData) => {
       user_card_version_image: row.card_version_image,
     },
     row.product_id.toString(),
-    token.value
+    userInfo.jhs_token
   ).then((resp) => {
     if (resp.message == "success") {
       ElMessage({
@@ -73,11 +72,16 @@ const handleRowSubmit = (row: ProductsListRespData) => {
           <img :src="slotProps.row.card_version_image" referrerpolicy="no-referrer" min-width="70" height="70" v-viewer />
         </template>
       </el-table-column>
-      <el-table-column prop="card_version_number" label="卡牌编号" />
-      <el-table-column prop="card_name_cn" label="卡牌名称" />
-      <el-table-column prop="card_version_rarity" label="稀有度" />
-      <!-- <el-table-column prop="min_price" label="最低价" />
-      <el-table-column prop="avg_price" label="集换价" /> -->
+
+      <el-table-column label="编号-稀有度/名称" width="250">
+        <template #default="slotProps">
+          <span>{{ slotProps.row.card_version_number }}</span>
+          -
+          <span>{{ slotProps.row.card_version_rarity }}</span>
+          <br />
+          <span>{{ slotProps.row.card_name_cn }}</span>
+        </template>
+      </el-table-column>
 
       <el-table-column label="市场价" width="140">
         <template #default="slotProps">
