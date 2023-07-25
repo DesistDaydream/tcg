@@ -9,10 +9,6 @@ import { getUserWithUID } from "@/api/v1/services"
 
 let { searchParam, tableData, pagination, genSellProductsTableData, token } = useProductsTable()
 
-getUserWithUID("1").then((resp) => {
-  token.value = resp.jhs_token
-})
-
 const handleRowSubmit = (row: ProductsListRespData) => {
   putProduct(
     {
