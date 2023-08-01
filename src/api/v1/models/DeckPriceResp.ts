@@ -9,6 +9,7 @@ export interface DeckPriceRespData {
   count: number
   serial: string
   sc_name: string
+  rarity: string
   alternative_art: string
   min_price: string
   avg_price: string

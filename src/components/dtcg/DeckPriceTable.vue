@@ -81,6 +81,7 @@ const handleDel = (row: DeckPriceRespData) => {
     <el-table-column prop="sc_name" label="名称" />
     <el-table-column prop="count" label="数量" width="70" />
     <el-table-column prop="serial" label="编号" width="100" />
+    <el-table-column prop="rarity" label="稀有度" width="100" />
     <el-table-column prop="alternative_art" label="异画" width="80" sortable />
     <el-table-column prop="avg_unit_price" label="集换单价" width="110" sortable :sort-method="sortAvgUnitPrice" />
     <el-table-column prop="avg_price" label="集换价" width="100" sortable :sort-method="sortAvgPrice" />

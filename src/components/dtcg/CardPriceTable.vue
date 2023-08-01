@@ -38,6 +38,7 @@ let handleAdd = (row: CardsPriceWithDtcgDBImgRespData) => {
     count: 1,
     serial: row.serial,
     sc_name: row.sc_name,
+    rarity: row.rarity,
     alternative_art: row.alternative_art,
     min_price: row.min_price.toString(),
     avg_price: row.avg_price.toString(),
