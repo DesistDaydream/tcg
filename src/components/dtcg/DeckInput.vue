@@ -2,7 +2,7 @@
 import { ref } from "vue"
 import { Search } from "@element-plus/icons-vue"
 
-import { postDeckPriceWithJSON, getDeckPriceWithHID, getDeckPriceWithCDID } from "@/api/v1/services"
+import { postDeckPriceWithJSON, getDeckPriceWithHID, getDeckPriceWithCDID, getDeckPriceWithWLID } from "@/api/v1/services"
 import type { DeckPriceResp } from "@/api/v1/models/DeckPriceResp"
 
 const props = defineProps<{
@@ -56,6 +56,19 @@ function commitWithDeckJSON(deckJSON: string) {
       props.tableLoading.loading = false
     })
 }
+
+let jhsWishListID = ref<string>("")
+function commitWithJhsWishListID(jhsWishListID: string) {
+  props.tableLoading.loading = true
+  getDeckPriceWithWLID(jhsWishListID)
+    .then((resp) => {
+      props.tableDataForDeckPriceResp.data = resp.data
+      props.tableLoading.loading = false
+    })
+    .catch((err) => {
+      props.tableLoading.loading = false
+    })
+}
 </script>
 
 <template>
@@ -80,6 +93,14 @@ function commitWithDeckJSON(deckJSON: string) {
       <el-input v-model="deckJSON" placeholder="卡组JSON" @keyup.enter.native="commitWithDeckJSON(deckJSON)">
         <template #append>
           <el-button :icon="Search" @click="commitWithDeckJSON(deckJSON)"></el-button>
+        </template>
+      </el-input>
+    </el-form-item>
+
+    <el-form-item label="集换社心愿单ID">
+      <el-input v-model="jhsWishListID" placeholder="集换社心愿单ID" @keyup.enter.native="commitWithJhsWishListID(jhsWishListID)">
+        <template #append>
+          <el-button :icon="Search" @click="commitWithJhsWishListID(jhsWishListID)"></el-button>
         </template>
       </el-input>
     </el-form-item>
