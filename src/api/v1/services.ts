@@ -104,3 +104,27 @@ export const getUserWithUID = async (uid: string): Promise<UserInfoResp> => {
   const resp = await requestInstance.get("/user/info/" + uid)
   return resp.data
 }
+
+// 集换社接口
+import type { ProductsListReqQuery } from "./models/JhsProductsListReq"
+import type { ProductsListResp } from "./models/JhsProductsListResp"
+import type { ProductUpgradeReqBody } from "./models/JhsProductUpgradeReq"
+import type { ProductUpgradeResp } from "./models/JhsProductUpgradeResp"
+
+// 列出我在卖的商品
+export const getProductsList = async (productsListReqQuery: ProductsListReqQuery): Promise<ProductsListResp> => {
+  const resp = await requestInstance.get("/jhs/market/sellers/products", {
+    params: productsListReqQuery,
+  })
+  return resp.data
+}
+
+// 更新商品
+export const putProduct = async (productUpgradeReqBody: ProductUpgradeReqBody, product_id: string): Promise<ProductUpgradeResp> => {
+  const resp = await requestInstance.put("/jhs/market/sellers/products/" + product_id, JSON.stringify(productUpgradeReqBody), {
+    headers: {
+      "content-type": "application/json",
+    },
+  })
+  return resp.data
+}

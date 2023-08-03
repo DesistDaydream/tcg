@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ref } from "vue"
-
 import { Plus, Minus, Delete } from "@element-plus/icons-vue"
 
 import type { DeckPriceResp, DeckPriceRespData } from "@/api/v1/models/DeckPriceResp"

@@ -2,11 +2,12 @@
 import { Search } from "@element-plus/icons-vue"
 import { ElMessage } from "element-plus"
 
-import type { ProductsListRespData } from "@/api/jhs/models/ProductsListResp"
-import { putProduct } from "@/api/jhs/services"
+import type { ProductsListRespData } from "@/api/v1/models/JhsProductsListResp"
+import { putProduct } from "@/api/v1/services"
+
 import { useProductsTable } from "@/components/market/interface/use_sell_products_table"
 
-let { searchParam, tableData, pagination, genSellProductsTableData, userInfo } = useProductsTable()
+let { searchParam, tableData, pagination, genSellProductsTableData } = useProductsTable()
 
 const handleRowSubmit = (row: ProductsListRespData) => {
   putProduct(
@@ -15,13 +16,12 @@ const handleRowSubmit = (row: ProductsListRespData) => {
       grading: "",
       condition: row.condition.toString(),
       on_sale: row.on_sale.toString(),
-      price: row.price,
+      price: row.price.toString(),
+      product_card_version_image: row.card_version_image,
       quantity: row.quantity.toString(),
       remark: row.remark,
-      user_card_version_image: row.card_version_image,
     },
-    row.product_id.toString(),
-    userInfo.jhs_token
+    row.product_id.toString()
   ).then((resp) => {
     if (resp.message == "success") {
       ElMessage({
@@ -135,4 +135,3 @@ const handleRowSubmit = (row: ProductsListRespData) => {
   margin-bottom: 16px;
 }
 </style>
-@/components/market/interface/use_sell_products_table

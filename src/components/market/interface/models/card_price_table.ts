@@ -1,5 +1,5 @@
 // import type { CardsPriceRespData } from "@/api/v1/models/CardsPriceResp"
-import type { ProductsListRespData } from "@/api/jhs/models/ProductsListResp"
+import type { ProductsListRespData } from "@/api/v1/models/JhsProductsListResp"
 
 export interface SellProductsTableState {
   searchParam: SearchParam
@@ -8,7 +8,6 @@ export interface SellProductsTableState {
 }
 
 export interface SearchParam {
-  // userID: string
   keyword: string
 }
 

@@ -1,6 +1,6 @@
 import { onMounted, reactive, toRefs } from "vue"
 import type { TableState } from "@/components/dtcg/interface/models/card_price_table"
-import { postCardsPrice, postCardsPriceWithDtcgDBImg } from "@/api/v1/services"
+import { postCardsPriceWithDtcgDBImg } from "@/api/v1/services"
 import type { CardsPriceReqQuery, CardsPriceReqBody } from "@/api/v1/models/CardsPriceReq"
 
 export let usePriceTable = () => {
@@ -39,10 +39,6 @@ export let usePriceTable = () => {
       state.tableData = resp.data
       state.cardsCount = resp.count
     })
-    // postCardsPrice(cardsPriceReqQuery, cardsPriceReqBody).then((resp) => {
-    //   tableData.value = resp.data
-    //   cardsCount.value = resp.count
-    // })
   }
 
   // 组件挂载时(即初始化时)执行，生成表格数据
