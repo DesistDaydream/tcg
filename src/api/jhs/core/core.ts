@@ -2,7 +2,7 @@ import axios from "axios"
 import type { InternalAxiosRequestConfig, AxiosResponse } from "axios"
 
 const instance = axios.create({
-  baseURL: "https://api.jihuanshe.com/api",
+  // baseURL: "https://api.jihuanshe.com/api",
   timeout: 30000,
 })
 

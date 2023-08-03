@@ -1,5 +1,5 @@
 import requestInstance from "./core/core"
-import type { CardSetReq } from "./models/CardSetReq"
+import type { CardSetReqBody } from "./models/CardSetReq"
 import type { CardSetResp } from "./models/CardSetResp"
 import type { CardsDescReqQuery, CardsDescReqBody } from "./models/CardsDescReq"
 import type { CardsDescResp } from "./models/CardsDescResp"
@@ -8,6 +8,8 @@ import type { CardsPriceResp, CardsPriceWithDtcgDBImgResp } from "./models/Cards
 import type { DeckPriceReqQuery } from "./models/DeckPriceReq"
 import type { DeckPriceResp } from "./models/DeckPriceResp"
 import type { UserInfoResp } from "./models/UserInfoResp"
+import type { LoginReqBody } from "./models/LoginReq"
+import type { LoginResp } from "./models/LoginResp"
 
 // export const postCardsDesc = (data: CardsDescReq): Promise<CardsDescResp> => {
 //   return requestInstance
@@ -24,8 +26,13 @@ import type { UserInfoResp } from "./models/UserInfoResp"
 //     })
 // }
 
+export const postLogin = async (loginReqBody: LoginReqBody): Promise<LoginResp> => {
+  const resp = await requestInstance.post("/login", JSON.stringify(loginReqBody))
+  return resp.data
+}
+
 // IDE 推荐转为异步？？？
-export const postCardSet = async (cardSetReq: CardSetReq): Promise<CardSetResp> => {
+export const postCardSet = async (cardSetReq: CardSetReqBody): Promise<CardSetResp> => {
   const resp = await requestInstance.post("/set/desc", JSON.stringify(cardSetReq))
   return resp.data
 }

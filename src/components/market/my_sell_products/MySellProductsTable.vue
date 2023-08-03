@@ -4,7 +4,7 @@ import { ElMessage } from "element-plus"
 
 import type { ProductsListRespData } from "@/api/jhs/models/ProductsListResp"
 import { putProduct } from "@/api/jhs/services"
-import { useProductsTable } from "@/components/market/interface/use_products_table"
+import { useProductsTable } from "@/components/market/interface/use_sell_products_table"
 
 let { searchParam, tableData, pagination, genSellProductsTableData, userInfo } = useProductsTable()
 
@@ -135,3 +135,4 @@ const handleRowSubmit = (row: ProductsListRespData) => {
   margin-bottom: 16px;
 }
 </style>
+@/components/market/interface/use_sell_products_table
