@@ -23,12 +23,13 @@ export default defineConfig({
     host: "0.0.0.0",
     // 端口
     port: 42205,
-    // proxy: {
-    //   "/api/v1": {
-    //     target: "https://tcg.102205.xyz:10443",
-    //     changeOrigin: true,
-    //     rewrite: (path) => path.replace(/^\/api/, ""),
-    //   },
-    // },
+    proxy: {
+      "/api": {
+        // target: "https://tcg.102205.xyz:10443",
+        target: "http://localhost:2205",
+        changeOrigin: true,
+        // rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
   },
 })
