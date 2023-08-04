@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue"
 import { Search } from "@element-plus/icons-vue"
+import { ElMessage } from "element-plus"
 
 import { postDeckPriceWithJSON, getDeckPriceWithHID, getDeckPriceWithCDID, getDeckPriceWithWLID } from "@/api/v1/services"
 import type { DeckPriceResp } from "@/api/v1/models/DeckPriceResp"
@@ -21,6 +22,10 @@ function commitWithDeckHID(deckHID: string) {
       props.tableLoading.loading = false
     })
     .catch((err) => {
+      ElMessage({
+        message: err.response.data,
+        type: "error",
+      })
       props.tableLoading.loading = false
     })
 }
@@ -36,6 +41,10 @@ function commitWithDeckCDID(deckCDID: string) {
       props.tableLoading.loading = false
     })
     .catch((err) => {
+      ElMessage({
+        message: err.response.data,
+        type: "error",
+      })
       props.tableLoading.loading = false
     })
 }
@@ -53,6 +62,10 @@ function commitWithDeckJSON(deckJSON: string) {
       props.tableLoading.loading = false
     })
     .catch((err) => {
+      ElMessage({
+        message: err.response.data,
+        type: "error",
+      })
       props.tableLoading.loading = false
     })
 }
@@ -66,6 +79,10 @@ function commitWithJhsWishListID(jhsWishListID: string) {
       props.tableLoading.loading = false
     })
     .catch((err) => {
+      ElMessage({
+        message: err.response.data,
+        type: "error",
+      })
       props.tableLoading.loading = false
     })
 }
