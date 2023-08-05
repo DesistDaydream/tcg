@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { ref } from "vue"
+import { ref, onMounted } from "vue"
 import { RouterLink, RouterView } from "vue-router"
 
 import User from "@/components/user/User.vue"
 
+// TODO: 页面刷新后，高亮选中回到 index，这是不对的，应该在刷新后，高亮选中当前页对应的菜单项
 const activeIndex = ref("index")
 const handleSelect = (key: string, keyPath: string[]) => {
   console.log(key, keyPath)
