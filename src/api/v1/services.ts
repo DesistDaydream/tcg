@@ -7,7 +7,7 @@ import type { CardsPriceReqQuery, CardsPriceReqBody } from "./models/CardsPriceR
 import type { CardsPriceResp, CardsPriceWithDtcgDBImgResp } from "./models/CardsPriceResp"
 import type { DeckPriceReqQuery } from "./models/DeckPriceReq"
 import type { DeckPriceResp } from "./models/DeckPriceResp"
-import type { UserInfoResp } from "./models/UserInfoResp"
+import type { UserInfoResp, MeResp } from "./models/UserInfoResp"
 import type { LoginReqBody } from "./models/LoginReq"
 import type { LoginResp } from "./models/LoginResp"
 
@@ -26,8 +26,21 @@ import type { LoginResp } from "./models/LoginResp"
 //     })
 // }
 
+// 登录
 export const postLogin = async (loginReqBody: LoginReqBody): Promise<LoginResp> => {
   const resp = await requestInstance.post("/login", JSON.stringify(loginReqBody))
+  return resp.data
+}
+
+// 获取当前登录的用户的信息
+export const getMe = async (): Promise<MeResp> => {
+  const resp = await requestInstance.get("/me")
+  return resp.data
+}
+
+// 获取用户信息
+export const getUserWithUID = async (uid: string): Promise<UserInfoResp> => {
+  const resp = await requestInstance.get("/user/info/" + uid)
   return resp.data
 }
 
@@ -96,12 +109,6 @@ export const getDeckPriceWithCDID = async (cdid: string): Promise<DeckPriceResp>
 // 根据集换社心愿单 ID 获取卡组价格
 export const getDeckPriceWithWLID = async (wlid: string): Promise<DeckPriceResp> => {
   const resp = await requestInstance.get("/deck/price/wlid/" + wlid)
-  return resp.data
-}
-
-// 获取用户信息
-export const getUserWithUID = async (uid: string): Promise<UserInfoResp> => {
-  const resp = await requestInstance.get("/user/info/" + uid)
   return resp.data
 }
 

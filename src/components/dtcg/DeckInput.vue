@@ -7,7 +7,7 @@ import { postDeckPriceWithJSON, getDeckPriceWithHID, getDeckPriceWithCDID, getDe
 import type { DeckPriceResp } from "@/api/v1/models/DeckPriceResp"
 
 const props = defineProps<{
-  tableDataForDeckPriceResp: DeckPriceResp
+  tableDataFromDeckPriceResp: DeckPriceResp
   tableLoading: { loading: boolean }
 }>()
 
@@ -18,7 +18,7 @@ function commitWithDeckHID(deckHID: string) {
 
   getDeckPriceWithHID(deckHID)
     .then((resp) => {
-      props.tableDataForDeckPriceResp.data = resp.data
+      props.tableDataFromDeckPriceResp.data = resp.data
       props.tableLoading.loading = false
     })
     .catch((err) => {
@@ -37,13 +37,14 @@ function commitWithDeckCDID(deckCDID: string) {
 
   getDeckPriceWithCDID(deckCDID)
     .then((resp) => {
-      props.tableDataForDeckPriceResp.data = resp.data
+      props.tableDataFromDeckPriceResp.data = resp.data
       props.tableLoading.loading = false
     })
     .catch((err) => {
       ElMessage({
         message: err.response.data,
         type: "error",
+        duration: 1000,
       })
       props.tableLoading.loading = false
     })
@@ -58,7 +59,7 @@ function commitWithDeckJSON(deckJSON: string) {
   let req = { deck: deckJSON, envir: "chs" }
   postDeckPriceWithJSON(req)
     .then((resp) => {
-      props.tableDataForDeckPriceResp.data = resp.data
+      props.tableDataFromDeckPriceResp.data = resp.data
       props.tableLoading.loading = false
     })
     .catch((err) => {
@@ -75,7 +76,7 @@ function commitWithJhsWishListID(jhsWishListID: string) {
   props.tableLoading.loading = true
   getDeckPriceWithWLID(jhsWishListID)
     .then((resp) => {
-      props.tableDataForDeckPriceResp.data = resp.data
+      props.tableDataFromDeckPriceResp.data = resp.data
       props.tableLoading.loading = false
     })
     .catch((err) => {

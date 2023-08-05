@@ -11,7 +11,6 @@ const instance = axios.create({
 instance.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     let token = localStorage.getItem("token")
-    console.log("token 为: ", token)
     config.headers["Authorization"] = token
     return config
   },

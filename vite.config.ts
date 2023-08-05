@@ -27,7 +27,7 @@ export default defineConfig({
     proxy: {
       "/api/v1": {
         // target: "https://tcg.102205.xyz:10443",
-        target: "http://localhost:2205",
+        target: "http://172.18.134.76:2205",
         changeOrigin: true,
         // rewrite: (path) => path.replace(/^\/api/, ""),
       },

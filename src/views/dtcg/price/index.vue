@@ -9,7 +9,7 @@ import type { DeckPriceResp } from "@/api/v1/models/DeckPriceResp"
 import { NewDeckPriceResp } from "@/api/v1/models/DeckPriceResp"
 
 // 卡组价格表格数据
-let tableDataForDeckPriceResp = ref<DeckPriceResp>(NewDeckPriceResp())
+let tableDataFromDeckPriceResp = ref<DeckPriceResp>(NewDeckPriceResp())
 // 表格遮罩层。当表格数据正在加载时，显示遮罩层
 let tableLoading = ref({ loading: false })
 </script>
@@ -20,7 +20,7 @@ let tableLoading = ref({ loading: false })
     <el-collapse-item title="卡牌价格列表" name="1">
       <el-row :gutter="20">
         <el-col :span="24">
-          <CardPriceTable :tableDataForDeckPriceResp="tableDataForDeckPriceResp"></CardPriceTable>
+          <CardPriceTable :tableDataFromDeckPriceResp="tableDataFromDeckPriceResp"></CardPriceTable>
         </el-col>
       </el-row>
     </el-collapse-item>
@@ -29,13 +29,13 @@ let tableLoading = ref({ loading: false })
   <h1>卡组价格查询</h1>
   <el-row :gutter="20" justify="center" align="middle">
     <el-col :span="24">
-      <DeckInput :tableDataForDeckPriceResp="tableDataForDeckPriceResp" :tableLoading="tableLoading" />
+      <DeckInput :tableDataFromDeckPriceResp="tableDataFromDeckPriceResp" :tableLoading="tableLoading" />
     </el-col>
   </el-row>
 
   <el-row :gutter="20" justify="center" align="middle">
     <el-col :span="24">
-      <DeckPriceTable :tableDataForDeckPriceResp="tableDataForDeckPriceResp" :tableLoading="tableLoading"></DeckPriceTable>
+      <DeckPriceTable :tableDataFromDeckPriceResp="tableDataFromDeckPriceResp" :tableLoading="tableLoading"></DeckPriceTable>
     </el-col>
   </el-row>
 </template>

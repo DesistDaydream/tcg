@@ -4,7 +4,7 @@ import { Plus, Minus, Delete } from "@element-plus/icons-vue"
 import type { DeckPriceResp, DeckPriceRespData } from "@/api/v1/models/DeckPriceResp"
 
 const props = defineProps<{
-  tableDataForDeckPriceResp: DeckPriceResp
+  tableDataFromDeckPriceResp: DeckPriceResp
   tableLoading: { loading: boolean }
 }>()
 
@@ -41,7 +41,7 @@ const handleMinus = (row: DeckPriceRespData) => {
 
   // 若卡牌数量为0，则删除该行
   if (row.count === 0) {
-    props.tableDataForDeckPriceResp.data = props.tableDataForDeckPriceResp.data.filter((item) => item !== row)
+    props.tableDataFromDeckPriceResp.data = props.tableDataFromDeckPriceResp.data.filter((item) => item !== row)
   }
 
   console.log(row)
@@ -49,7 +49,7 @@ const handleMinus = (row: DeckPriceRespData) => {
 // 删除表中一个卡牌
 const handleDel = (row: DeckPriceRespData) => {
   // 直接从表数据中删除该行
-  props.tableDataForDeckPriceResp.data = props.tableDataForDeckPriceResp.data.filter((item) => item !== row)
+  props.tableDataFromDeckPriceResp.data = props.tableDataFromDeckPriceResp.data.filter((item) => item !== row)
   console.log(row)
 }
 </script>
@@ -58,7 +58,7 @@ const handleDel = (row: DeckPriceRespData) => {
   <el-table
     v-loading="tableLoading.loading"
     class="tableBox"
-    :data="tableDataForDeckPriceResp.data"
+    :data="tableDataFromDeckPriceResp.data"
     show-summary
     border
     :cell-style="{ 'text-align': 'center', padding: '0px' }"

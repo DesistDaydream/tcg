@@ -10,7 +10,7 @@ import Pagination from "@/components/table/Pagination.vue"
 import SearchForm from "@/components/table/SearchForm.vue"
 
 let props = defineProps<{
-  tableDataForDeckPriceResp: DeckPriceResp
+  tableDataFromDeckPriceResp: DeckPriceResp
 }>()
 
 let { pageNum, pageSize, cardsCount, tableData, searchParam, handleSearch, handlePageSizeChange, handlePageNumChange } = usePriceTable()
@@ -19,14 +19,14 @@ let handleAdd = (row: CardsPriceWithDtcgDBImgRespData) => {
   console.log("添加：cardIDFromDB %s; cardVersionID %s", row.card_id_from_db, row.card_version_id)
 
   // 若该卡牌已经在表格中，则数量加1
-  for (let i = 0; i < props.tableDataForDeckPriceResp.data.length; i++) {
-    if (props.tableDataForDeckPriceResp.data[i].card_id_from_db === row.card_id_from_db) {
-      props.tableDataForDeckPriceResp.data[i].count++
+  for (let i = 0; i < props.tableDataFromDeckPriceResp.data.length; i++) {
+    if (props.tableDataFromDeckPriceResp.data[i].card_id_from_db === row.card_id_from_db) {
+      props.tableDataFromDeckPriceResp.data[i].count++
       // 集换价和最低价也要随数量变化而增加
-      props.tableDataForDeckPriceResp.data[i].avg_price = (Number(props.tableDataForDeckPriceResp.data[i].avg_price) + Number(row.avg_price))
+      props.tableDataFromDeckPriceResp.data[i].avg_price = (Number(props.tableDataFromDeckPriceResp.data[i].avg_price) + Number(row.avg_price))
         .toFixed(2)
         .toString()
-      props.tableDataForDeckPriceResp.data[i].min_price = (Number(props.tableDataForDeckPriceResp.data[i].min_price) + Number(row.min_price))
+      props.tableDataFromDeckPriceResp.data[i].min_price = (Number(props.tableDataFromDeckPriceResp.data[i].min_price) + Number(row.min_price))
         .toFixed(2)
         .toString()
       return
@@ -47,7 +47,7 @@ let handleAdd = (row: CardsPriceWithDtcgDBImgRespData) => {
     image: row.image,
   }
 
-  props.tableDataForDeckPriceResp.data.unshift(newData)
+  props.tableDataFromDeckPriceResp.data.unshift(newData)
 }
 </script>
 
@@ -63,7 +63,7 @@ let handleAdd = (row: CardsPriceWithDtcgDBImgRespData) => {
       border
       :cell-style="{ 'text-align': 'center' }"
       :header-cell-style="{ 'text-align': 'center', padding: '0px' }">
-      <el-table-column fixed="left" label="操作" width="120">
+      <el-table-column fixed="left" label="操作" width="60">
         <template #default="slotProps">
           <!-- <el-button link type="primary" @click="handleAdd(slotProps.row)">添加</el-button> -->
           <el-button size="small" type="success" :icon="Plus" circle @click="handleAdd(slotProps.row)" />
@@ -74,10 +74,17 @@ let handleAdd = (row: CardsPriceWithDtcgDBImgRespData) => {
           <img :src="slotProps.row.image" referrerpolicy="no-referrer" min-width="70" height="70" v-viewer />
         </template>
       </el-table-column>
-      <el-table-column prop="sc_name" label="名称" />
-      <el-table-column prop="serial" label="编号" />
+      <el-table-column label="编号-稀有度/名称">
+        <template #default="slotProps">
+          <span>{{ slotProps.row.serial }}</span>
+          -
+          <span>{{ slotProps.row.rarity }}</span>
+          <br />
+          <span>{{ slotProps.row.sc_name }}</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="alternative_art" label="异画" />
-      <el-table-column prop="rarity" label="稀有度" />
+      <el-table-column prop="set_prefix" label="卡集" />
       <el-table-column prop="avg_price" label="集换价" />
       <el-table-column prop="min_price" label="最低价" />
     </el-table>

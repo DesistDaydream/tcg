@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import { ref } from "vue"
+import { ElMessage } from "element-plus"
+
 import { postLogin } from "@/api/v1/services"
 import type { LoginReqBody } from "@/api/v1/models/LoginReq"
-import { ref } from "vue"
 
 let username = ref<string>("")
 let password = ref<string>("")
@@ -10,11 +12,31 @@ const login = () => {
     username: username.value,
     password: password.value,
   }
-  postLogin(loginReq).then((resp) => {
-    console.log(resp)
-
-    localStorage.setItem("token", resp.data.token)
-  })
+  postLogin(loginReq)
+    .then((resp) => {
+      if (resp.message == "success") {
+        console.log(resp)
+        ElMessage({
+          message: "登录成功",
+          type: "success",
+          duration: 1000,
+        })
+        localStorage.setItem("token", resp.data.token)
+      } else {
+        ElMessage({
+          message: "登录失败",
+          type: "error",
+          duration: 1000,
+        })
+      }
+    })
+    .catch((err) => {
+      ElMessage({
+        message: err,
+        type: "error",
+      })
+      console.log(err)
+    })
 }
 </script>
 

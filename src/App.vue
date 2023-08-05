@@ -1,17 +1,25 @@
 <script setup lang="ts">
 import { ref } from "vue"
 import { RouterLink, RouterView } from "vue-router"
+import { getMe } from "@/api/v1/services"
+
 const activeIndex = ref("index")
 const handleSelect = (key: string, keyPath: string[]) => {
   console.log(key, keyPath)
 }
+
+const user = ref<string>("无")
+
+getMe().then((resp) => {
+  user.value = resp.username.substring(0, 2)
+})
 </script>
 
 <template>
   <el-menu
     :default-active="activeIndex"
     router
-    class="el-menu-demo"
+    class="menu"
     mode="horizontal"
     background-color="#545c64"
     text-color="#fff"
@@ -48,10 +56,13 @@ const handleSelect = (key: string, keyPath: string[]) => {
     <el-menu-item index="tools" route="/tools">工具</el-menu-item>
   </el-menu>
 
+  <el-avatar class="avatar">{{ user }}</el-avatar>
+
   <RouterView />
 </template>
 
 <style scoped>
+/* ul 是菜单的背景，被渲染成 ul */
 ul {
   border-radius: 15px; /* 圆角 */
   overflow: hidden; /* 隐藏超出部分 */
@@ -61,5 +72,13 @@ ul {
 a {
   text-decoration: none;
   color: #fff;
+}
+
+.avatar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: 15px;
+  margin-right: 20px;
 }
 </style>
