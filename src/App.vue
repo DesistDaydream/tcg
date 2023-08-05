@@ -1,18 +1,13 @@
 <script setup lang="ts">
 import { ref } from "vue"
 import { RouterLink, RouterView } from "vue-router"
-import { getMe } from "@/api/v1/services"
+
+import User from "@/components/user/User.vue"
 
 const activeIndex = ref("index")
 const handleSelect = (key: string, keyPath: string[]) => {
   console.log(key, keyPath)
 }
-
-const user = ref<string>("无")
-
-getMe().then((resp) => {
-  user.value = resp.username.substring(0, 2)
-})
 </script>
 
 <template>
@@ -56,7 +51,7 @@ getMe().then((resp) => {
     <el-menu-item index="tools" route="/tools">工具</el-menu-item>
   </el-menu>
 
-  <el-avatar class="avatar">{{ user }}</el-avatar>
+  <User />
 
   <RouterView />
 </template>
@@ -72,13 +67,5 @@ ul {
 a {
   text-decoration: none;
   color: #fff;
-}
-
-.avatar {
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin-top: 15px;
-  margin-right: 20px;
 }
 </style>

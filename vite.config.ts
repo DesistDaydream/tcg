@@ -26,8 +26,8 @@ export default defineConfig({
     // 让 Vite 实现 Nginx 的功能，避免本地调试出现 CORS
     proxy: {
       "/api/v1": {
-        // target: "https://tcg.102205.xyz:10443",
-        target: "http://172.18.134.76:2205",
+        target: "https://tcg.102205.xyz:10443",
+        // target: "http://172.18.134.76:2205",
         changeOrigin: true,
         // rewrite: (path) => path.replace(/^\/api/, ""),
       },
