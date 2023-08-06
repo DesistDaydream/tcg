@@ -64,7 +64,7 @@ const handleDel = (row: DeckPriceRespData) => {
     :cell-style="{ 'text-align': 'center', padding: '0px' }"
     :header-cell-style="{ 'text-align': 'center' }"
     :row-style="{ height: '30px' }">
-    <el-table-column fixed="left" label="操作" width="121" sortable>
+    <el-table-column label="操作" width="121" sortable>
       <template #default="scope">
         <el-button size="small" type="danger" :icon="Delete" circle @click="handleDel(scope.row)" />
         <el-button size="small" type="success" :icon="Plus" circle @click="handlePlus(scope.row)" />
