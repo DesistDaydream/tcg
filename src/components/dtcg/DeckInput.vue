@@ -6,6 +6,8 @@ import { ElMessage } from "element-plus"
 import { postDeckPriceWithJSON, getDeckPriceWithHID, getDeckPriceWithCDID, getDeckPriceWithWLID } from "@/api/v1/services"
 import type { DeckPriceResp } from "@/api/v1/models/DeckPriceResp"
 
+import { validationToken } from "@/api/utils/validation"
+
 const props = defineProps<{
   tableDataFromDeckPriceResp: DeckPriceResp
   tableLoading: { loading: boolean }
@@ -14,6 +16,10 @@ const props = defineProps<{
 let deckHID = ref<string>("")
 // 示例HID: f078e7f43203337c507850c58ccd2d2312f135a3
 function commitWithDeckHID(deckHID: string) {
+  if (!validationToken()) {
+    return
+  }
+
   props.tableLoading.loading = true
 
   getDeckPriceWithHID(deckHID)
@@ -33,6 +39,10 @@ function commitWithDeckHID(deckHID: string) {
 let deckCDID = ref<string>("")
 // 示例CDID: 106981
 function commitWithDeckCDID(deckCDID: string) {
+  if (!validationToken()) {
+    return
+  }
+
   props.tableLoading.loading = true
 
   getDeckPriceWithCDID(deckCDID)
@@ -54,6 +64,10 @@ let deckJSON = ref<string>("")
 // 示例JSON：
 // ["Exported from http://digimon.card.moe","ST1-01","ST1-03","ST1-03","ST1-03","ST1-06","ST1-06","ST1-07","ST1-07","ST1-07","ST1-07","ST1-16","ST1-16","BT1-010","BT1-010","BT1-020","BT1-025","BT1-025","BT1-084","BT1-085","BT1-114","BT1-114","P-009","P-009","P-009","P-009","BT4-017","BT4-019","BT4-019","BT4-092","BT4-099","BT5-001","BT5-001","BT5-001","BT5-001","BT5-007","BT5-007","BT5-007","BT5-010","BT5-010","BT5-010","BT5-010","BT5-015","BT5-015","BT5-015","BT5-015","BT5-016","BT5-016","BT5-086","BT5-086","BT5-092","BT5-092","ST7-12","P-035","P-035","P-035"]
 function commitWithDeckJSON(deckJSON: string) {
+  if (!validationToken()) {
+    return
+  }
+
   props.tableLoading.loading = true
 
   let req = { deck: deckJSON, envir: "chs" }
@@ -73,6 +87,10 @@ function commitWithDeckJSON(deckJSON: string) {
 
 let jhsWishListID = ref<string>("")
 function commitWithJhsWishListID(jhsWishListID: string) {
+  if (!validationToken()) {
+    return
+  }
+
   props.tableLoading.loading = true
   getDeckPriceWithWLID(jhsWishListID)
     .then((resp) => {

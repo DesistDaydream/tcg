@@ -4,6 +4,8 @@ import type { SellProductsTableState } from "@/components/market/interface/model
 import type { ProductsListReqQuery } from "@/api/v1/models/JhsProductsListReq"
 import { getProductsList } from "@/api/v1/services"
 
+import { validationToken } from "@/api/utils/validation"
+
 export let useProductsTable = () => {
   // 声明响应式数据。用于存储表格数据
   const state = reactive<SellProductsTableState>({
@@ -19,6 +21,10 @@ export let useProductsTable = () => {
   })
 
   let genSellProductsTableData = () => {
+    if (!validationToken()) {
+      return
+    }
+
     const productsListReqQuery: ProductsListReqQuery = {
       game_key: "dgm",
       game_sub_key: "sc",
