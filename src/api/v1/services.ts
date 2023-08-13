@@ -106,6 +106,12 @@ export const getDeckPriceWithCDID = async (cdid: string): Promise<DeckPriceResp>
   return resp.data
 }
 
+// 根据分享的卡组 ID 获取卡组价格
+export const getDeckPriceWithShareID = async (shareid: string): Promise<DeckPriceResp> => {
+  const resp = await requestInstance.get("/deck/price/share/" + shareid)
+  return resp.data
+}
+
 // 根据集换社心愿单 ID 获取卡组价格
 export const getDeckPriceWithWLID = async (wlid: string): Promise<DeckPriceResp> => {
   const resp = await requestInstance.get("/deck/price/wlid/" + wlid)

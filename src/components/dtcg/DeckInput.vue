@@ -3,7 +3,7 @@ import { ref } from "vue"
 import { Search } from "@element-plus/icons-vue"
 import { ElMessage } from "element-plus"
 
-import { postDeckPriceWithJSON, getDeckPriceWithHID, getDeckPriceWithCDID, getDeckPriceWithWLID } from "@/api/v1/services"
+import { postDeckPriceWithJSON, getDeckPriceWithHID, getDeckPriceWithCDID, getDeckPriceWithWLID, getDeckPriceWithShareID } from "@/api/v1/services"
 import type { DeckPriceResp } from "@/api/v1/models/DeckPriceResp"
 
 import { validationToken } from "@/api/utils/validation"
@@ -85,6 +85,30 @@ function commitWithDeckJSON(deckJSON: string) {
     })
 }
 
+let deckShareID = ref<string>("")
+// 实例 ID: RENHRFYxAAEJswQAEBSLBBGDBAhoBBSPBBSJBBSQBBKiARSRAhGLBBSTARSUAhSVBA52AhBQAhGuBBSWBA==
+function commitWithShareID(deckShareID: string) {
+  if (!validationToken()) {
+    return
+  }
+
+  props.tableLoading.loading = true
+
+  getDeckPriceWithShareID(deckShareID)
+    .then((resp) => {
+      props.tableDataFromDeckPriceResp.data = resp.data
+      props.tableLoading.loading = false
+    })
+    .catch((err) => {
+      ElMessage({
+        message: err.response.data,
+        type: "error",
+        duration: 1000,
+      })
+      props.tableLoading.loading = false
+    })
+}
+
 let jhsWishListID = ref<string>("")
 function commitWithJhsWishListID(jhsWishListID: string) {
   if (!validationToken()) {
@@ -137,6 +161,14 @@ function commitWithJhsWishListID(jhsWishListID: string) {
       <el-input v-model="jhsWishListID" placeholder="集换社心愿单ID" @keyup.enter.native="commitWithJhsWishListID(jhsWishListID)">
         <template #append>
           <el-button :icon="Search" @click="commitWithJhsWishListID(jhsWishListID)"></el-button>
+        </template>
+      </el-input>
+    </el-form-item>
+
+    <el-form-item label="卡查分享ID">
+      <el-input v-model="deckShareID" placeholder="查分享ID" @keyup.enter.native="commitWithShareID(deckShareID)">
+        <template #append>
+          <el-button :icon="Search" @click="commitWithShareID(deckShareID)"></el-button>
         </template>
       </el-input>
     </el-form-item>
