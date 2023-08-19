@@ -14,6 +14,7 @@ const handleRowSubmit = (row: ProductsListRespData) => {
     {
       authenticator_id: "",
       grading: "",
+      default: "1",
       condition: row.condition.toString(),
       on_sale: row.on_sale.toString(),
       price: row.price.toString(),
