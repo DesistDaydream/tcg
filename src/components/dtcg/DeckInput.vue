@@ -37,7 +37,7 @@ function commitWithDeckHID(deckHID: string) {
 }
 
 let deckCDID = ref<string>("")
-// 示例CDID: 106981
+// 示例CDID: 322622
 function commitWithDeckCDID(deckCDID: string) {
   if (!validationToken()) {
     return
@@ -109,6 +109,7 @@ function commitWithShareID(deckShareID: string) {
     })
 }
 
+// 示例 ID: 2988342
 let jhsWishListID = ref<string>("")
 function commitWithJhsWishListID(jhsWishListID: string) {
   if (!validationToken()) {
@@ -157,18 +158,18 @@ function commitWithJhsWishListID(jhsWishListID: string) {
       </el-input>
     </el-form-item>
 
-    <el-form-item label="集换社心愿单ID">
-      <el-input v-model="jhsWishListID" placeholder="集换社心愿单ID" @keyup.enter.native="commitWithJhsWishListID(jhsWishListID)">
-        <template #append>
-          <el-button :icon="Search" @click="commitWithJhsWishListID(jhsWishListID)"></el-button>
-        </template>
-      </el-input>
-    </el-form-item>
-
     <el-form-item label="卡查分享ID">
       <el-input v-model="deckShareID" placeholder="查分享ID" @keyup.enter.native="commitWithShareID(deckShareID)">
         <template #append>
           <el-button :icon="Search" @click="commitWithShareID(deckShareID)"></el-button>
+        </template>
+      </el-input>
+    </el-form-item>
+
+    <el-form-item label="集换社心愿单ID">
+      <el-input v-model="jhsWishListID" placeholder="集换社心愿单ID" @keyup.enter.native="commitWithJhsWishListID(jhsWishListID)">
+        <template #append>
+          <el-button :icon="Search" @click="commitWithJhsWishListID(jhsWishListID)"></el-button>
         </template>
       </el-input>
     </el-form-item>
