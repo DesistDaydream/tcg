@@ -1,5 +1,5 @@
 import requestInstance from "./core/core"
-import type { CardSetReqBody } from "./models/CardSetReq"
+import type { CardSetReqQuery } from "./models/CardSetReq"
 import type { CardSetResp } from "./models/CardSetResp"
 import type { CardsDescReqQuery, CardsDescReqBody } from "./models/CardsDescReq"
 import type { CardsDescResp } from "./models/CardsDescResp"
@@ -45,8 +45,8 @@ export const getUserWithUID = async (uid: string): Promise<UserInfoResp> => {
 }
 
 // IDE 推荐转为异步？？？
-export const postCardSet = async (cardSetReq: CardSetReqBody): Promise<CardSetResp> => {
-  const resp = await requestInstance.post("/set/desc", JSON.stringify(cardSetReq))
+export const postCardSet = async (cardSetReqQuery: CardSetReqQuery): Promise<CardSetResp> => {
+  const resp = await requestInstance.get("/set/desc", { params: cardSetReqQuery })
   return resp.data
 }
 

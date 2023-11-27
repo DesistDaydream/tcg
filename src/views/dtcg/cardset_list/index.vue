@@ -2,17 +2,21 @@
 import { ref } from "vue"
 import type { CardSetRespData } from "@/api/v1/models/CardSetResp"
 import { postCardSet } from "@/api/v1/services"
+import type { CardSetReqQuery } from "@/api/v1/models/CardSetReq"
+import type { CardSetResp } from "@/api/v1/models/CardSetResp"
 
 const currentPage = ref<number>(1)
-const pageSize = ref<number>(20)
+const pageSize = ref<number>(10)
 const cardsCount = ref<number>(0)
 const tableData = ref<CardSetRespData[]>()
 
 function genTableData() {
-  postCardSet({
+  const cardSetsReqQuery: CardSetReqQuery = {
     page_size: pageSize.value,
     page_num: currentPage.value,
-  }).then((resp) => {
+  }
+
+  postCardSet(cardSetsReqQuery).then((resp) => {
     tableData.value = resp.data
     cardsCount.value = resp.count
   })
